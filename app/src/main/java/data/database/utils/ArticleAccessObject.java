@@ -14,15 +14,15 @@ import data.datamodels.Articles;
 @Dao
 public abstract class ArticleAccessObject {
 
-    @Query("SELECT * FROM Articles")
+    @Query("SELECT * FROM articles")
     public abstract LiveData<List<Articles>> fetchAllData();
 
-    @Query("SELECT * FROM Articles where dataQuery = :dataQuery")
+    @Query("SELECT * FROM articles where description = :dataQuery")
     public abstract  List<Articles> searchByInterest(String dataQuery);
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public  abstract  void createDataIfNotExists(List<Articles> ... articles);
+    public  abstract void createDataIfNotExists(Articles ... articleData);
 
 
 

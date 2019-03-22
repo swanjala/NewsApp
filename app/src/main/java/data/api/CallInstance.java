@@ -18,9 +18,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CallInstance {
 
-    public static NetworkService callInstance(String url, Context context){
+    public static NetworkService callInstance(){
 
-
+        String url = "https://newsapi.org/v2/";
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();

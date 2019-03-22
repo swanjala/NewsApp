@@ -34,7 +34,11 @@ public class PopulateDbAsync extends AsyncTask<Void, Void,Void> {
 
                 Log.d("DataResponse data", String.
                         valueOf(response.body().getArticles().get(2).getAuthor()));
-                articleAccessObject.createDataIfNotExists(response.body().getArticles());
+
+                for (int i = 0; i < response.body().getArticles().size() ; i++) {
+
+                    articleAccessObject.createDataIfNotExists(response.body().getArticles().get(i));
+                }
             }
 
             @Override

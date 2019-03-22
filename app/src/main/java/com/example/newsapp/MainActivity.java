@@ -1,11 +1,15 @@
 package com.example.newsapp;
 
 import android.app.Dialog;
+import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +28,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Call;
 import retrofit2.Response;
+import viewModel.NewsViewModel;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,51 +37,43 @@ public class MainActivity extends AppCompatActivity {
     private List<Articles> articleList = new ArrayList<>();
     private String query;
 
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        UrlBuilder urlBuilder = new UrlBuilder();
+        recyclerView = findViewById(R.id.rv_news_layout);
+        recyclerView.setHasFixedSize(true);
+
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+
+
+        NewsViewModel model = ViewModelProviders
+                .of(this)
+                .get(NewsViewModel.class);
+
+            model.fetchAllArticles().observe(this, articlesList ->{
+                mAdapter = new MainAdapter(this,articlesList);
+                recyclerView.setAdapter(mAdapter);
+
+            });
 
 
         FloatingActionButton floatingActionButton = findViewById(R.id.fb_news_items);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputDialog();
             }
         });
 
     }
 
-    public void inputDialog() {
 
-        final EditText taskEditText = new EditText(this);
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("News App")
-                .setMessage("Enter Topic")
-                .setView(taskEditText)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String task = String.valueOf(taskEditText.getText());
-
-
-                        new Thread(new Task()).start();
-                    }
-                })
-                .setNegativeButton("Cancel", null)
-                .create();
-        dialog.show();
-    }
-
-    class Task implements Runnable{
-        @Override
-        public void run() {
-
-
-        }
-    }
 
 }

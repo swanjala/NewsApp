@@ -16,7 +16,7 @@ public class NewsViewModel extends AndroidViewModel {
 
     ArticleRepository mRepository;
 
-    private LiveData<List<Articles>> articlesLiveData;
+    public LiveData<List<Articles>> articlesLiveData;
 
     public NewsViewModel (Application application){
         super(application);
@@ -25,7 +25,7 @@ public class NewsViewModel extends AndroidViewModel {
 
     }
 
-    LiveData<List<Articles>> fetchAllArticles() {
+    public LiveData<List<Articles>> fetchAllArticles() {
         return articlesLiveData;
 
     }

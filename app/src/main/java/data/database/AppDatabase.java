@@ -12,7 +12,7 @@ import data.database.utils.ArticleDatabase;
 import data.datamodels.Articles;
 
 
-@Database(entities = {Articles.class}, version = 1)
+@Database(entities = {Articles.class}, version = 6)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract ArticleAccessObject articleAccessObject();
@@ -28,6 +28,8 @@ public abstract class AppDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class,"app_database")
                             .addCallback(newsRoomDatabaseCallback)
+                            .allowMainThreadQueries()
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
