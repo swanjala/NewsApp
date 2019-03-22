@@ -32,22 +32,14 @@ public class ApiManager {
         this.query = query;
 
         this.base_url = context.getResources().getString(R.string.base_url);
-        // api call instance.
-        this.callInstance.setInstance(CallInstance.callInstance(base_url, context));
+
 
     }
 
 
     public Call<DataResponse> getArticles(){
-        final String apiKey =context.getResources().getString(R.string.api_key);
 
-
-        Uri.Builder builder = new Uri.Builder();
-        builder.appendQueryParameter("q",query)
-                .appendQueryParameter("apiKey",apiKey);
-        String myUrl = builder.build().toString();
-
-        Log.d("url",myUrl);
+        this.callInstance.setInstance(CallInstance.callInstance());
 
         return callInstance.getInstance().getAllNews();
     }
