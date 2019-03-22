@@ -37,7 +37,11 @@ public class ArticleRepository {
 
         @Override
         protected  Void doInBackground(final List<Articles>... params){
-            mAsyckTaskAccessObject.createDataIfNotExists(params[0]);
+
+            for (int index = 0; index < params[0].size(); index++) {
+                mAsyckTaskAccessObject.createDataIfNotExists(params[0].get(index));
+            }
+
             return null;
         }
 
