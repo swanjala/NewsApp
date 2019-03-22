@@ -1,17 +1,29 @@
 package data.datamodels;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverter;
+import android.arch.persistence.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity
+import data.database.utils.NewsAppTypeConverter;
+
+@Entity(tableName="articles",
+        indices = {@Index("id")})
+
+@TypeConverters(NewsAppTypeConverter.class)
+
 public class Articles {
 
-
-        @SerializedName("source")
+        @SerializedName("id")
         @Expose
-        private Source source;
+        @PrimaryKey(autoGenerate = true)
+        private int id;
+
         @SerializedName("author")
         @Expose
         private String author;
@@ -22,28 +34,19 @@ public class Articles {
         @Expose
         private String description;
         @SerializedName("url")
+        @Ignore
         @Expose
         private String url;
         @SerializedName("urlToImage")
         @Expose
-        private Object urlToImage;
+        private String urlToImage;
+
         @SerializedName("publishedAt")
         @Expose
         private String publishedAt;
         @SerializedName("content")
         @Expose
-        private Object content;
-
-        private String dataQuery;
-
-
-        public Source getSource() {
-            return source;
-        }
-
-        public void setSource(Source source) {
-            this.source = source;
-        }
+        private String content;
 
         public String getAuthor() {
             return author;
@@ -77,13 +80,13 @@ public class Articles {
             this.url = url;
         }
 
-        public Object getUrlToImage() {
-            return urlToImage;
-        }
-
-        public void setUrlToImage(Object urlToImage) {
-            this.urlToImage = urlToImage;
-        }
+//        public Object getUrlToImage() {
+//            return urlToImage;
+//        }
+//
+//        public void setUrlToImage(Object urlToImage) {
+//            this.urlToImage = urlToImage;
+//        }
 
         public String getPublishedAt() {
             return publishedAt;
@@ -93,18 +96,26 @@ public class Articles {
             this.publishedAt = publishedAt;
         }
 
-        public Object getContent() {
+        public String getContent() {
             return content;
         }
 
-        public void setContent(Object content) {
+        public void setContent(String content) {
             this.content = content;
         }
 
-        public String getQuery() {
-            return dataQuery;
-        }
-        public void setQuery(String query) {
-            this.dataQuery = query;
-        }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUrlToImage() {
+        return urlToImage;
+    }
+    public void setUrlToImage(String urlToImage) {
+        this.urlToImage = urlToImage;
+    }
 }
