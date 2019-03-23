@@ -27,8 +27,14 @@ public class CallInstance {
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-        OkHttpClient client =
-                builder.build();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build();
+
+//        OkHttpClient client =
+//                builder.build();
 
         Retrofit.Builder retroBuild = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))

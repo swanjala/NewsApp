@@ -2,7 +2,10 @@ package data.DataRepository;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 
 import java.util.List;
 
@@ -13,10 +16,15 @@ import data.datamodels.Articles;
 public class ArticleRepository {
     private ArticleAccessObject articleAccessObject;
     private LiveData<List<Articles>> mAllArticles;
+    private String query;
 
    public ArticleRepository(Application application){
         AppDatabase database = AppDatabase.getDatabase(application);
+
+
         articleAccessObject  = database.articleAccessObject();
+
+
         mAllArticles = articleAccessObject.fetchAllData();
     }
     public LiveData<List<Articles>> getmAllArticles(){

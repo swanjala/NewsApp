@@ -6,6 +6,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import java.util.Collections;
 import java.util.List;
 
 import data.DataRepository.ArticleRepository;
@@ -26,7 +27,7 @@ public class NewsViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Articles>> fetchAllArticles() {
-        return articlesLiveData;
+       return articlesLiveData;
 
     }
 }

@@ -1,5 +1,7 @@
 package data.database;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -16,8 +18,11 @@ public class PopulateDbAsync extends AsyncTask<Void, Void,Void> {
 
     private ApiManager apiManager;
 
-    public PopulateDbAsync(AppDatabase appDatabase) {
+    private  Context context;
+
+    public PopulateDbAsync(Context context, AppDatabase appDatabase) {
         articleAccessObject = appDatabase.articleAccessObject();
+        this.context= context;
     }
 
     @Override
@@ -25,19 +30,21 @@ public class PopulateDbAsync extends AsyncTask<Void, Void,Void> {
         articleAccessObject.createDataIfNotExists();
 
 
-        apiManager = new ApiManager();
+        apiManager = new ApiManager(context);
         Call<DataResponse> call = apiManager.getArticles();
 
         call.enqueue(new Callback<DataResponse>() {
             @Override
             public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
 
-                Log.d("DataResponse data", String.
-                        valueOf(response.body().getArticles().get(2).getAuthor()));
 
-                for (int i = 0; i < response.body().getArticles().size() ; i++) {
+                Log.d("Response Check", String.valueOf(response.body().getTotalResults()));
+                if (response.body() != null) {
 
-                    articleAccessObject.createDataIfNotExists(response.body().getArticles().get(i));
+                    for (int i = 0; i < response.body().getArticles().size(); i++) {
+
+                        articleAccessObject.createDataIfNotExists(response.body().getArticles().get(i));
+                    }
                 }
             }
 

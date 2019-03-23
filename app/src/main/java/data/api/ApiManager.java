@@ -1,9 +1,12 @@
 package data.api;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.example.newsapp.BuildConfig;
 import com.example.newsapp.R;
 
 import java.util.List;
@@ -23,17 +26,12 @@ public class ApiManager {
     private CallInstanceModel callInstance
             = new CallInstanceModel();
 
-    public ApiManager(){
 
-    }
+    public ApiManager(Context context) {
 
-    public ApiManager(Context context, String query) {
-        this.context = context;
-        this.query = query;
-
-        this.base_url = context.getResources().getString(R.string.base_url);
-
-
+        SharedPreferences sharedPref = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        this.query = sharedPref.getString("Query", "");
     }
 
 
@@ -41,7 +39,9 @@ public class ApiManager {
 
         this.callInstance.setInstance(CallInstance.callInstance());
 
-        return callInstance.getInstance().getAllNews();
+
+        Log.d("Query Of Dat", query);
+        return callInstance.getInstance().getAllNews(query, BuildConfig.ApiKey);
     }
 
 
