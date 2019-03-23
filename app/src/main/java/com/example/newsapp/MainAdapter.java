@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import data.datamodels.Articles;
@@ -25,6 +27,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
 
     public MainAdapter(Context context, List<Articles> articlesList){
         mArticleDataSet = articlesList;
+
+        Collections.sort(articlesList, (o1, o2)
+                -> o1.getPublishedAt().compareTo(o2.getPublishedAt()));
+
+
         this.layoutInflater = LayoutInflater.from(context);
         this.context = context;
 

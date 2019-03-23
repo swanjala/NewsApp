@@ -1,15 +1,15 @@
 package data.api;
 
+import android.util.Log;
+
 import data.datamodels.DataResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface NetworkService {
 
-    //https://newsapi.org/v2/everything?q=bitcoin&apiKey=8dc32f53a41142188e754552063131a7
-
-    @GET("everything?q=bitcoin&apiKey=8dc32f53a41142188e754552063131a7")
-    Call<DataResponse> getAllNews();
-
+    @GET("everything")
+    Call<DataResponse> getAllNews(@Query("q") String query, @Query("apiKey") String apiKey);
 
 }

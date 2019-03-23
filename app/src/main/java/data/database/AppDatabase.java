@@ -12,14 +12,19 @@ import data.database.utils.ArticleDatabase;
 import data.datamodels.Articles;
 
 
-@Database(entities = {Articles.class}, version = 6)
+@Database(entities = {Articles.class}, version = 7)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract ArticleAccessObject articleAccessObject();
     private static volatile AppDatabase INSTANCE;
 
+    public static  Context dbContext;
+
+
 
     public static AppDatabase getDatabase(final Context context){
+
+        dbContext= context;
 
         if(INSTANCE == null) {
 
@@ -44,7 +49,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 @Override
                 public void onOpen (@NonNull SupportSQLiteDatabase database){
                     super.onOpen(database);
-                    new PopulateDbAsync(INSTANCE).execute();
+                    new PopulateDbAsync(dbContext,INSTANCE).execute();
                 }
 
             };
