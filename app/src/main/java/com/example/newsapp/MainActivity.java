@@ -1,22 +1,16 @@
 package com.example.newsapp;
 
-import android.app.Dialog;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
+
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,14 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import data.api.ApiManager;
 import data.datamodels.Articles;
-import data.datamodels.DataResponse;
-import data.networkutils.UrlBuilder;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Call;
-import retrofit2.Response;
 import viewModel.NewsViewModel;
 
 
@@ -40,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
 
     private List<Articles> articleList = new ArrayList<>();
-    private String query;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -66,9 +52,6 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         recyclerView.setLayoutManager(layoutManager);
 
         loadData();
-
-
-
 
         FloatingActionButton floatingActionButton = findViewById(R.id.fb_news_items);
 
