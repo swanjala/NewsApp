@@ -24,6 +24,10 @@ public abstract class ArticleAccessObject {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public  abstract void createDataIfNotExists(Articles ... articleData);
 
+    @Query("SELECT * FROM articles WHERE title LIKE :dataQuery")
+    public abstract  void getUserRequestedData(String dataQuery);
+
+
 
 
 }
