@@ -22,6 +22,7 @@ public class ApiManager {
 
     private String base_url,query,url;
     private Context context;
+    private String apiKey;
 
     private CallInstanceModel callInstance
             = new CallInstanceModel();
@@ -32,16 +33,21 @@ public class ApiManager {
         SharedPreferences sharedPref = PreferenceManager
                 .getDefaultSharedPreferences(context);
         this.query = sharedPref.getString("Query", "");
+
+        this.callInstance.setInstance(CallInstance.callInstance());
+         this.apiKey = BuildConfig.ApiKey;
     }
 
 
     public Call<DataResponse> getArticles(){
 
-        this.callInstance.setInstance(CallInstance.callInstance());
+        return callInstance.getInstance().getAllNews(query, apiKey);
+    }
 
+    public Call<DataResponse> getSources() {
 
-        Log.d("Query Of Dat", query);
-        return callInstance.getInstance().getAllNews(query, BuildConfig.ApiKey);
+        return callInstance.getInstance().getSources(apiKey);
+
     }
 
 
