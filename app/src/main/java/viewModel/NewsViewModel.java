@@ -30,4 +30,5 @@ public class NewsViewModel extends AndroidViewModel {
        return articlesLiveData;
 
     }
+
 }
