@@ -9,13 +9,16 @@ import android.support.annotation.NonNull;
 
 import data.database.utils.ArticleAccessObject;
 import data.database.utils.ArticleDatabase;
+import data.database.utils.SourcesAccessObject;
 import data.datamodels.Articles;
+import data.datamodels.Source;
 
 
-@Database(entities = {Articles.class}, version = 8)
+@Database(entities = {Articles.class, Source.class}, version = 9)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract ArticleAccessObject articleAccessObject();
+    public abstract SourcesAccessObject sourcesAccessObject();
     private static volatile AppDatabase INSTANCE;
 
     public static  Context dbContext;
