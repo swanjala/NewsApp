@@ -14,20 +14,12 @@ import data.datamodels.Articles;
 @Dao
 public abstract class ArticleAccessObject {
 
-    @Query("SELECT * FROM articles")
-    public abstract LiveData<List<Articles>> fetchAllData();
-
-    @Query("SELECT * FROM articles where description = :dataQuery")
-    public abstract  List<Articles> searchByInterest(String dataQuery);
+    @Query("SELECT * FROM articles where title LIKE :dataQuery")
+    public abstract LiveData<List<Articles>> fetchAllData(String dataQuery);
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public  abstract void createDataIfNotExists(Articles ... articleData);
-
-    @Query("SELECT * FROM articles WHERE title LIKE :dataQuery")
-    public abstract  void getUserRequestedData(String dataQuery);
-
-
 
 
 }
