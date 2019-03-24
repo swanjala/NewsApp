@@ -9,6 +9,7 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 import data.datamodels.Articles;
+import data.datamodels.Source;
 
 
 @Dao
@@ -20,6 +21,9 @@ public abstract class ArticleAccessObject {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public  abstract void createDataIfNotExists(Articles ... articleData);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public abstract  void createSourceDataIfNotExists(Source... sourceData);
 
 
 }
