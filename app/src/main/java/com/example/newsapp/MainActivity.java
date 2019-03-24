@@ -10,24 +10,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
 
 import java.util.ArrayList;
 import java.util.List;
-
 import data.datamodels.Articles;
 import viewModel.NewsViewModel;
-
 
 public class MainActivity extends AppCompatActivity implements  View.OnClickListener{
 
 
     private List<Articles> articleList = new ArrayList<>();
-
+    private NewsViewModel model;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -51,7 +50,9 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        loadData();
+        this.model= ViewModelProviders
+                .of(this)
+                .get(NewsViewModel.class);
 
         FloatingActionButton floatingActionButton = findViewById(R.id.fb_news_items);
 
@@ -59,9 +60,6 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
     private void loadData() {
 
-        NewsViewModel model = ViewModelProviders
-                .of(this)
-                .get(NewsViewModel.class);
         model.fetchAllArticles().observe(this, articlesList ->{
             mAdapter = new MainAdapter(this,articlesList);
             recyclerView.setAdapter(mAdapter);
@@ -70,13 +68,23 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
             searchEditText.setVisibility(View.INVISIBLE);
             loadButton.setVisibility(View.INVISIBLE);
         });
+    }
 
+    private void loadSourcesList() {
+
+        model.fetchAllSources().observe(this, sources -> {
+
+            mAdapter = new SourcesAdapter(this, sources);
+            recyclerView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
+
+            searchEditText.setVisibility(View.INVISIBLE);
+            loadButton.setVisibility(View.INVISIBLE);
+        });
     }
 
     @Override
     public void onClick(View view) {
-
-        Toast.makeText(this,"Stop kicking me", Toast.LENGTH_LONG).show();
 
         String query;
         if (view.getId() == R.id.fb_news_items) {
@@ -97,9 +105,31 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
             loadData();
         }
-
-
   }
+
+  @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+      MenuInflater inflater = getMenuInflater();
+      inflater.inflate(R.menu.main_menu, menu);
+      return true;
+  }
+
+  @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.all_news:
+                loadData();
+                return true;
+
+            case R.id.news_sources:
+                loadSourcesList();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+  }
+
 }
 
 
