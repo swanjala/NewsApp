@@ -12,7 +12,7 @@ import data.database.utils.ArticleDatabase;
 import data.datamodels.Articles;
 
 
-@Database(entities = {Articles.class}, version = 7)
+@Database(entities = {Articles.class}, version = 8)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract ArticleAccessObject articleAccessObject();
