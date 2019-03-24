@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.newsapp.Fragments.MainFragment;
+import com.example.newsapp.Fragments.SourcesFragment;
 import com.example.newsapp.adapters.MainAdapter;
 import com.example.newsapp.adapters.SourcesAdapter;
 
@@ -46,6 +47,11 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        loadData();
+
+    }
+
+    private void loadData() {
         MainFragment mainFragment = new MainFragment();
 
         fragmentContainer = R.id.fr_main_holder;
@@ -54,31 +60,18 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                 .replace(fragmentContainer,mainFragment)
                 .commitAllowingStateLoss();
 
-    }
 
-    private void loadData() {
-
-        model.fetchAllArticles().observe(this, articlesList ->{
-            mAdapter = new MainAdapter(this,articlesList);
-            recyclerView.setAdapter(mAdapter);
-            mAdapter.notifyDataSetChanged();
-
-            searchEditText.setVisibility(View.INVISIBLE);
-            loadButton.setVisibility(View.INVISIBLE);
-        });
     }
 
     private void loadSourcesList() {
 
-        model.fetchAllSources().observe(this, sources -> {
+        SourcesFragment sourcesFragment = new SourcesFragment();
+        fragmentContainer = R.id.fr_main_holder;
+        fragmentManager = this.getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(fragmentContainer,sourcesFragment)
+                .commitAllowingStateLoss();
 
-            mAdapter = new SourcesAdapter(this, sources);
-            recyclerView.setAdapter(mAdapter);
-            mAdapter.notifyDataSetChanged();
-
-            searchEditText.setVisibility(View.INVISIBLE);
-            loadButton.setVisibility(View.INVISIBLE);
-        });
     }
 
     @Override
