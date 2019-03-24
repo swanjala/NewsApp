@@ -16,7 +16,7 @@ import data.datamodels.Source;
 public abstract class SourcesAccessObject {
 
     @Query("SELECT * FROM source")
-    public abstract LiveData<List<Articles>> fetchAllData(String dataQuery);
+    public abstract LiveData<List<Source>> fetchAllData();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract  void createSourceDataIfNotExists(Source... sourceData);
