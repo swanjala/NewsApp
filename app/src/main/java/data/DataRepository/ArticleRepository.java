@@ -24,8 +24,11 @@ public class ArticleRepository {
 
         articleAccessObject  = database.articleAccessObject();
 
+       SharedPreferences sharedPref = PreferenceManager
+               .getDefaultSharedPreferences(application.getApplicationContext());
+       this.query = sharedPref.getString("Query", "");
 
-        mAllArticles = articleAccessObject.fetchAllData();
+        mAllArticles = articleAccessObject.fetchAllData("%"+query+"%");
     }
     public LiveData<List<Articles>> getmAllArticles(){
         return mAllArticles;
