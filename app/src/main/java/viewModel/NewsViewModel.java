@@ -11,18 +11,21 @@ import java.util.List;
 
 import data.DataRepository.ArticleRepository;
 import data.datamodels.Articles;
+import data.datamodels.Source;
 
 
 public class NewsViewModel extends AndroidViewModel {
 
     ArticleRepository mRepository;
 
-    public LiveData<List<Articles>> articlesLiveData;
+    private LiveData<List<Articles>> articlesLiveData;
+    private LiveData<List<Source>> sourcesLiveData;
 
     public NewsViewModel (Application application){
         super(application);
         mRepository = new ArticleRepository(application);
         articlesLiveData = mRepository.getmAllArticles();
+        sourcesLiveData = mRepository.getSources();
 
     }
 
@@ -30,4 +33,8 @@ public class NewsViewModel extends AndroidViewModel {
        return articlesLiveData;
 
     }
+    public LiveData<List<Source>> fetchAllSources() {
+        return sourcesLiveData;
+    }
+
 }

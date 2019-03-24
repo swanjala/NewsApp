@@ -12,4 +12,7 @@ public interface NetworkService {
     @GET("everything")
     Call<DataResponse> getAllNews(@Query("q") String query, @Query("apiKey") String apiKey);
 
+    @GET("sources")
+    Call<DataResponse> getSources(@Query("apiKey") String apiKey);
+
 }

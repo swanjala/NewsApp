@@ -11,24 +11,39 @@ import java.util.List;
 
 import data.database.AppDatabase;
 import data.database.utils.ArticleAccessObject;
+import data.database.utils.SourcesAccessObject;
 import data.datamodels.Articles;
+import data.datamodels.Source;
 
 public class ArticleRepository {
+
     private ArticleAccessObject articleAccessObject;
+    private SourcesAccessObject sourcesAccessObject;
     private LiveData<List<Articles>> mAllArticles;
+    private LiveData<List<Source>> mSources;
     private String query;
 
-   public ArticleRepository(Application application){
+    public ArticleRepository(Application application){
+
         AppDatabase database = AppDatabase.getDatabase(application);
-
-
         articleAccessObject  = database.articleAccessObject();
+        sourcesAccessObject = database.sourcesAccessObject();
+        SharedPreferences sharedPref = PreferenceManager
+                .getDefaultSharedPreferences(application.getApplicationContext());
 
+        this.query = sharedPref.getString("Query", "");
+        mAllArticles = articleAccessObject.fetchAllData("%"+query+"%");
+        mSources = sourcesAccessObject.fetchAllData();
 
-        mAllArticles = articleAccessObject.fetchAllData();
     }
     public LiveData<List<Articles>> getmAllArticles(){
+
         return mAllArticles;
+    }
+
+    public LiveData<List<Source>> getSources(){
+
+        return mSources;
     }
 
     public void insert(List<Articles> articles){
@@ -37,6 +52,7 @@ public class ArticleRepository {
     }
 
     public static class insertAsyncTask extends AsyncTask<List<Articles>, Void, Void> {
+
         private ArticleAccessObject mAsyckTaskAccessObject;
 
         insertAsyncTask(ArticleAccessObject articleAccessObject){

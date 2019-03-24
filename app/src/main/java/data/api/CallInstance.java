@@ -33,9 +33,6 @@ public class CallInstance {
                 .addInterceptor(interceptor)
                 .build();
 
-//        OkHttpClient client =
-//                builder.build();
-
         Retrofit.Builder retroBuild = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(url)
