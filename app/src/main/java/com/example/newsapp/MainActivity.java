@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.newsapp.Fragments.MainFragment;
+import com.example.newsapp.adapters.MainAdapter;
+import com.example.newsapp.adapters.SourcesAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,28 +38,21 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
     private EditText searchEditText;
     private Button loadButton;
 
+    private  FragmentManager fragmentManager;
+    private  int fragmentContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        searchEditText = findViewById(R.id.et_search_value);
-        searchEditText.setVisibility(View.INVISIBLE);
+        MainFragment mainFragment = new MainFragment();
 
-        loadButton = findViewById(R.id.bt_load);
-        loadButton.setVisibility(View.INVISIBLE);
-
-        recyclerView = findViewById(R.id.rv_news_layout);
-        recyclerView.setHasFixedSize(true);
-
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        this.model= ViewModelProviders
-                .of(this)
-                .get(NewsViewModel.class);
-
-        FloatingActionButton floatingActionButton = findViewById(R.id.fb_news_items);
+        fragmentContainer = R.id.fr_main_holder;
+        fragmentManager = this.getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(fragmentContainer,mainFragment)
+                .commitAllowingStateLoss();
 
     }
 
