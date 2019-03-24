@@ -1,4 +1,4 @@
-package com.example.newsapp;
+package com.example.newsapp.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.newsapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
