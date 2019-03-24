@@ -2,15 +2,19 @@ package data.datamodels;
 
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+@Entity(tableName = "source",
+indices = {@Index("id")})
 
 public class Source {
 
     @SerializedName("id")
     @Expose
-    private Object id;
+    private String id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -39,11 +43,11 @@ public class Source {
 
 
 
-    public Object getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Object id) {
+    public void setId(String id) {
         this.id = id;
     }
 

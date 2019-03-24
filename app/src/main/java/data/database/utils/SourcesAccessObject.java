@@ -1,5 +1,6 @@
 package data.database.utils;
 
+
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
@@ -11,16 +12,12 @@ import java.util.List;
 import data.datamodels.Articles;
 import data.datamodels.Source;
 
-
 @Dao
-public abstract class ArticleAccessObject {
+public abstract class SourcesAccessObject {
 
-    @Query("SELECT * FROM articles where title LIKE :dataQuery")
+    @Query("SELECT * FROM source")
     public abstract LiveData<List<Articles>> fetchAllData(String dataQuery);
 
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public  abstract void createDataIfNotExists(Articles ... articleData);
-
-
+    public abstract  void createSourceDataIfNotExists(Source... sourceData);
 }
