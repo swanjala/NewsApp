@@ -20,12 +20,14 @@ public class NewsViewModel extends AndroidViewModel {
 
     private LiveData<List<Articles>> articlesLiveData;
     private LiveData<List<Source>> sourcesLiveData;
+    private LiveData<List<String>> countryLiveData;
 
     public NewsViewModel (Application application){
         super(application);
         mRepository = new ArticleRepository(application);
         articlesLiveData = mRepository.getmAllArticles();
         sourcesLiveData = mRepository.getSources();
+        countryLiveData =mRepository.getCountries();
 
     }
 
@@ -35,6 +37,9 @@ public class NewsViewModel extends AndroidViewModel {
     }
     public LiveData<List<Source>> fetchAllSources() {
         return sourcesLiveData;
+    }
+    public LiveData<List<String>> fetchAllCountries() {
+        return countryLiveData;
     }
 
 }
