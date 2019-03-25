@@ -1,13 +1,12 @@
 package data.database;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import data.api.ApiManager;
-import data.database.utils.ArticleAccessObject;
-import data.database.utils.SourcesAccessObject;
+import data.database.accessobjects.ArticleAccessObject;
+import data.database.accessobjects.SourcesAccessObject;
 import data.datamodels.DataResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,7 +41,6 @@ public class PopulateDbAsync extends AsyncTask<Void, Void,Void> {
             public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
 
 
-                Log.d("Response Check", String.valueOf(response.body().getTotalResults()));
                 if (response.body() != null) {
 
                     for (int i = 0; i < response.body().getArticles().size(); i++) {
