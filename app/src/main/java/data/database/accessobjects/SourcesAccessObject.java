@@ -22,7 +22,7 @@ public abstract class SourcesAccessObject {
     public abstract  void createSourceDataIfNotExists(Source... sourceData);
 
     @Query("SELECT country FROM source ")
-    public abstract  void fetchCountryLists();
+    public abstract  LiveData<List<String>> fetchCountryLists();
 
 
 }
