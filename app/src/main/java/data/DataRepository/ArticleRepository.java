@@ -2,7 +2,6 @@ package data.DataRepository;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -10,8 +9,8 @@ import android.preference.PreferenceManager;
 import java.util.List;
 
 import data.database.AppDatabase;
-import data.database.utils.ArticleAccessObject;
-import data.database.utils.SourcesAccessObject;
+import data.database.accessobjects.ArticleAccessObject;
+import data.database.accessobjects.SourcesAccessObject;
 import data.datamodels.Articles;
 import data.datamodels.Source;
 
