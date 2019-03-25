@@ -13,7 +13,7 @@ import com.google.gson.annotations.SerializedName;
 import data.database.utils.NewsAppTypeConverter;
 
 @Entity(tableName="articles",
-        indices = {@Index("id")})
+        indices = {@Index(value = "description", unique = true)})
 
 @TypeConverters(NewsAppTypeConverter.class)
 
@@ -48,6 +48,11 @@ public class Articles {
         @Expose
         private String content;
 
+        @SerializedName("source")
+        @Expose
+        private Source source;
+
+
         public String getAuthor() {
             return author;
         }
@@ -80,13 +85,13 @@ public class Articles {
             this.url = url;
         }
 
-//        public Object getUrlToImage() {
-//            return urlToImage;
-//        }
-//
-//        public void setUrlToImage(Object urlToImage) {
-//            this.urlToImage = urlToImage;
-//        }
+        public Source getSource() {
+            return source;
+        }
+
+        public void setSource(Source source) {
+            this.source = source;
+        }
 
         public String getPublishedAt() {
             return publishedAt;
