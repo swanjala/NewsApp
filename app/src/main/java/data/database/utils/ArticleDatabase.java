@@ -1,11 +1,6 @@
 package data.database.utils;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
-
-import data.datamodels.Articles;
-import data.datamodels.Source;
-
+import data.database.accessobjects.ArticleAccessObject;
 
 
 public abstract class ArticleDatabase  {
