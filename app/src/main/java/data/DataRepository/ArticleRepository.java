@@ -20,6 +20,7 @@ public class ArticleRepository {
     private SourcesAccessObject sourcesAccessObject;
     private LiveData<List<Articles>> mAllArticles;
     private LiveData<List<Source>> mSources;
+    private LiveData<List<String>> mCountries;
     private String query;
 
     public ArticleRepository(Application application){
@@ -33,6 +34,7 @@ public class ArticleRepository {
         this.query = sharedPref.getString("Query", "");
         mAllArticles = articleAccessObject.fetchAllData("%"+query+"%");
         mSources = sourcesAccessObject.fetchAllData();
+        mCountries = sourcesAccessObject.fetchCountryLists();
 
     }
     public LiveData<List<Articles>> getmAllArticles(){
@@ -43,6 +45,10 @@ public class ArticleRepository {
     public LiveData<List<Source>> getSources(){
 
         return mSources;
+    }
+
+    public LiveData<List<String>> getCountries(){
+        return mCountries;
     }
 
     public void insert(List<Articles> articles){
