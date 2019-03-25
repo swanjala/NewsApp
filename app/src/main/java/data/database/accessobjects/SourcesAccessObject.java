@@ -1,4 +1,4 @@
-package data.database.utils;
+package data.database.accessobjects;
 
 
 import android.arch.lifecycle.LiveData;
@@ -20,4 +20,9 @@ public abstract class SourcesAccessObject {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract  void createSourceDataIfNotExists(Source... sourceData);
+
+    @Query("SELECT country FROM source ")
+    public abstract  void fetchCountryLists();
+
+
 }

@@ -1,4 +1,4 @@
-package data.database.utils;
+package data.database.accessobjects;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -21,6 +21,10 @@ public abstract class ArticleAccessObject {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public  abstract void createDataIfNotExists(Articles ... articleData);
+
+    @Query("SELECT * FROM articles where source = :source")
+    public abstract void fetchBySource(String source);
+
 
 
 }
