@@ -80,10 +80,6 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         String query;
         if (view.getId() == R.id.fb_news_items) {
 
-            searchEditText.setVisibility(View.VISIBLE);
-            searchEditText.bringToFront();
-            loadButton.setVisibility(View.VISIBLE);
-
         }
 
         if (view.getId() == R.id.bt_load){
