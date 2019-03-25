@@ -7,14 +7,13 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import data.database.utils.ArticleAccessObject;
-import data.database.utils.ArticleDatabase;
-import data.database.utils.SourcesAccessObject;
+import data.database.accessobjects.ArticleAccessObject;
+import data.database.accessobjects.SourcesAccessObject;
 import data.datamodels.Articles;
 import data.datamodels.Source;
 
 
-@Database(entities = {Articles.class, Source.class}, version = 9)
+@Database(entities = {Articles.class, Source.class}, version = 10)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract ArticleAccessObject articleAccessObject();
