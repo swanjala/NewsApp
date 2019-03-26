@@ -9,7 +9,6 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 import data.datamodels.Articles;
-import data.datamodels.Source;
 
 
 @Dao
@@ -23,7 +22,7 @@ public abstract class ArticleAccessObject {
     public  abstract void createDataIfNotExists(Articles ... articleData);
 
     @Query("SELECT * FROM articles where source = :source")
-    public abstract void fetchBySource(String source);
+    public abstract LiveData<List<Articles>> fetchBySource(String source);
 
 
 
