@@ -9,10 +9,6 @@ import android.arch.persistence.room.TypeConverters;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
-
 import data.database.utils.NewsAppTypeConverter;
 
 @Entity(tableName="articles",
