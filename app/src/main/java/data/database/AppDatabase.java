@@ -4,16 +4,19 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
 import data.database.accessobjects.ArticleAccessObject;
 import data.database.accessobjects.SourcesAccessObject;
+import data.database.utils.NewsAppTypeConverter;
 import data.datamodels.Articles;
-import data.datamodels.Source;
+import data.datamodels.Sources;
 
 
-@Database(entities = {Articles.class, Source.class}, version = 10)
+@Database(entities = {Articles.class, Sources.class}, version = 13)
+@TypeConverters({NewsAppTypeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract ArticleAccessObject articleAccessObject();
