@@ -18,6 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.newsapp.Fragments.CategoriesFragment;
+import com.example.newsapp.Fragments.CountryListFragment;
 import com.example.newsapp.Fragments.MainFragment;
 import com.example.newsapp.Fragments.SourcesFragment;
 import com.example.newsapp.adapters.MainAdapter;
@@ -74,6 +76,30 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
     }
 
+
+    private void loadCountries() {
+
+        CountryListFragment countryListFragment = new CountryListFragment();
+        fragmentContainer = R.id.fr_main_holder;
+        fragmentManager = this.getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(fragmentContainer,countryListFragment)
+                .commitAllowingStateLoss();
+
+    }
+
+    public void loadCategories() {
+
+        CategoriesFragment categoriesFragment = new CategoriesFragment();
+
+        fragmentContainer = R.id.fr_main_holder;
+        fragmentManager = this.getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(fragmentContainer,categoriesFragment)
+                .commitAllowingStateLoss();
+
+    }
+
     @Override
     public void onClick(View view) {
 
@@ -110,6 +136,15 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
             case R.id.news_sources:
                 loadSourcesList();
+                return true;
+
+            case R.id.top_headlines:
+                loadCountries();
+
+                return true;
+
+            case R.id.news_categories:
+                loadCategories();
                 return true;
 
             default:

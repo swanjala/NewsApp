@@ -12,14 +12,16 @@ import data.database.AppDatabase;
 import data.database.accessobjects.ArticleAccessObject;
 import data.database.accessobjects.SourcesAccessObject;
 import data.datamodels.Articles;
-import data.datamodels.Source;
+import data.datamodels.Sources;
 
 public class ArticleRepository {
 
     private ArticleAccessObject articleAccessObject;
     private SourcesAccessObject sourcesAccessObject;
     private LiveData<List<Articles>> mAllArticles;
-    private LiveData<List<Source>> mSources;
+    private LiveData<List<Sources>> mSources;
+    private LiveData<List<String>> mCountries;
+    private LiveData<List<String>> mNewsCategories;
     private String query;
 
     public ArticleRepository(Application application){
@@ -33,6 +35,8 @@ public class ArticleRepository {
         this.query = sharedPref.getString("Query", "");
         mAllArticles = articleAccessObject.fetchAllData("%"+query+"%");
         mSources = sourcesAccessObject.fetchAllData();
+        mCountries = sourcesAccessObject.fetchCountryLists();
+        mNewsCategories = sourcesAccessObject.fetchCategoryList();
 
     }
     public LiveData<List<Articles>> getmAllArticles(){
@@ -40,9 +44,17 @@ public class ArticleRepository {
         return mAllArticles;
     }
 
-    public LiveData<List<Source>> getSources(){
+    public LiveData<List<Sources>> getSources(){
 
         return mSources;
+    }
+
+    public LiveData<List<String>> getCountries(){
+        return mCountries;
+    }
+
+    public LiveData<List<String>> getNewsCategories() {
+        return mNewsCategories;
     }
 
     public void insert(List<Articles> articles){

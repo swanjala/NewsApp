@@ -16,7 +16,7 @@ public class DataResponse {
     private List<Articles> articles;
 
     @SerializedName("sources")
-    private List<Source> sources;
+    private List<Sources> sources;
 
     public String getStatus() {
         return status;
@@ -41,11 +41,11 @@ public class DataResponse {
     public void setArticles(List<Articles> articles) {
         this.articles = articles;
     }
-    public List<Source> getSources() {
+    public List<Sources> getSources() {
         return sources;
     }
 
-    public void setSources(List<Source> sources) {
+    public void setSources(List<Sources> sources) {
         this.sources = sources;
     }
 }

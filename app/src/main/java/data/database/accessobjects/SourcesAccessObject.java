@@ -9,20 +9,22 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import data.datamodels.Articles;
-import data.datamodels.Source;
+import data.datamodels.Sources;
 
 @Dao
 public abstract class SourcesAccessObject {
 
-    @Query("SELECT * FROM source")
-    public abstract LiveData<List<Source>> fetchAllData();
+    @Query("SELECT * FROM Sources")
+    public abstract LiveData<List<Sources>> fetchAllData();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract  void createSourceDataIfNotExists(Source... sourceData);
+    public abstract  void createSourceDataIfNotExists(Sources... sourceData);
 
-    @Query("SELECT country FROM source ")
-    public abstract  void fetchCountryLists();
+    @Query("SELECT DISTINCT(country) FROM Sources ")
+    public abstract  LiveData<List<String>> fetchCountryLists();
+
+    @Query("SELECT DISTINCT(category) FROM Sources")
+    public abstract LiveData<List<String>> fetchCategoryList();
 
 
 }

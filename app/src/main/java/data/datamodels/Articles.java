@@ -4,7 +4,6 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
@@ -50,7 +49,7 @@ public class Articles {
 
         @SerializedName("source")
         @Expose
-        private Source source;
+        private String source;
 
 
         public String getAuthor() {
@@ -85,13 +84,14 @@ public class Articles {
             this.url = url;
         }
 
-        public Source getSource() {
+
+        public void setSource(String source) {
+            this.source = source;
+        }
+        public String getSource(){
             return source;
         }
 
-        public void setSource(Source source) {
-            this.source = source;
-        }
 
         public String getPublishedAt() {
             return publishedAt;
@@ -123,4 +123,6 @@ public class Articles {
     public void setUrlToImage(String urlToImage) {
         this.urlToImage = urlToImage;
     }
+
+
 }

@@ -11,16 +11,16 @@ import com.example.newsapp.R;
 
 import java.util.List;
 
-import data.datamodels.Source;
+import data.datamodels.Sources;
 
 public class SourcesAdapter extends
         RecyclerView.Adapter<SourcesAdapter.SourceViewHolder> {
 
-    private List<Source> mSourceDataSet;
+    private List<Sources> mSourceDataSet;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public SourcesAdapter(Context context, List<Source> sourceList){
+    public SourcesAdapter(Context context, List<Sources> sourceList){
         mSourceDataSet = sourceList;
 
         this.layoutInflater = LayoutInflater.from(context);
@@ -41,7 +41,7 @@ public class SourcesAdapter extends
 
     @Override
     public void onBindViewHolder(SourceViewHolder holder, int position){
-        Source currentSource = mSourceDataSet.get(position);
+        Sources currentSource = mSourceDataSet.get(position);
         holder.setData(currentSource,position);
     }
 
@@ -64,7 +64,7 @@ public class SourcesAdapter extends
 
         }
 
-        public void setData(final Source current, final int position){
+        public void setData(final Sources current, final int position){
 
             this.tv_name.setText(current.getName());
             this.tv_description.setText(current.getDescription());
