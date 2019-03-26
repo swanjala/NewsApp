@@ -9,10 +9,10 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "source",
+@Entity(tableName = "sources",
 indices = {@Index("id")})
 
-public class Source {
+public class Sources {
 
     @SerializedName("id")
     @Expose
