@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     >
 
-    <Button
-        android:id="@+id/bt_load"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Load"
-        android:onClick="onClick"
-        app:layout_anchor="@+id/rv_news_layout"
-        app:layout_anchorGravity="right|top" />
-
-    <EditText
-        android:id="@+id/et_search_value"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fb_news_items"

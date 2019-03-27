@@ -1,14 +1,11 @@
 package com.example.newsapp;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.view.Menu;
@@ -22,15 +19,13 @@ import com.example.newsapp.Fragments.CategoriesFragment;
 import com.example.newsapp.Fragments.CountryListFragment;
 import com.example.newsapp.Fragments.MainFragment;
 import com.example.newsapp.Fragments.SourcesFragment;
-import com.example.newsapp.adapters.MainAdapter;
-import com.example.newsapp.adapters.SourcesAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 import data.datamodels.Articles;
-import viewModel.NewsViewModel;
+import viewmodels.NewsViewModel;
 
-public class MainActivity extends AppCompatActivity implements  View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
 
     private List<Articles> articleList = new ArrayList<>();
@@ -108,16 +103,16 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
         }
 
-        if (view.getId() == R.id.bt_load){
-
-            query = searchEditText.getText().toString();
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("Query", query);
-            editor.apply();
-
-            loadData();
-        }
+//        if (view.getId() == R.id.bt_load){
+//
+//            query = searchEditText.getText().toString();
+//            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+//            SharedPreferences.Editor editor = sharedPref.edit();
+//            editor.putString("Query", query);
+//            editor.apply();
+//
+//            loadData();
+//        }
   }
 
   @Override

@@ -33,7 +33,6 @@ public class Articles {
         @Expose
         private String description;
         @SerializedName("url")
-        @Ignore
         @Expose
         private String url;
         @SerializedName("urlToImage")
@@ -47,10 +46,23 @@ public class Articles {
         @Expose
         private String content;
 
-        @SerializedName("source")
-        @Expose
-        private String source;
+//        @SerializedName("source")
+//        @Expose
+//        @Ignore
+//        private String source;
 
+
+        @SerializedName("country")
+        @Expose
+        private String country;
+
+        public String getCountry() {
+            return country;
+        }
+
+        public void setCountry(String country) {
+            this.country = country;
+        }
 
         public String getAuthor() {
             return author;
@@ -85,12 +97,12 @@ public class Articles {
         }
 
 
-        public void setSource(String source) {
-            this.source = source;
-        }
-        public String getSource(){
-            return source;
-        }
+//        public void setSource(String source) {
+//            this.source = source;
+//        }
+//        public String getSource(){
+//            return source;
+//        }
 
 
         public String getPublishedAt() {

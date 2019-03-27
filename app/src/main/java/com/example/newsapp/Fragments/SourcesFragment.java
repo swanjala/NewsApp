@@ -11,12 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.newsapp.R;
-import com.example.newsapp.adapters.MainAdapter;
 import com.example.newsapp.adapters.SourcesAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import viewModel.NewsViewModel;
+import viewmodels.NewsViewModel;
 
 public class SourcesFragment extends Fragment {
 

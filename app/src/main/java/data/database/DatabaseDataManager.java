@@ -12,7 +12,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PopulateDbAsync extends AsyncTask<Void, Void,Void> {
+public class DatabaseDataManager extends AsyncTask<Void, Void,Void> {
 
     private final ArticleAccessObject articleAccessObject;
     private final SourcesAccessObject sourcesAccessObject;
@@ -21,7 +21,7 @@ public class PopulateDbAsync extends AsyncTask<Void, Void,Void> {
 
     private  Context context;
 
-    public PopulateDbAsync(Context context, AppDatabase appDatabase) {
+    public DatabaseDataManager(Context context, AppDatabase appDatabase) {
         articleAccessObject = appDatabase.articleAccessObject();
         sourcesAccessObject = appDatabase.sourcesAccessObject();
         this.context= context;
@@ -75,6 +75,7 @@ public class PopulateDbAsync extends AsyncTask<Void, Void,Void> {
                 Log.d("Sources Error", t.getLocalizedMessage());
             }
         });
+
         return null;
     }
 }

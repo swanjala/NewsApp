@@ -15,7 +15,7 @@ import data.datamodels.Articles;
 import data.datamodels.Sources;
 
 
-@Database(entities = {Articles.class, Sources.class}, version = 13)
+@Database(entities = {Articles.class, Sources.class}, version = 15)
 @TypeConverters({NewsAppTypeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -54,7 +54,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 @Override
                 public void onOpen (@NonNull SupportSQLiteDatabase database){
                     super.onOpen(database);
-                    new PopulateDbAsync(dbContext,INSTANCE).execute();
+                    new DatabaseDataManager(dbContext,INSTANCE).execute();
                 }
 
             };

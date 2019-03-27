@@ -7,8 +7,6 @@
     android:title="Show All News"/>
 <item android:id="@+id/top_headlines"
     android:title="Top Headlines By Country"/>
-<item android:id="@+id/news_search_date"
-    android:title="Find By Date"/>
 <item android:id="@+id/news_by_domain"
     android:title="News Domain"/>
 <item android:id="@+id/news_categories"

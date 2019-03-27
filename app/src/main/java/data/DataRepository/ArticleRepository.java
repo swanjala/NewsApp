@@ -8,7 +8,10 @@ import android.preference.PreferenceManager;
 
 import java.util.List;
 
+import data.DataRepository.repositorymodel.Country;
+import data.DataRepository.repositorymodel.Source;
 import data.database.AppDatabase;
+import data.database.DataManager;
 import data.database.accessobjects.ArticleAccessObject;
 import data.database.accessobjects.SourcesAccessObject;
 import data.datamodels.Articles;
@@ -22,23 +25,84 @@ public class ArticleRepository {
     private LiveData<List<Sources>> mSources;
     private LiveData<List<String>> mCountries;
     private LiveData<List<String>> mNewsCategories;
-    private String query;
+
+
+    private List<Articles> mTopHeadlines,
+            mTopHeadlinesByCountryCategory,
+            mTopHeadlinesByCountry,
+            mTopHeadlinesBySearch;
 
     public ArticleRepository(Application application){
+        initializeDatabaseValues(application);
+
+    }
+
+    public ArticleRepository(Application application, Source source){
+
+        initializeDatabaseValues(application);
+        mTopHeadlines = new DataManager
+                .TopHeadlines(application,source.getSourceName())
+                .topHeadlinesData;
+    }
+
+    public ArticleRepository(Application application, Country country){
+
+        initializeDatabaseValues(application);
+
+        mTopHeadlinesByCountry = new DataManager
+                .TopHeadlinesByCountry(application, country.getCountry())
+                .topHeadlinesByCountry;
+    }
+
+    public ArticleRepository(Application application, Country country, String category){
+
+        initializeDatabaseValues(application);
+
+        mTopHeadlinesByCountryCategory = new DataManager
+                .TopHeadlinesByCountryCategory(application,
+                country,
+                category)
+                .topHeadlinesByCountryCategory;
+    }
+
+    public ArticleRepository(Application application, String queryValue){
+
+
+        initializeDatabaseValues(application, queryValue);
+        mTopHeadlinesBySearch = new DataManager
+                .TopHeadlinesBySearch(application,
+                queryValue)
+                .topHeadlinesBySearch;
+
+    }
+
+    public void initializeDatabaseValues(Application application, String query){
 
         AppDatabase database = AppDatabase.getDatabase(application);
         articleAccessObject  = database.articleAccessObject();
         sourcesAccessObject = database.sourcesAccessObject();
-        SharedPreferences sharedPref = PreferenceManager
-                .getDefaultSharedPreferences(application.getApplicationContext());
 
-        this.query = sharedPref.getString("Query", "");
+        /* Instanciate this query value*/
+
         mAllArticles = articleAccessObject.fetchAllData("%"+query+"%");
+
+
+    }
+
+
+    public void initializeDatabaseValues(Application application){
+
+        AppDatabase database = AppDatabase.getDatabase(application);
+        articleAccessObject  = database.articleAccessObject();
+        sourcesAccessObject = database.sourcesAccessObject();
+
+        mAllArticles = articleAccessObject.fetchAllData();
         mSources = sourcesAccessObject.fetchAllData();
         mCountries = sourcesAccessObject.fetchCountryLists();
         mNewsCategories = sourcesAccessObject.fetchCategoryList();
-
     }
+
+   
     public LiveData<List<Articles>> getmAllArticles(){
 
         return mAllArticles;
@@ -56,6 +120,23 @@ public class ArticleRepository {
     public LiveData<List<String>> getNewsCategories() {
         return mNewsCategories;
     }
+
+    public List<Articles> getTopHeadlinesByDomain(){
+        return mTopHeadlines;
+    }
+
+    public List<Articles> getTopHeadlinesByCountryCategory(){
+        return mTopHeadlinesByCountryCategory;
+    }
+
+    public List<Articles> getmTopHeadlinesByCountry(){
+        return mTopHeadlinesByCountry;
+    }
+
+    public List<Articles> getTopHeadlinesBySearch(){
+        return mTopHeadlinesBySearch;
+    }
+
 
     public void insert(List<Articles> articles){
         new insertAsyncTask(articleAccessObject).execute(articles);
@@ -80,5 +161,7 @@ public class ArticleRepository {
             return null;
         }
 
+
     }
+
 }
