@@ -1,7 +1,9 @@
 package com.example.newsapp.adapters;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,13 @@ import android.widget.TextView;
 import com.example.newsapp.R;
 
 import java.util.List;
+
+import data.api.ApiManager;
+import data.datamodels.Articles;
+import data.datamodels.DataResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewsCategoryAdapter extends RecyclerView.Adapter<
         NewsCategoryAdapter.NewsCategoryViewHolder> {
@@ -68,6 +77,7 @@ public class NewsCategoryAdapter extends RecyclerView.Adapter<
         }
 
     }
+
 
 
 }

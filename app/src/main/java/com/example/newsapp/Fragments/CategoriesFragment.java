@@ -15,7 +15,7 @@ import com.example.newsapp.adapters.NewsCategoryAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import viewModel.NewsViewModel;
+import viewmodels.NewsViewModel;
 
 public class CategoriesFragment extends Fragment {
 

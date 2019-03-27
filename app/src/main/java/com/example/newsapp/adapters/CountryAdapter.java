@@ -1,8 +1,10 @@
 package com.example.newsapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,10 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.newsapp.Fragments.CountryHeadlineFragment;
+import com.example.newsapp.HeadlinesByCountry;
+import com.example.newsapp.MainActivity;
 import com.example.newsapp.R;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class CountryAdapter extends
         RecyclerView.Adapter<CountryAdapter.CountryViewHolder> {
@@ -63,11 +69,25 @@ public class CountryAdapter extends
 
             tv_country = countryView.findViewById(R.id.tv_country);
             this.countryData = countryData;
+
         }
 
         public void setData(final String currentCountry, final int position){
 
+
             this.tv_country.setText(countryData.get(currentCountry.toUpperCase()));
+
+            tv_country.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent =  new Intent(context,HeadlinesByCountry.class);
+                    intent.putExtra("countryValue", currentCountry);
+
+                    context.startActivity(intent);
+
+                }
+            });
         }
 
     }
