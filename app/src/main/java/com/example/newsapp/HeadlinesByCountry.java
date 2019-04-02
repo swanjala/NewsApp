@@ -92,9 +92,6 @@ public class HeadlinesByCountry extends AppCompatActivity {
         protected List<Articles> doInBackground(Call... params) {
 
 
-
-
-
             apiManager = new ApiManager(context, country);
             /* Top Headlines*/
 
