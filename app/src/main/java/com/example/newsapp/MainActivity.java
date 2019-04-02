@@ -102,17 +102,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (view.getId() == R.id.fb_news_items) {
 
         }
-
-//        if (view.getId() == R.id.bt_load){
-//
-//            query = searchEditText.getText().toString();
-//            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-//            SharedPreferences.Editor editor = sharedPref.edit();
-//            editor.putString("Query", query);
-//            editor.apply();
-//
-//            loadData();
-//        }
   }
 
   @Override
