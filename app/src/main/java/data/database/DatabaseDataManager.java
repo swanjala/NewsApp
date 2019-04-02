@@ -43,6 +43,8 @@ public class DatabaseDataManager extends AsyncTask<Void, Void,Void> {
 
                 if (response.body() != null) {
 
+                    /* Consider removing loop*/
+
                     for (int i = 0; i < response.body().getArticles().size(); i++) {
 
                         articleAccessObject.createDataIfNotExists(response.body().getArticles().get(i));
