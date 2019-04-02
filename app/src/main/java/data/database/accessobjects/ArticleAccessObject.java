@@ -26,4 +26,10 @@ public abstract class ArticleAccessObject {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public  abstract void createDataIfNotExists(Articles ... articleData);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public abstract  void setNewsItemToFavorite(Articles articles);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public abstract void setNesItemToRead(Articles articles);
+
 }
