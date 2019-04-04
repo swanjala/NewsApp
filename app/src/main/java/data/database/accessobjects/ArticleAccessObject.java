@@ -23,13 +23,19 @@ public abstract class ArticleAccessObject {
     @Query("SELECT * FROM  articles where url LIKE :domainQuery")
     public abstract  LiveData<List<Articles>> fetchDataByDomain(String domainQuery);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Query("SELECT * FROM articles where toRead = 1")
+    public abstract LiveData<List<Articles>> fetchDataByToRead();
+
+    @Query("SELECT * FROM articles where favorite = 1")
+    public abstract LiveData<List<Articles>> fetchDataByFavorite();
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     public  abstract void createDataIfNotExists(Articles ... articleData);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract  void setNewsItemToFavorite(Articles articles);
+    @Query("UPDATE articles SET favorite=:favValue WHERE title LIKE :titleQuery")
+    public abstract  void setNewsItemToFavorite(boolean favValue, String titleQuery);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public abstract void setNesItemToRead(Articles articles);
+    @Query("UPDATE articles SET toRead=:readValue where title LIKE :titleQuery")
+    public abstract void setNewsItemToRead(boolean readValue, String titleQuery);
 
 }
