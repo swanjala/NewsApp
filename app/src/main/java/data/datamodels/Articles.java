@@ -56,17 +56,16 @@ public class Articles {
 
         @SerializedName("favorite")
         @Expose
-
         private boolean favorite;
 
-        public boolean isFavorite() {
+        public boolean getFavorite() {
             return favorite;
         }
 
         public void setFavorite(boolean favorite) {
             this.favorite = favorite;
         }
-        public boolean isToRead() {
+        public boolean getToRead() {
             return toRead;
         }
 
