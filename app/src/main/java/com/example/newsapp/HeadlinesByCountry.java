@@ -1,24 +1,18 @@
 package com.example.newsapp;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.example.newsapp.Fragments.CountryHeadlineFragment;
-import com.example.newsapp.Fragments.MainFragment;
-import com.example.newsapp.adapters.CountryHeadlineAdapter;
+import com.example.newsapp.adapters.MainAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import data.DataRepository.repositorymodel.Country;
 import data.api.ApiManager;
 import data.datamodels.Articles;
@@ -26,16 +20,8 @@ import data.datamodels.DataResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import viewmodels.NetworkDataViewModel;
-import viewmodels.ViewModelFactory;
 
 public class HeadlinesByCountry extends AppCompatActivity {
-
-    private FragmentManager fragmentManager;
-    private int fragmentContainer;
-
-    private NetworkDataViewModel networkDataViewModel;
-    private List<Articles> data;
 
     private static RecyclerView recyclerView;
 
@@ -93,7 +79,6 @@ public class HeadlinesByCountry extends AppCompatActivity {
 
 
             apiManager = new ApiManager(context, country);
-            /* Top Headlines*/
 
             Call<DataResponse> getTopHeadlinesByCountryCall = apiManager.getTopHeadlines();
 
@@ -107,7 +92,7 @@ public class HeadlinesByCountry extends AppCompatActivity {
                     if (response.body() != null) {
 
 
-                        mAdapter = new CountryHeadlineAdapter(context,response.body().getArticles());
+                        mAdapter = new MainAdapter(context,response.body().getArticles());
 
                         recyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
