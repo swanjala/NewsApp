@@ -1,24 +1,20 @@
 package com.example.newsapp.adapters;
 
 import android.content.Context;
-import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.newsapp.Fragments.SourcesFragment;
 import com.example.newsapp.R;
 
 import java.util.List;
-
-import data.api.ApiManager;
-import data.datamodels.Articles;
-import data.datamodels.DataResponse;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class NewsCategoryAdapter extends RecyclerView.Adapter<
         NewsCategoryAdapter.NewsCategoryViewHolder> {
@@ -26,6 +22,7 @@ public class NewsCategoryAdapter extends RecyclerView.Adapter<
     private List<String> mNewsCategoryList;
     private LayoutInflater layoutInflater;
     private Context context;
+    private int fragmentContainer;
 
     public NewsCategoryAdapter(Context context, List<String> categoryList){
         this.mNewsCategoryList = categoryList;
@@ -59,8 +56,12 @@ public class NewsCategoryAdapter extends RecyclerView.Adapter<
     }
 
 
-    class NewsCategoryViewHolder extends  RecyclerView.ViewHolder{
+    class NewsCategoryViewHolder extends  RecyclerView.ViewHolder {
 
+        private FragmentManager fragmentManager = ((AppCompatActivity)context)
+                .getSupportFragmentManager();
+
+        FragmentTransaction fragmentTransaction;
         TextView tv_category;
 
         public NewsCategoryViewHolder(View view){
@@ -74,10 +75,22 @@ public class NewsCategoryAdapter extends RecyclerView.Adapter<
             this.tv_category.setText(currentCategory.substring(0,1).toUpperCase()+
                     currentCategory.substring(1));
 
+            tv_category.setOnClickListener(v -> {
+
+                SourcesFragment sourcesFragment = new SourcesFragment();
+                Bundle bundle = new Bundle();
+
+                fragmentContainer = R.id.fr_main_holder;
+
+                bundle.putString("sourceCategory", currentCategory);
+                sourcesFragment.setArguments(bundle);
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(fragmentContainer,sourcesFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commitAllowingStateLoss();
+            });
         }
 
     }
-
-
 
 }
