@@ -1,40 +1,21 @@
 package com.example.newsapp;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.example.newsapp.Fragments.CategoriesFragment;
 import com.example.newsapp.Fragments.CountryListFragment;
 import com.example.newsapp.Fragments.MainFragment;
 import com.example.newsapp.Fragments.SourcesFragment;
 
-import java.util.ArrayList;
-import java.util.List;
-import data.datamodels.Articles;
-import viewmodels.NewsViewModel;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-
-    private List<Articles> articleList = new ArrayList<>();
-    private NewsViewModel model;
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private EditText searchEditText;
-    private Button loadButton;
+    private static String DATAFLAG;
 
     private  FragmentManager fragmentManager;
     private  int fragmentContainer;
@@ -43,13 +24,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.DATAFLAG = "all_data";
 
-        loadData();
+         loadData();
 
     }
 
     private void loadData() {
+
         MainFragment mainFragment = new MainFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("DataFlag", DATAFLAG);
+        mainFragment.setArguments(bundle);
 
         fragmentContainer = R.id.fr_main_holder;
         fragmentManager = this.getSupportFragmentManager();
@@ -63,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void loadSourcesList() {
 
         SourcesFragment sourcesFragment = new SourcesFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("sourceCategory","");
+        sourcesFragment.setArguments(bundle);
         fragmentContainer = R.id.fr_main_holder;
         fragmentManager = this.getSupportFragmentManager();
         fragmentManager.beginTransaction()
@@ -70,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .commitAllowingStateLoss();
 
     }
-
 
     private void loadCountries() {
 
@@ -115,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.all_news:
+                this.DATAFLAG = "all_data";
                 loadData();
                 return true;
 
@@ -129,6 +118,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.news_categories:
                 loadCategories();
+                return true;
+
+            case R.id.loadFavorites:
+                this.DATAFLAG = "load_favorites";
+                loadData();
+                return true;
+
+            case R.id.loadBySetToRead:
+                this.DATAFLAG = "load_set_to_read";
+                loadData();
                 return true;
 
             default:
