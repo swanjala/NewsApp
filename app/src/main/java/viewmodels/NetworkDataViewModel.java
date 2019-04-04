@@ -28,20 +28,20 @@ public class NetworkDataViewModel extends AndroidViewModel {
 
     private String queryParams;
 
-    public NetworkDataViewModel (Application application, Source source){
-        super(application);
+//    public NetworkDataViewModel (Application application, Source source){
+//        super(application);
+//
+//        mRepository = new ArticleRepository(application, source);
+//        articlesByDomain = mRepository.getTopHeadlinesByDomain();
+//
+//    }
 
-        mRepository = new ArticleRepository(application, source);
-        articlesByDomain = mRepository.getTopHeadlinesByDomain();
-
-    }
-
-    public NetworkDataViewModel (Application application, Country country){
-        super(application);
-        mRepository = new ArticleRepository(application, country);
-        getArticlesByCountry = mRepository.getmTopHeadlinesByCountry();
-
-    }
+//    public NetworkDataViewModel (Application application, Country country){
+//        super(application);
+//        mRepository = new ArticleRepository(application, country);
+//        getArticlesByCountry = mRepository.getmTopHeadlinesByCountry();
+//
+//    }
 
     public NetworkDataViewModel (Application application, String queryParam){
         super(application);
@@ -50,14 +50,14 @@ public class NetworkDataViewModel extends AndroidViewModel {
         getArticlesBySearch = mRepository.getTopHeadlinesBySearch();
 
     }
-
-    public NetworkDataViewModel (Application application, Country country, String category){
-        super(application);
-        mRepository = new ArticleRepository(application, country, category);
-
-        getArticlesByCountryCategory = mRepository.getTopHeadlinesByCountryCategory();
-
-    }
+//
+//    public NetworkDataViewModel (Application application, Country country, String category){
+//        super(application);
+//        mRepository = new ArticleRepository(application, country, category);
+//
+//        getArticlesByCountryCategory = mRepository.getTopHeadlinesByCountryCategory();
+//
+//    }
 
     public LiveData<List<Articles>> fetchAllArticles() {
         return articlesLiveData;
