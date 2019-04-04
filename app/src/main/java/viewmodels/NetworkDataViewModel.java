@@ -28,34 +28,11 @@ public class NetworkDataViewModel extends AndroidViewModel {
 
     private String queryParams;
 
-    public NetworkDataViewModel (Application application, Source source){
-        super(application);
-
-        mRepository = new ArticleRepository(application, source);
-        articlesByDomain = mRepository.getTopHeadlinesByDomain();
-
-    }
-
-    public NetworkDataViewModel (Application application, Country country){
-        super(application);
-        mRepository = new ArticleRepository(application, country);
-        getArticlesByCountry = mRepository.getmTopHeadlinesByCountry();
-
-    }
-
     public NetworkDataViewModel (Application application, String queryParam){
         super(application);
         mRepository = new ArticleRepository(application, queryParam);
 
         getArticlesBySearch = mRepository.getTopHeadlinesBySearch();
-
-    }
-
-    public NetworkDataViewModel (Application application, Country country, String category){
-        super(application);
-        mRepository = new ArticleRepository(application, country, category);
-
-        getArticlesByCountryCategory = mRepository.getTopHeadlinesByCountryCategory();
 
     }
 

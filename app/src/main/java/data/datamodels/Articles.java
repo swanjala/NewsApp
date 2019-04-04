@@ -46,15 +46,32 @@ public class Articles {
         @Expose
         private String content;
 
-//        @SerializedName("source")
-//        @Expose
-//        @Ignore
-//        private String source;
-
-
         @SerializedName("country")
         @Expose
         private String country;
+
+         @SerializedName("toRead")
+        @Expose
+        private boolean toRead;
+
+        @SerializedName("favorite")
+        @Expose
+        private boolean favorite;
+
+        public boolean getFavorite() {
+            return favorite;
+        }
+
+        public void setFavorite(boolean favorite) {
+            this.favorite = favorite;
+        }
+        public boolean getToRead() {
+            return toRead;
+        }
+
+        public void setToRead(boolean toRead) {
+            this.toRead = toRead;
+        }
 
         public String getCountry() {
             return country;
@@ -96,15 +113,6 @@ public class Articles {
             this.url = url;
         }
 
-
-//        public void setSource(String source) {
-//            this.source = source;
-//        }
-//        public String getSource(){
-//            return source;
-//        }
-
-
         public String getPublishedAt() {
             return publishedAt;
         }
@@ -121,20 +129,20 @@ public class Articles {
             this.content = content;
         }
 
-    public int getId() {
-        return id;
-    }
+        public int getId() {
+            return id;
+        }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+        public void setId(int id) {
+            this.id = id;
+        }
 
-    public String getUrlToImage() {
-        return urlToImage;
-    }
-    public void setUrlToImage(String urlToImage) {
-        this.urlToImage = urlToImage;
-    }
+        public String getUrlToImage() {
+            return urlToImage;
+        }
+        public void setUrlToImage(String urlToImage) {
+            this.urlToImage = urlToImage;
+        }
 
 
 }

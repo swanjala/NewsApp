@@ -1,7 +1,5 @@
 package data.api;
 
-import android.util.Log;
-
 import data.datamodels.DataResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;

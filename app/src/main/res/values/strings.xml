@@ -2,4 +2,12 @@
     <string name="app_name">NewsApp</string>
     <string name="base_url">https://newsapi.org/v2/</string>
     <string name="api_key">8dc32f53a41142188e754552063131a7</string>
+    <string name="all_data_flag">all_data</string>
+    <string name="load_favorites_flag">load_favorites</string>
+    <string name="load_set_to_read">load_set_to_read</string>
+
+    <string-array name="search_spinner_list">
+        <item>Domain Search</item>
+        <item>Title Search</item>
+    </string-array>
 </resources>

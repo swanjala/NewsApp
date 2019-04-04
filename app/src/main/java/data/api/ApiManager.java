@@ -1,17 +1,10 @@
 package data.api;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.example.newsapp.BuildConfig;
-import com.example.newsapp.R;
 
 import java.util.List;
-
-import javax.sql.DataSource;
 
 import data.datamodels.Articles;
 import data.datamodels.DataResponse;
@@ -22,7 +15,7 @@ public class ApiManager {
     public static List<Articles> articles;
 
 
-    private String base_url,query,url;
+    private String query;
     private Context context;
     private String apiKey;
     private String domain, country, category;
@@ -37,10 +30,10 @@ public class ApiManager {
         this.callInstance.setInstance(CallInstance.callInstance());
          this.apiKey = BuildConfig.ApiKey;
     }
-    public ApiManager(Context context, String country) {
+    public ApiManager(Context context, String query) {
 
         this.callInstance.setInstance(CallInstance.callInstance());
-        this.country = country;
+        this.query = query;
         this.apiKey = BuildConfig.ApiKey;
     }
     public ApiManager(Context context, String country, String category){
@@ -52,10 +45,6 @@ public class ApiManager {
 
 
     public Call<DataResponse> getArticles(){
-
-        /*update this for dynamic querying*/
-        query = "nokia";
-
         return callInstance.getInstance().getAllNews(query, apiKey);
     }
 
@@ -66,13 +55,13 @@ public class ApiManager {
     }
 
     public Call<DataResponse> getNewsByDomains(){
-        return callInstance.getInstance().getNewsByDomains(domain, apiKey);
+        return callInstance.getInstance().getNewsByDomains(query, apiKey);
     }
     public Call<DataResponse> getTopHeadlines(){
-        return callInstance.getInstance().getTopHeadlines(country,apiKey);
+        return callInstance.getInstance().getTopHeadlines(query,apiKey);
     }
     public Call<DataResponse> getTopHeadlinesByCountryCategory() {
-        return callInstance.getInstance().getTopHeadlinesByCountryCategory(country, category, apiKey);
+        return callInstance.getInstance().getTopHeadlinesByCountryCategory(query, category, apiKey);
     }
     public Call<DataResponse> getTopHeadlineBySearch(){
         return callInstance.getInstance().getTopHeadlineBySearch(query, apiKey);

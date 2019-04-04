@@ -19,6 +19,7 @@ public class Sources {
     @NonNull
     @PrimaryKey
     private String id;
+
     @SerializedName("name")
     @Expose
     private String name;

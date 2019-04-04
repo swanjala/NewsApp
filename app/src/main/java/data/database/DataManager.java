@@ -1,6 +1,5 @@
 package data.database;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -47,10 +46,7 @@ public class DataManager {
 
 
                     if (response.body() != null) {
-
                         for (int i = 0; i < response.body().getArticles().size(); i++) {
-
-                            //  articleAccessObject.createDataIfNotExists(response.body().getArticles().get(i));
                         }
                     }
                 }
@@ -81,20 +77,12 @@ public class DataManager {
             this.context = context;
             this.country = country;
 
-
-
         }
 
         @Override
         protected List<Articles> doInBackground(Call... params) {
-            // articleAccessObject.createDataIfNotExists();
-
-            Log.d("pointer","point of exectuion");
 
             apiManager = new ApiManager(context);
-            /* Top Headlines*/
-
-
 
             Call<DataResponse> getTopHeadlinesByCountryCall = apiManager.getTopHeadlines();
 
@@ -103,19 +91,10 @@ public class DataManager {
                 public void onResponse(Call<DataResponse> getTopHeadlinesByCountryCall,
                                        Response<DataResponse> response) {
 
-                 //   response.body();
-
 
                     if (response.body() != null) {
 
-//                        for (int i = 0; i < response.body().getArticles().size(); i++) {
-//
-//                            //  articleAccessObject.createDataIfNotExists(response.body().getArticles().get(i));
-//                        }
-
                         topHeadlinesByCountry= response.body().getArticles();
-
-                        Log.d("Values", topHeadlinesByCountry.get(0).getAuthor());
 
                     }
                 }
@@ -159,8 +138,6 @@ public class DataManager {
         protected Void doInBackground(final Void... params) {
 
             apiManager = new ApiManager(context);
-            /* Top Headlines*/
-
             Call<DataResponse> getTopHeadlinesBySearchCall = apiManager.getTopHeadlines();
 
             getTopHeadlinesBySearchCall.enqueue(new Callback<DataResponse>() {
@@ -173,7 +150,6 @@ public class DataManager {
 
                         for (int i = 0; i < response.body().getArticles().size(); i++) {
 
-                            //  articleAccessObject.createDataIfNotExists(response.body().getArticles().get(i));
                         }
                     }
                 }

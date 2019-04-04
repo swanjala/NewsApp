@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-<item android:id="@+id/news_sources"
+    <item android:id="@+id/news_sources"
     android:title="News Sources"/>
-<item android:id="@+id/all_news"
-    android:title="Show All News"/>
-<item android:id="@+id/top_headlines"
-    android:title="Top Headlines By Country"/>
-<item android:id="@+id/news_by_domain"
-    android:title="News Domain"/>
-<item android:id="@+id/news_categories"
-    android:title="News Categories"/>
+    <item android:id="@+id/all_news"
+        android:title="Show All News"/>
+    <item android:id="@+id/top_headlines"
+        android:title="Top Headlines By Country"/>
+    <item android:id="@+id/news_categories"
+        android:title="News Categories"/>
+    <item android:id="@+id/loadFavorites"
+        android:title="My Favorite News"/>
+    <item android:id="@+id/loadBySetToRead"
+        android:title="My Reading List"
+        />
 
 </menu>

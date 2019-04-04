@@ -15,7 +15,7 @@ import data.datamodels.Articles;
 import data.datamodels.Sources;
 
 
-@Database(entities = {Articles.class, Sources.class}, version = 15)
+@Database(entities = {Articles.class, Sources.class}, version = 17)
 @TypeConverters({NewsAppTypeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -24,39 +24,34 @@ public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;
 
     public static  Context dbContext;
-
-
-
     public static AppDatabase getDatabase(final Context context){
 
         dbContext= context;
 
-        if(INSTANCE == null) {
-
+        if (INSTANCE == null){
             synchronized (AppDatabase.class){
-                if(INSTANCE == null){
+                if (INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class,"app_database")
-                            .addCallback(newsRoomDatabaseCallback)
+                            AppDatabase.class, "app_database")
+                            .addCallback(newsSourcesCallBack)
                             .allowMainThreadQueries()
                             .fallbackToDestructiveMigration()
                             .build();
                 }
+
             }
         }
 
         return INSTANCE;
-
     }
 
-    private static RoomDatabase.Callback newsRoomDatabaseCallback =
+
+    private static RoomDatabase.Callback newsSourcesCallBack =
             new RoomDatabase.Callback(){
-                @Override
+        @Override
                 public void onOpen (@NonNull SupportSQLiteDatabase database){
-                    super.onOpen(database);
-                    new DatabaseDataManager(dbContext,INSTANCE).execute();
-                }
-
-            };
-
+            super.onOpen(database);
+            new DatabaseDataManager(dbContext, INSTANCE).execute();
+        }
+    };
 }

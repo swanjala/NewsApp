@@ -47,13 +47,30 @@ public class SourcesFragment extends Fragment {
                 .of(this)
                 .get(NewsViewModel.class);
 
-        model.fetchAllSources().observe(this, sources -> {
+        if (getArguments().getString("sourceCategory") != null
+                && getArguments().getString("sourceCategory") != "" ){
 
-            sourcesAdapter = new SourcesAdapter(getContext(), sources);
-            rv_sources_layout.setAdapter(sourcesAdapter);
-            sourcesAdapter.notifyDataSetChanged();
+            model.fetchDataByNewsCategories(getArguments().getString("sourceCategory"))
+                    .observe(this, sources -> {
 
-        });
+                sourcesAdapter = new SourcesAdapter(getContext(), sources);
+                rv_sources_layout.setAdapter(sourcesAdapter);
+                sourcesAdapter.notifyDataSetChanged();
+
+            });
+
+        } else{
+
+            model.fetchAllSources().observe(this, sources -> {
+
+                sourcesAdapter = new SourcesAdapter(getContext(), sources);
+                rv_sources_layout.setAdapter(sourcesAdapter);
+                sourcesAdapter.notifyDataSetChanged();
+
+            });
+        }
+
+
 
     }
 }

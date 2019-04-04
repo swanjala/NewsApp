@@ -1,17 +1,9 @@
 package data.api;
 
-import android.content.Context;
-
-import com.example.newsapp.BuildConfig;
-import com.example.newsapp.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
-
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -41,6 +33,5 @@ public class CallInstance {
         Retrofit retrofit =  retroBuild.build();
         return retrofit.create(NetworkService.class);
         }
-
 
 }

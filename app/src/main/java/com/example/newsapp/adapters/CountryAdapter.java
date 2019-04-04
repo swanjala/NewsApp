@@ -4,22 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.newsapp.Fragments.CountryHeadlineFragment;
 import com.example.newsapp.HeadlinesByCountry;
-import com.example.newsapp.MainActivity;
 import com.example.newsapp.R;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class CountryAdapter extends
         RecyclerView.Adapter<CountryAdapter.CountryViewHolder> {

@@ -5,17 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.example.newsapp.R;
 import com.example.newsapp.adapters.MainAdapter;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +31,8 @@ public class MainFragment extends Fragment {
 
     private NewsViewModel model;
 
+    private static String DATAFLAG;
+
     @Override
     public View onCreateView(LayoutInflater layoutInflater,
                              @Nullable ViewGroup container,
@@ -41,6 +41,7 @@ public class MainFragment extends Fragment {
         View view = layoutInflater.inflate(R.layout.fragment_main_news,
                 container,
                 false);
+
         ButterKnife.bind(this, view);
         return view;
 
@@ -54,14 +55,75 @@ public class MainFragment extends Fragment {
 
         rv_news_layout.setLayoutManager(linearLayoutManager);
 
-        this.model= ViewModelProviders
-                .of(this)
-                .get(NewsViewModel.class);
 
-        model.fetchAllArticles().observe(this, articlesList ->{
-            mainAdapter = new MainAdapter(getContext(),articlesList);
-            rv_news_layout.setAdapter(mainAdapter);
-            mainAdapter.notifyDataSetChanged();
+        if (getArguments() != null && getArguments()
+                .getString("DataFlag") != null){
+
+            this.model= ViewModelProviders
+                    .of(this)
+                    .get(NewsViewModel.class);
+
+            DATAFLAG = getArguments().getString("DataFlag");
+
+            if (DATAFLAG.equals(getString(R.string.all_data_flag))){
+                model.fetchAllArticlesNoQuery().observe(this, articlesList ->{
+                    mainAdapter = new MainAdapter(getContext(),articlesList);
+                    rv_news_layout.setAdapter(mainAdapter);
+                    mainAdapter.notifyDataSetChanged();
+
+                });
+            } else if (DATAFLAG.equals(getString(R.string.load_favorites_flag))){
+                model.fetchDataByFavorite().observe(this, articlesList -> {
+                    mainAdapter = new MainAdapter(getContext(), articlesList);
+                    rv_news_layout.setAdapter(mainAdapter);
+                    mainAdapter.notifyDataSetChanged();
+                });
+            } else if(DATAFLAG.equals(getString(R.string.load_set_to_read))){
+                model.fetchDataBySetToRead().observe(this, articlesList -> {
+                    mainAdapter = new MainAdapter(getContext(), articlesList);
+                    rv_news_layout.setAdapter(mainAdapter);
+                    mainAdapter.notifyDataSetChanged();
+                });
+            } else  if(DATAFLAG.equals("domain_search")){
+
+                model.fetchArticlesByDomain(getArguments().getString("QueryValue"))
+                        .observe(this, articlesList -> {
+                    mainAdapter = new MainAdapter(getContext(), articlesList);
+                    rv_news_layout.setAdapter(mainAdapter);
+                    mainAdapter.notifyDataSetChanged();
+                });
+            }
+            else  if(DATAFLAG.equals("title_search")){
+
+                model.fetchArticlesByTitle(getArguments().getString("QueryValue"))
+                        .observe(this, articlesList -> {
+                            mainAdapter = new MainAdapter(getContext(), articlesList);
+                            rv_news_layout.setAdapter(mainAdapter);
+                            mainAdapter.notifyDataSetChanged();
+                        });
+            }
+            else if(DATAFLAG.equals("data_by_url")){
+                model.fetchArticlesByDomain(getArguments().getString("DataUrl"))
+                        .observe(this,articlesList -> {
+                            mainAdapter = new MainAdapter(getContext(), articlesList);
+
+                            rv_news_layout.setAdapter(mainAdapter);
+                            mainAdapter.notifyDataSetChanged();
+                        });
+            }
+        }
+
+        fb_news_items.setOnClickListener(v -> {
+             int fragmentContainer;
+             FragmentTransaction fragmentTransaction;
+
+            SearchFragment searchFragment  = new SearchFragment();
+            fragmentContainer = R.id.fr_main_holder;
+            fragmentTransaction = getFragmentManager().beginTransaction();
+
+            fragmentTransaction.replace(fragmentContainer,searchFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commitAllowingStateLoss();
 
         });
 
