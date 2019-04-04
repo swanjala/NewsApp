@@ -26,5 +26,8 @@ public abstract class SourcesAccessObject {
     @Query("SELECT DISTINCT(category) FROM Sources")
     public abstract LiveData<List<String>> fetchCategoryList();
 
+    @Query("SELECT * FROM Sources WHERE category LIKE :categoryQuery")
+    public abstract LiveData<List<Sources>> fetchNewsNamesByCategory(String categoryQuery);
+
 
 }
