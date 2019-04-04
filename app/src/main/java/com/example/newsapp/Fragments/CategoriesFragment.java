@@ -54,5 +54,4 @@ public class CategoriesFragment extends Fragment {
             newsCategoryAdapter.notifyDataSetChanged();;
         });
     }
-
 }
