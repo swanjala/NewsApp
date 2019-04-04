@@ -2,69 +2,60 @@ package data.DataRepository;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
-import android.content.SharedPreferences;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import data.DataRepository.repositorymodel.Country;
-import data.DataRepository.repositorymodel.Source;
+import data.api.ApiManager;
 import data.database.AppDatabase;
 import data.database.DataManager;
 import data.database.accessobjects.ArticleAccessObject;
 import data.database.accessobjects.SourcesAccessObject;
 import data.datamodels.Articles;
+import data.datamodels.DataResponse;
 import data.datamodels.Sources;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ArticleRepository {
 
     private ArticleAccessObject articleAccessObject;
     private SourcesAccessObject sourcesAccessObject;
     private LiveData<List<Articles>> mAllArticles;
+    private LiveData<List<Articles>> mAllArticlesByTitle;
+    private LiveData<List<Articles>> mAllArticlesNoQuery;
     private LiveData<List<Sources>> mSources;
     private LiveData<List<String>> mCountries;
     private LiveData<List<String>> mNewsCategories;
+    private LiveData<List<Articles>> mNewsBySetToRead;
+    private LiveData<List<Articles>> mNewsByFavorite;
+    private LiveData<List<Articles>> mNewsByDomain;
 
+    private LiveData<List<Sources>> mSourcesByNewsCategory;
 
     private List<Articles> mTopHeadlines,
             mTopHeadlinesByCountryCategory,
             mTopHeadlinesByCountry,
             mTopHeadlinesBySearch;
 
+    private Application application;
+
+
     public ArticleRepository(Application application){
         initializeDatabaseValues(application);
+        this.application = application;
 
     }
-
-    public ArticleRepository(Application application, Source source){
-
-        initializeDatabaseValues(application);
-        mTopHeadlines = new DataManager
-                .TopHeadlines(application,source.getSourceName())
-                .topHeadlinesData;
-    }
-
-    public ArticleRepository(Application application, Country country){
-
-        initializeDatabaseValues(application);
-
-        mTopHeadlinesByCountry = new DataManager
-                .TopHeadlinesByCountry(application, country.getCountry())
-                .topHeadlinesByCountry;
-    }
-
-    public ArticleRepository(Application application, Country country, String category){
-
-        initializeDatabaseValues(application);
-
-        mTopHeadlinesByCountryCategory = new DataManager
-                .TopHeadlinesByCountryCategory(application,
-                country,
-                category)
-                .topHeadlinesByCountryCategory;
-    }
-
     public ArticleRepository(Application application, String queryValue){
 
 
@@ -75,43 +66,82 @@ public class ArticleRepository {
                 .topHeadlinesBySearch;
 
     }
-
-    public void initializeDatabaseValues(Application application, String query){
-
-        AppDatabase database = AppDatabase.getDatabase(application);
-        articleAccessObject  = database.articleAccessObject();
-        sourcesAccessObject = database.sourcesAccessObject();
-
-        /* Instanciate this query value*/
-
-        mAllArticles = articleAccessObject.fetchAllData("%"+query+"%");
-
-
-    }
-
-
     public void initializeDatabaseValues(Application application){
-
-        AppDatabase database = AppDatabase.getDatabase(application);
-        articleAccessObject  = database.articleAccessObject();
-        sourcesAccessObject = database.sourcesAccessObject();
-
-        mAllArticles = articleAccessObject.fetchAllData();
+        AppDatabase appDatabase = AppDatabase.getDatabase(application);
+        articleAccessObject  = appDatabase.articleAccessObject();
+        sourcesAccessObject = appDatabase.sourcesAccessObject();
         mSources = sourcesAccessObject.fetchAllData();
         mCountries = sourcesAccessObject.fetchCountryLists();
+        mAllArticlesNoQuery = articleAccessObject.fetchAllData();
         mNewsCategories = sourcesAccessObject.fetchCategoryList();
+
     }
 
-   
+    public void initializeDatabaseValues(Application application, String query){
+        Log.d("initialize ", query);
+
+        AppDatabase database = AppDatabase.getDatabase(application);
+        articleAccessObject  = database.articleAccessObject();
+        sourcesAccessObject = database.sourcesAccessObject();
+    }
+
     public LiveData<List<Articles>> getmAllArticles(){
 
         return mAllArticles;
+    }
+    public LiveData<List<Articles>> getAllArticlesNoQuery(){
+        return mAllArticlesNoQuery;
     }
 
     public LiveData<List<Sources>> getSources(){
 
         return mSources;
     }
+
+    public LiveData<List<Sources>> getSourcesByNewsCategory(String categoryQuery){
+
+        mSourcesByNewsCategory = sourcesAccessObject.fetchNewsNamesByCategory(categoryQuery);
+        return mSourcesByNewsCategory;
+    }
+
+    public LiveData<List<Articles>> getArticlesByTitle(Context context, String title){
+
+        try {
+            new insertDataFromTitle(context,title,articleAccessObject).execute();
+
+        } finally {
+
+            mAllArticlesByTitle = articleAccessObject.fetchAllData("%"+title+"%");
+        }
+
+        return mAllArticlesByTitle;
+
+    }
+
+    public LiveData<List<Articles>> getArticlesByDomain(Context context, String domain) {
+
+        try {
+            new insertDataFromDomain(context,domain,articleAccessObject).execute();
+
+        } finally {
+
+            mAllArticlesByTitle = articleAccessObject
+                    .fetchDataByDomain("%"+domain+"%");
+        }
+
+        return mAllArticlesByTitle;
+
+    }
+
+    public LiveData<List<Articles>> getDataByFavorite(){
+        mNewsByFavorite = articleAccessObject.fetchDataByFavorite();
+        return mNewsByFavorite;
+    }
+    public LiveData<List<Articles>> getDataBySetToRead(){
+        mNewsBySetToRead = articleAccessObject.fetchDataByToRead();
+        return mNewsBySetToRead;
+    }
+
 
     public LiveData<List<String>> getCountries(){
         return mCountries;
@@ -143,6 +173,25 @@ public class ArticleRepository {
 
     }
 
+    public void insertFavorite(boolean setToFavorite, String title){
+
+        HashMap hashMap = new HashMap();
+        hashMap.put("favorite",setToFavorite);
+        hashMap.put("title", title);
+
+        new insertFavoriteArticle(articleAccessObject).execute(hashMap);
+
+    }
+    public void insertSetToRead(boolean setToReadValue, String title){
+        HashMap hashMap = new HashMap();
+        hashMap.put("toReadValue",setToReadValue);
+        hashMap.put("title", title);
+
+
+        new insertSetToRead(articleAccessObject).execute(hashMap);
+
+    }
+
     public static class insertAsyncTask extends AsyncTask<List<Articles>, Void, Void> {
 
         private ArticleAccessObject mAsyckTaskAccessObject;
@@ -161,7 +210,187 @@ public class ArticleRepository {
             return null;
         }
 
+    }
 
+    public static class insertDataFromTitle extends AsyncTask<String, Void, Void> {
+
+        private ArticleAccessObject mInsertByTitleAccessObject;
+        private Context context;
+        private String queryValue;
+        private List<Articles> articlesByTitle;
+
+        insertDataFromTitle(Context context, String query,ArticleAccessObject articleAccessObject){
+            this.context = context;
+            this.queryValue = query;
+            mInsertByTitleAccessObject = articleAccessObject;
+        }
+
+        @Override
+        protected Void doInBackground(String... strings){
+            if (strings != null){
+
+                ApiManager apiManager = new ApiManager(context, queryValue);
+
+                ConnectivityManager connectivityManager =(ConnectivityManager)context
+                        .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+
+                boolean isConnected = activeNetwork != null &&
+                        activeNetwork.isConnectedOrConnecting();
+
+                if (isConnected) {
+
+                    Call<DataResponse> call = apiManager.getArticles();
+                    call.enqueue(new Callback<DataResponse>() {
+                        @Override
+                        public void onResponse(Call<DataResponse> call,
+                                               Response<DataResponse> response) {
+
+                            if (response.body() != null) {
+
+                                articlesByTitle = response.body().getArticles();
+
+                                for (int index = 0; index < articlesByTitle.size(); index++) {
+
+                                    mInsertByTitleAccessObject.createDataIfNotExists(articlesByTitle
+                                            .get(index));
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<DataResponse> call, Throwable t) {
+                            Log.d("Data", t.getLocalizedMessage());
+
+                        }
+                    });
+                } else {
+
+                    Handler handler =  new Handler(context.getMainLooper());
+                    handler.post( new Runnable(){
+                        public void run(){
+                            Toast.makeText(context,"You are not connected to the internet",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+            return null;
+        }
+
+    }
+    public static class insertDataFromDomain extends AsyncTask<String, Void, Void> {
+
+        private ArticleAccessObject mInsertByTitleAccessObject;
+        private Context context;
+        private String queryValue;
+        private List<Articles> articlesByDomain;
+
+        insertDataFromDomain(Context context, String domain,ArticleAccessObject articleAccessObject){
+            this.context = context;
+            this.queryValue = domain;
+
+            Pattern pattern = Pattern.compile("(https?://)([^:^/]*)(:\\d*)?(.*)?");
+            Matcher matcher = pattern.matcher(domain);
+            matcher.find();
+            this.queryValue   = matcher.group(2).substring(4);
+            mInsertByTitleAccessObject = articleAccessObject;
+        }
+
+        @Override
+        protected Void doInBackground(String... strings){
+            if (strings != null){
+
+                ApiManager apiManager = new ApiManager(context, queryValue);
+
+                ConnectivityManager connectivityManager =(ConnectivityManager)context
+                        .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+
+                boolean isConnected = activeNetwork != null &&
+                        activeNetwork.isConnectedOrConnecting();
+
+                if (isConnected) {
+
+                    Call<DataResponse> call = apiManager.getNewsByDomains();
+                    call.enqueue(new Callback<DataResponse>() {
+                        @Override
+                        public void onResponse(Call<DataResponse> call,
+                                               Response<DataResponse> response) {
+
+                            if (response.body() != null) {
+
+                                articlesByDomain = response.body().getArticles();
+
+                                for (int index = 0; index < articlesByDomain.size(); index++) {
+
+                                    mInsertByTitleAccessObject.createDataIfNotExists(articlesByDomain
+                                            .get(index));
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<DataResponse> call, Throwable t) {
+                            Log.d("Data", t.getLocalizedMessage());
+
+                        }
+                    });
+                } else {
+
+                    Handler handler =  new Handler(context.getMainLooper());
+                    handler.post( new Runnable(){
+                        public void run(){
+                            Toast.makeText(context,"You are not connected to the internet",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+            return null;
+        }
+
+    }
+
+    public static class insertFavoriteArticle extends AsyncTask<HashMap, Void, Void>{
+        private ArticleAccessObject mFavoriteAsyncTaskAccessObject;
+
+        insertFavoriteArticle(ArticleAccessObject articleAccessObject){
+            mFavoriteAsyncTaskAccessObject = articleAccessObject;
+        }
+        @Override
+        protected  Void doInBackground(HashMap... hashMaps){
+            if (hashMaps != null) {
+
+                boolean favorite = (boolean)hashMaps[0].get("favorite");
+                String title = (String)hashMaps[0].get("title");
+                mFavoriteAsyncTaskAccessObject.setNewsItemToFavorite(favorite,
+                        title);
+            }
+            return null;
+        }
+
+    }
+    public static class insertSetToRead extends AsyncTask<HashMap, Void, Void>{
+        private ArticleAccessObject mSetToReadAsyncTaskAccessObject;
+
+        insertSetToRead(ArticleAccessObject articleAccessObject){
+            mSetToReadAsyncTaskAccessObject = articleAccessObject;
+        }
+        @Override
+        protected  Void doInBackground(HashMap ... hashMaps){
+            if (hashMaps != null) {
+
+                boolean toReadValue = (boolean)hashMaps[0].get("toReadValue");
+                String title = (String)hashMaps[0].get("title");
+                mSetToReadAsyncTaskAccessObject.setNewsItemToRead(toReadValue, title);
+            }
+            return null;
+        }
     }
 
 }
