@@ -1,9 +1,12 @@
 package com.example.newsapp.adapters;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,6 +54,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position){
         Articles currentArticle = mArticleDataSet.get(position);
@@ -67,6 +71,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         TextView tv_Title, tv_description, tv_author, tv_date;
         ImageView iv_articleImage;
         Button btToRead, btFavorite;
+        private String publishedAt;
         private NewsViewModel userActionViewModel;
 
         public MyViewHolder(View articleView) {
@@ -81,20 +86,72 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
             btToRead = articleView.findViewById(R.id.bt_to_read);
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        @SuppressLint("ResourceAsColor")
         public void setData(final Articles current, final int position) {
 
+            publishedAt = current.getPublishedAt();
             this.tv_Title.setText(current.getTitle());
             this.tv_description.setText(current.getDescription());
             this.tv_author.setText(current.getAuthor());
-            this.tv_date.setText(current.getPublishedAt());
+            this.tv_date.setText(publishedAt.substring(0,10).concat(" | ")
+            .concat(publishedAt.substring(11,19)));
 
-            tv_description.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(current.getUrl()));
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+            if (current.getFavorite()){
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    btFavorite.setForeground(context.getDrawable(R.drawable.ic_thumb_up_accent_24dp));
                 }
+
+                btFavorite.setOnClickListener(v -> {
+
+                    String titleQuery = "%" + current.getTitle().substring(0, 10) + "%";
+
+                    userActionViewModel.setNewsItemsByFavorite(false, titleQuery);
+
+
+                });
+
+            } else{
+                btFavorite.setForeground(context.getDrawable(R.drawable.ic_thumb_up_black_24dp));
+
+                btFavorite.setOnClickListener(v -> {
+                    btFavorite.setForeground(context.getDrawable(R.drawable.ic_thumb_up_accent_24dp));
+
+                    String titleQuery = "%" + current.getTitle().substring(0, 10) + "%";
+
+                    userActionViewModel.setNewsItemsByFavorite(true, titleQuery);
+
+
+                });
+
+            }
+            if (current.getToRead()){
+
+                btToRead.setForeground(context.getDrawable(R.drawable.ic_library_add_accent_24dp));
+
+                btToRead.setOnClickListener(v -> {
+                    String titleQuery = "%" + current.getTitle().substring(0, 10) + "%";
+                    userActionViewModel
+                            .setNewsItemsBySetToRead(false, titleQuery);
+
+                });
+
+            }else{
+                btToRead.setForeground(context.getDrawable(R.drawable.ic_library_add_black_24dp));
+                btToRead.setOnClickListener(v -> {
+                    String titleQuery = "%" + current.getTitle().substring(0, 10) + "%";
+                    btFavorite.setForeground(context.getDrawable(R.drawable.ic_library_add_accent_24dp));
+
+                    userActionViewModel
+                            .setNewsItemsBySetToRead(true, titleQuery);
+                });
+            }
+
+            tv_description.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(current.getUrl()));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             });
 
 
@@ -108,21 +165,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
             this.userActionViewModel = ViewModelProviders
                     .of((FragmentActivity) context)
                     .get(NewsViewModel.class);
-
-            btFavorite.setOnClickListener(v -> {
-                String titleQuery = "%" + current.getTitle().substring(0, 10) + "%";
-
-                userActionViewModel.setNewsItemsByFavorite(true, titleQuery);
-
-
-            });
-            btToRead.setOnClickListener(v -> {
-                String titleQuery = "%" + current.getTitle().substring(0, 10) + "%";
-
-                userActionViewModel
-                        .setNewsItemsBySetToRead(true, titleQuery);
-
-            });
 
 
         }
