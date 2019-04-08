@@ -5,6 +5,12 @@
     <string name="all_data_flag">all_data</string>
     <string name="load_favorites_flag">load_favorites</string>
     <string name="load_set_to_read">load_set_to_read</string>
+    <string name="content_description_search_a_news_item_by_using_a_key_word">Search a news item by using a key word</string>
+    <string name="category_content_description">Loads up news category when clicked</string>
+    <string name="country_news_content_description">Loads up news for the country on the label</string>
+    <string name="content_description_add_to_read_list">Adds the news item to a to-read list</string>
+    <string name="content_description_add_news_to_favorites">Adds news item to a favorites list</string>
+    <string name="content_description_show_news_from_source">Shows news items from the source when clicked</string>
 
     <string-array name="search_spinner_list">
         <item>Domain Search</item>
