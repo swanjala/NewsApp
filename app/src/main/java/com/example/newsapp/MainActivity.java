@@ -12,6 +12,7 @@ import com.example.newsapp.Fragments.CategoriesFragment;
 import com.example.newsapp.Fragments.CountryListFragment;
 import com.example.newsapp.Fragments.MainFragment;
 import com.example.newsapp.Fragments.SourcesFragment;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -20,13 +21,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  FragmentManager fragmentManager;
     private  int fragmentContainer;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.DATAFLAG = "all_data";
 
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID,"MainActivity");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME,"MainActivityLog");
+        bundle.putSerializable(FirebaseAnalytics.Param.CONTENT_TYPE,"ActivityLog");
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT,bundle);
          loadData();
+
+    }
+
+    @Override
+    protected  void onResume() {
+        super.onResume();
 
     }
 
