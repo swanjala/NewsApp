@@ -28,7 +28,8 @@
         android:layout_gravity="bottom|end"
         android:onClick="onClick"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_search_black_24dp" />
+        android:src="@drawable/ic_search_black_24dp"
+        android:contentDescription="@string/content_description_search_a_news_item_by_using_a_key_word"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_news_layout"

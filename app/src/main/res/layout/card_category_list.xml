@@ -25,6 +25,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:hint=" Categories"
+            android:contentDescription="@string/category_content_description"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
