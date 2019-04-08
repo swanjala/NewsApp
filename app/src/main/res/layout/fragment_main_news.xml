@@ -2,9 +2,23 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="285dp"
+        android:layout_height="90dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        ads:adSize="BANNER"
+        android:layout_gravity="bottom"
+        android:layout_margin="16dp"
+        ads:adUnitId="ca-app-pub-3711971625506611/9547685097">
+
+    </com.google.android.gms.ads.AdView>
 
 
     <android.support.design.widget.FloatingActionButton
@@ -20,8 +34,9 @@
         android:id="@+id/rv_news_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:stackFromEnd="true"
-        />
+        app:stackFromEnd="true" />
+
+
 
 
 </android.support.design.widget.CoordinatorLayout>
