@@ -26,6 +26,7 @@
             android:layout_marginBottom="8dp"
             android:textSize="15sp"
             android:hint=" Country"
+            android:contentDescription="@string/country_news_content_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.473"
