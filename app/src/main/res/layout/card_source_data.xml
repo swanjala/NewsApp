@@ -40,6 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="Description"
+        android:contentDescription="@string/content_description_show_news_from_source"
         app:layout_constraintBottom_toTopOf="@+id/tv_category"
         app:layout_constraintEnd_toEndOf="@+id/tv_name"
         app:layout_constraintHorizontal_bias="0.003"
