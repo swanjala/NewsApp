@@ -5,14 +5,12 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 
 import com.example.newsapp.R;
 
-public class SettingFragment extends PreferenceFragmentCompat {
-
+public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
 
         addPreferencesFromResource(R.xml.pref_high_contrast);
-
 
     }
 }
