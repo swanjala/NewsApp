@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -31,15 +33,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
     private LayoutInflater layoutInflater;
     private Context context;
 
-
-
     public MainAdapter(Context context, List<Articles> articlesList){
         mArticleDataSet = articlesList;
 
         Collections.sort(articlesList, (o1, o2)
                 -> o1.getPublishedAt().compareTo(o2.getPublishedAt()));
-
-
         this.layoutInflater = LayoutInflater.from(context);
         this.context = context;
 
@@ -47,7 +45,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                       int viewType){
+                                           int viewType){
         View view = layoutInflater.inflate(R.layout.card_news_data, parent, false);
         MyViewHolder viewHolder = new MyViewHolder(view);
         return viewHolder;
@@ -73,7 +71,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         Button btToRead, btFavorite;
         private String publishedAt;
         private NewsViewModel userActionViewModel;
+        private Boolean contrastFlag;
 
+        @SuppressLint("ResourceAsColor")
         public MyViewHolder(View articleView) {
             super(articleView);
 
@@ -93,35 +93,64 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
             publishedAt = current.getPublishedAt();
             this.tv_Title.setText(current.getTitle());
             this.tv_description.setText(current.getDescription());
+
+            SharedPreferences sharedPreferences =
+                    PreferenceManager.getDefaultSharedPreferences(context);
+
+            contrastFlag = sharedPreferences
+                    .getBoolean("show_high_contrast", false);
+
+            if (contrastFlag){
+                tv_description.setTextColor(context.getResources()
+                        .getColor(R.color.colorPrimaryDark,null));
+                tv_description.setTextScaleX((float) 1.25);
+
+                tv_Title.setTextColor(context.getResources()
+                        .getColor(R.color.colorPrimaryDark));
+                tv_Title.setTextScaleX((float) 1.25);
+                tv_author.setTextColor(context
+                        .getResources()
+                        .getColor(R.color.colorPrimaryDark, null));
+                tv_date.setTextColor(context
+                        .getResources()
+                        .getColor(R.color.colorPrimaryDark, null));
+
+
+            }
             this.tv_author.setText(current.getAuthor());
             this.tv_date.setText(publishedAt.substring(0,10).concat(" | ")
-            .concat(publishedAt.substring(11,19)));
+                    .concat(publishedAt.substring(11,19)));
 
             if (current.getFavorite()){
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    btFavorite.setForeground(context.getDrawable(R.drawable.ic_thumb_up_accent_24dp));
+                    btFavorite.setForeground(context
+                            .getDrawable(R.drawable.ic_thumb_up_accent_24dp));
                 }
 
                 btFavorite.setOnClickListener(v -> {
 
                     String titleQuery = "%" + current.getTitle().substring(0, 10) + "%";
-
                     userActionViewModel.setNewsItemsByFavorite(false, titleQuery);
-
 
                 });
 
             } else{
-                btFavorite.setForeground(context.getDrawable(R.drawable.ic_thumb_up_black_24dp));
+
+                if (contrastFlag) {
+                    btFavorite.setForeground(context.getDrawable
+                            (R.drawable.ic_thumb_up_high_contrast_24dp));
+                } else {
+                    btFavorite.setForeground(context
+                            .getDrawable(R.drawable.ic_thumb_up_black_24dp));
+                }
 
                 btFavorite.setOnClickListener(v -> {
-                    btFavorite.setForeground(context.getDrawable(R.drawable.ic_thumb_up_accent_24dp));
+                    btFavorite.setForeground(context
+                            .getDrawable(R.drawable.ic_thumb_up_accent_24dp));
 
                     String titleQuery = "%" + current.getTitle().substring(0, 10) + "%";
-
                     userActionViewModel.setNewsItemsByFavorite(true, titleQuery);
-
 
                 });
 
@@ -138,10 +167,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
                 });
 
             }else{
-                btToRead.setForeground(context.getDrawable(R.drawable.ic_library_add_black_24dp));
+                if (contrastFlag){
+                    btToRead.setForeground(context
+                            .getDrawable(R.drawable.ic_add_box__high_contrast_black_24dp));
+                } else {
+                    btToRead.setForeground(context
+                            .getDrawable(R.drawable.ic_library_add_black_24dp));
+                }
                 btToRead.setOnClickListener(v -> {
                     String titleQuery = "%" + current.getTitle().substring(0, 10) + "%";
-                    btFavorite.setForeground(context.getDrawable(R.drawable.ic_library_add_accent_24dp));
+                    btFavorite.setForeground(context
+                            .getDrawable(R.drawable.ic_library_add_accent_24dp));
 
                     userActionViewModel
                             .setNewsItemsBySetToRead(true, titleQuery);
@@ -154,18 +190,15 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
                 context.startActivity(intent);
             });
 
-
             Picasso.with(context).load(current.getUrlToImage()).fit().centerCrop()
                     .placeholder(R.drawable.ic_launcher_foreground)
                     .fit()
                     .centerCrop()
                     .into(iv_articleImage);
 
-
             this.userActionViewModel = ViewModelProviders
                     .of((FragmentActivity) context)
                     .get(NewsViewModel.class);
-
 
         }
     }
