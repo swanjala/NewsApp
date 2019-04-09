@@ -11,6 +11,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField 'String', 'ApiKey', '\"8dc32f53a41142188e754552063131a7\"'
+        multiDexEnabled = true
     }
     buildTypes {
         release {
@@ -69,6 +70,9 @@ dependencies {
     /*Google services*/
     implementation 'com.google.android.gms:play-services-ads:17.2.0'
     implementation 'com.google.firebase:firebase-core:16.0.8'
+
+    implementation'com.android.support:preference-v7:28.0.0'
+    implementation 'com.android.support:multidex:1.0.3'
 
 
 }
