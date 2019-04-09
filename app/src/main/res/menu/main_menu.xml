@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/news_sources"
     android:title="News Sources"/>
@@ -13,6 +14,10 @@
         android:title="My Favorite News"/>
     <item android:id="@+id/loadBySetToRead"
         android:title="My Reading List"
+        />
+    <item android:id="@+id/action_settings"
+        android:title="Settings"
+        app:showAsAction="never"
         />
 
 </menu>
