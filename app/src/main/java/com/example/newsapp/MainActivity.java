@@ -1,5 +1,6 @@
 package com.example.newsapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -27,11 +28,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         this.DATAFLAG = "all_data";
 
-
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID,"MainActivity");
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME,"MainActivityLog");
@@ -49,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadData() {
-
         MainFragment mainFragment = new MainFragment();
         Bundle bundle = new Bundle();
         bundle.putString("DataFlag", DATAFLAG);
@@ -64,8 +65,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void loadSourcesList() {
 
+    private void loadSourcesList() {
         SourcesFragment sourcesFragment = new SourcesFragment();
         Bundle bundle = new Bundle();
         bundle.putString("sourceCategory","");
@@ -147,6 +148,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.DATAFLAG = "load_set_to_read";
                 loadData();
                 return true;
+
+            case R.id.action_settings:
+                Intent startSettingIntent = new
+                        Intent(this, Settings.class);
+                startActivity(startSettingIntent);
 
             default:
                 return super.onOptionsItemSelected(item);
