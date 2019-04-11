@@ -33,13 +33,16 @@ public class CountryListFragment extends Fragment {
     private CountryConstants countryConstants = new CountryConstants();
 
     private HashMap<String, String> countryMap = countryConstants.countryListData();
+    private boolean screenSize;
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState){
-        View view = layoutInflater.inflate(R.layout.fragment_country_list,
-                container, false);
+
+
+        View   view = layoutInflater.inflate(R.layout.fragment_country_list,
+                    container, false);
         ButterKnife.bind(this, view);
         return  view;
     }
@@ -58,11 +61,31 @@ public class CountryListFragment extends Fragment {
         this.newsViewModel = ViewModelProviders.of(this)
                 .get(NewsViewModel.class);
 
-        newsViewModel.fetchAllCountries().observe(this, countries -> {
-            countryAdapter = new CountryAdapter(getActivity(), countries, countryMap);
-            rv_country_list.setAdapter(countryAdapter);
-            countryAdapter.notifyDataSetChanged();
+        if (getArguments() != null && getArguments().getString("Country") !=  null) {
 
-        });
+            newsViewModel.fetchAllCountries().observe(this, countries -> {
+
+                countryAdapter = new CountryAdapter(getActivity(), countries, countryMap);
+                rv_country_list.setAdapter(countryAdapter);
+                countryAdapter.notifyDataSetChanged();
+
+            });
+
+
+        }else{
+
+            newsViewModel.fetchArticlesByCountry(getArguments().getString("Country"))
+                    .observe(this, countryData -> {
+
+                countryAdapter = new CountryAdapter(getActivity(), countryData);
+                rv_country_list.setAdapter(countryAdapter);
+                countryAdapter.notifyDataSetChanged();
+
+            });
+        }
+
+
+
+
     }
 }
