@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if(findViewById(R.id.cl_country_detail) != null){
             this.LARGE_SCREEN_SIZE = true;
             loadCountries();
+        } else if (findViewById(R.id.fr_main_holder) != null){
+            this.LARGE_SCREEN_SIZE = false;
         }
 
         loadData();
@@ -86,9 +88,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (LARGE_SCREEN_SIZE && findViewById(R.id.frame_detail) != null){
             fragmentContainer = R.id.frame_detail;
 
-        }else if (findViewById(R.id.frame_detail) != null){
+        }else if (findViewById(R.id.fr_main_holder) != null){
             fragmentContainer = R.id.fr_main_holder;
         }
+
 
         Log.d("Container", String.valueOf(fragmentContainer));
 
