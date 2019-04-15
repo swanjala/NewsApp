@@ -35,6 +35,7 @@ public class ArticleRepository {
     private LiveData<List<Articles>> mAllArticlesByTitle;
     private LiveData<List<Articles>> mAllArticlesNoQuery;
     private LiveData<List<Sources>> mSources;
+    private LiveData<List<Articles>> mArticlesByCountry;
     private LiveData<List<String>> mCountries;
     private LiveData<List<String>> mNewsCategories;
     private LiveData<List<Articles>> mNewsBySetToRead;
@@ -147,6 +148,19 @@ public class ArticleRepository {
         return mCountries;
     }
 
+    public LiveData<List<Articles>> getArticlesByCountry(Context context, String country) {
+
+        try {
+            new insertDataFromCountry(context,country,articleAccessObject).execute();
+
+        } finally {
+
+            mArticlesByCountry = articleAccessObject.fetchAllCountryData("%"+country+"%");
+        }
+
+        return mArticlesByCountry;
+    }
+
     public LiveData<List<String>> getNewsCategories() {
         return mNewsCategories;
     }
@@ -212,6 +226,81 @@ public class ArticleRepository {
 
     }
 
+
+    public static class insertDataFromCountry extends AsyncTask<String, Void, Void> {
+
+        private ArticleAccessObject mInsertByCountryAccessObject;
+        private Context context;
+        private String queryValue;
+        private List<Articles> articlesByCountry, modifiedArticleList;
+
+        insertDataFromCountry(Context context, String query,ArticleAccessObject articleAccessObject){
+            this.context = context;
+            this.queryValue = query;
+            mInsertByCountryAccessObject = articleAccessObject;
+        }
+
+        @Override
+        protected Void doInBackground(String... strings){
+            if (strings != null){
+
+                ApiManager apiManager = new ApiManager(context, queryValue);
+
+                ConnectivityManager connectivityManager =(ConnectivityManager)context
+                        .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+
+                boolean isConnected = activeNetwork != null &&
+                        activeNetwork.isConnectedOrConnecting();
+
+                if (isConnected) {
+
+                    Call<DataResponse> call = apiManager.getTopHeadlines();
+                    call.enqueue(new Callback<DataResponse>() {
+                        @Override
+                        public void onResponse(Call<DataResponse> call,
+                                               Response<DataResponse> response) {
+
+                            if (response.body() != null) {
+
+                                articlesByCountry = response.body().getArticles();
+                                for (int index = 0; index < articlesByCountry.size(); index++) {
+                                    String author = articlesByCountry.get(index).getAuthor();
+                                    articlesByCountry.get(index).setAuthor(author + queryValue);
+
+                                    mInsertByCountryAccessObject
+                                            .createDataIfNotExists(articlesByCountry
+                                            .get(index));
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<DataResponse> call, Throwable t) {
+                            Log.d("Data", t.getLocalizedMessage());
+
+                        }
+                    });
+                } else {
+
+                    Handler handler =  new Handler(context.getMainLooper());
+                    handler.post( new Runnable(){
+                        public void run(){
+                            Toast.makeText(context,"You are not connected to the internet",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+            return null;
+        }
+
+    }
+
+
+
     public static class insertDataFromTitle extends AsyncTask<String, Void, Void> {
 
         private ArticleAccessObject mInsertByTitleAccessObject;
@@ -219,7 +308,8 @@ public class ArticleRepository {
         private String queryValue;
         private List<Articles> articlesByTitle;
 
-        insertDataFromTitle(Context context, String query,ArticleAccessObject articleAccessObject){
+        insertDataFromTitle(Context context, String query,
+                            ArticleAccessObject articleAccessObject){
             this.context = context;
             this.queryValue = query;
             mInsertByTitleAccessObject = articleAccessObject;
