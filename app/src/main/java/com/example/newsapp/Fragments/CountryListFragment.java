@@ -8,12 +8,14 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.newsapp.R;
 import com.example.newsapp.adapters.CountryAdapter;
+import com.example.newsapp.adapters.MainAdapter;
 
 import java.util.HashMap;
 
@@ -27,19 +29,18 @@ public class CountryListFragment extends Fragment {
     @BindView(R.id.rv_country_list)
     RecyclerView rv_country_list;
 
-    private CountryAdapter countryAdapter;
     private NewsViewModel newsViewModel;
 
     private CountryConstants countryConstants = new CountryConstants();
-
-    private HashMap<String, String> countryMap = countryConstants.countryListData();
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState){
+
+
         View view = layoutInflater.inflate(R.layout.fragment_country_list,
-                container, false);
+                    container, false);
         ButterKnife.bind(this, view);
         return  view;
     }
@@ -51,6 +52,7 @@ public class CountryListFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager =
                 new LinearLayoutManager(rv_country_list.getContext());
+        HashMap<String, String> countryMap = countryConstants.countryListData();
 
 
         rv_country_list.setLayoutManager(linearLayoutManager);
@@ -58,11 +60,34 @@ public class CountryListFragment extends Fragment {
         this.newsViewModel = ViewModelProviders.of(this)
                 .get(NewsViewModel.class);
 
-        newsViewModel.fetchAllCountries().observe(this, countries -> {
-            countryAdapter = new CountryAdapter(getActivity(), countries, countryMap);
-            rv_country_list.setAdapter(countryAdapter);
-            countryAdapter.notifyDataSetChanged();
 
-        });
+        if (getArguments() != null ) {
+
+
+            String country = getArguments().getString("Country");
+
+            if (country != null) {
+
+                newsViewModel.fetchArticlesByCountry(getArguments().getString("Country"))
+                        .observe(this, countryArticles -> {
+
+                            MainAdapter mainAdapter;
+                            mainAdapter = new MainAdapter(getActivity(), countryArticles);
+                            rv_country_list.setAdapter(mainAdapter);
+                            mainAdapter.notifyDataSetChanged();
+
+                        });
+
+            } else {
+
+                newsViewModel.fetchAllCountries().observe(this, countries -> {
+                     CountryAdapter countryAdapter;
+                    countryAdapter = new CountryAdapter(getActivity(), countries, countryMap);
+                    rv_country_list.setAdapter(countryAdapter);
+                    countryAdapter.notifyDataSetChanged();
+
+                });
+            }
+        }}
+
     }
-}

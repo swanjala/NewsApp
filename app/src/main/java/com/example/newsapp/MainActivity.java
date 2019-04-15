@@ -1,9 +1,11 @@
 package com.example.newsapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +20,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static String DATAFLAG;
+    private static boolean LARGE_SCREEN_SIZE;
 
     private  FragmentManager fragmentManager;
     private  int fragmentContainer;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAnalytics mFirebaseAnalytics;
 
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -40,13 +44,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bundle.putSerializable(FirebaseAnalytics.Param.CONTENT_TYPE,"ActivityLog");
 
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT,bundle);
-         loadData();
+
+        if (findViewById(R.id.largeScreen) != null){
+            this.LARGE_SCREEN_SIZE = true;
+           // loadData();
+
+        } else if(findViewById(R.id.cl_country_detail) != null){
+            this.LARGE_SCREEN_SIZE = true;
+            loadCountries();
+        }
+
+        loadData();
 
     }
 
     @Override
     protected  void onResume() {
         super.onResume();
+        if (findViewById(R.id.largeScreen) != null){
+            this.LARGE_SCREEN_SIZE = true;
+            loadCountries();
+        }
+
+       if (findViewById(R.id.cl_country_detail) != null){
+           this.LARGE_SCREEN_SIZE = true;
+
+           Log.d("running", "runnig");
+           loadCountries();
+       }
+
+        this.LARGE_SCREEN_SIZE = false;
 
     }
 
@@ -55,16 +82,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Bundle bundle = new Bundle();
         bundle.putString("DataFlag", DATAFLAG);
         mainFragment.setArguments(bundle);
+        
+        if (LARGE_SCREEN_SIZE && findViewById(R.id.frame_detail) != null){
+            fragmentContainer = R.id.frame_detail;
 
-        fragmentContainer = R.id.fr_main_holder;
-        fragmentManager = this.getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(fragmentContainer,mainFragment)
-                .commitAllowingStateLoss();
+        }else if (findViewById(R.id.frame_detail) != null){
+            fragmentContainer = R.id.fr_main_holder;
+        }
 
+        Log.d("Container", String.valueOf(fragmentContainer));
+
+        if (!String.valueOf(fragmentContainer).equals("0")) {
+
+            fragmentManager = this.getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(fragmentContainer, mainFragment)
+                    .commitAllowingStateLoss();
+        }
 
     }
-
 
     private void loadSourcesList() {
         SourcesFragment sourcesFragment = new SourcesFragment();
@@ -81,12 +117,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void loadCountries() {
 
-        CountryListFragment countryListFragment = new CountryListFragment();
-        fragmentContainer = R.id.fr_main_holder;
-        fragmentManager = this.getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(fragmentContainer,countryListFragment)
-                .commitAllowingStateLoss();
+        Intent intent = new Intent(this, HeadlinesByCountry.class);
+        startActivity(intent);
+
 
     }
 
