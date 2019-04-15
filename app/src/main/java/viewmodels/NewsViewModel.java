@@ -27,6 +27,7 @@ public class NewsViewModel extends AndroidViewModel {
     private LiveData<List<Articles>> newsBySetToRead;
     private LiveData<List<Articles>> articlesByDomain;
     private LiveData<List<Articles>> articlesByTitle;
+    private LiveData<List<Articles>> articlesByCountry;
     private LiveData<List<Sources>> sourcesByNewsCategory;
     private String queryParams;
     private Context context;
@@ -63,6 +64,12 @@ public class NewsViewModel extends AndroidViewModel {
     }
     public LiveData<List<String>> fetchAllCountries() {
         return countryLiveData;
+    }
+    public LiveData<List<Articles>> fetchArticlesByCountry(String country){
+
+        articlesByCountry  = mRepository.getArticlesByCountry(context,country);
+
+        return articlesByCountry;
     }
     public LiveData<List<String>> fetchNewsCategories() {
         return newsCategories;
