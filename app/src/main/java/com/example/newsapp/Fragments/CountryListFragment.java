@@ -68,10 +68,6 @@ public class CountryListFragment extends Fragment {
 
             if (country != null) {
 
-                Log.d("Country", getArguments().getString("Country"));
-
-                Log.d("Execution", "Display the articles of the country ");
-
                 newsViewModel.fetchArticlesByCountry(getArguments().getString("Country"))
                         .observe(this, countryArticles -> {
 
@@ -83,8 +79,6 @@ public class CountryListFragment extends Fragment {
                         });
 
             } else {
-
-                Log.d("Execution", "Display the countries ");
 
                 newsViewModel.fetchAllCountries().observe(this, countries -> {
                      CountryAdapter countryAdapter;
