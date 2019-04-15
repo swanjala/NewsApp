@@ -15,8 +15,11 @@ import android.view.ViewGroup;
 import com.example.newsapp.R;
 import com.example.newsapp.adapters.MainAdapter;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import data.datamodels.Articles;
 import viewmodels.NewsViewModel;
 
 public class MainFragment extends Fragment {
@@ -111,7 +114,18 @@ public class MainFragment extends Fragment {
                             mainAdapter.notifyDataSetChanged();
                         });
             }
+        } else if(getArguments().getString("DataFlag").equals("ArticlesByCountry")){
+
+            String countryName = getArguments().getString("Country");
+
+            model.fetchArticlesByCountry(countryName).observe(this, articlesList -> {
+                mainAdapter = new MainAdapter(getContext(), articlesList);
+                rv_news_layout.setAdapter(mainAdapter);
+                mainAdapter.notifyDataSetChanged();
+            });
+
         }
+
 
         fb_news_items.setOnClickListener(v -> {
              int fragmentContainer;
