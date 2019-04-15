@@ -20,6 +20,9 @@ public abstract class ArticleAccessObject {
     @Query("SELECT * FROM articles where title LIKE :dataQuery")
     public abstract LiveData<List<Articles>> fetchAllData(String dataQuery);
 
+    @Query("SELECT * FROM articles where author LIKE :countryQuery")
+    public abstract LiveData<List<Articles>> fetchAllCountryData(String countryQuery);
+
     @Query("SELECT * FROM  articles where url LIKE :domainQuery")
     public abstract  LiveData<List<Articles>> fetchDataByDomain(String domainQuery);
 
