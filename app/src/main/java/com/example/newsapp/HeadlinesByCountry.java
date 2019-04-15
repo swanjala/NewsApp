@@ -4,22 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.example.newsapp.adapters.MainAdapter;
-
-import java.util.List;
-
-import data.DataRepository.repositorymodel.Country;
-import data.api.ApiManager;
-import data.datamodels.Articles;
-import data.datamodels.DataResponse;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.newsapp.Fragments.CountryListFragment;
 
 public class HeadlinesByCountry extends AppCompatActivity {
 
@@ -28,90 +20,61 @@ public class HeadlinesByCountry extends AppCompatActivity {
     private static RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
 
+    private static boolean LARGE_SCREEN_FLAG;
+
+    private int mainFragmentContainer, detailFragmentContainer;
+    private FragmentManager fragmentManager;
 
 
     @Override
-    protected  void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_country);
 
-        recyclerView = findViewById(R.id.rv_activity_detail);
+        if (findViewById(R.id.cl_country_detail) != null){
+            this.LARGE_SCREEN_FLAG = true;
+        } else{
+            this.LARGE_SCREEN_FLAG = false;
+        }
 
-         layoutManager = new LinearLayoutManager(recyclerView.getContext());
-        recyclerView.setLayoutManager(layoutManager);
-
-        Intent intent = getIntent();
-
-        String country = intent.getStringExtra("countryValue");
-
-        Log.d("Data info", country);
-
-        Country countryData = new Country();
-        countryData.setCountry(country);
-
-        new TopHeadlinesByCountry(this,countryData.getCountry()).execute();
-
-
+        loadData();
     }
 
-    public static class TopHeadlinesByCountry extends AsyncTask<Call, Void, List<Articles>> {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(findViewById(R.id.cl_country_detail) != null){
+            this.LARGE_SCREEN_FLAG = true;
 
+        } else {
+            this.LARGE_SCREEN_FLAG = false;
+        }
+    }
 
+    private void loadData() {
+        CountryListFragment countryListFragment = new CountryListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("DataFlag", "LoadCountries");
 
-        private ApiManager apiManager;
-        private List<Articles> topHeadlinesByCountry;
+        if (LARGE_SCREEN_FLAG) {
 
-        private Context context;
+            bundle.putBoolean("LargeScreen", LARGE_SCREEN_FLAG);
 
-        private String country;
+            mainFragmentContainer = R.id.frame_main;
 
-        public TopHeadlinesByCountry(Context context,String country) {
-            this.context = context;
-            this.country = country;
-
-
-
+        } else {
+            mainFragmentContainer = R.id.frame_counties_holder;
         }
 
-        @Override
-        protected List<Articles> doInBackground(Call... params) {
+        countryListFragment.setArguments(bundle);
 
+        fragmentManager = this.getSupportFragmentManager();
 
-            apiManager = new ApiManager(context, country);
+        fragmentManager.beginTransaction()
+                .replace(mainFragmentContainer, countryListFragment)
+                .commitAllowingStateLoss();
 
-            Call<DataResponse> getTopHeadlinesByCountryCall = apiManager.getTopHeadlines();
-
-
-            getTopHeadlinesByCountryCall.enqueue(new Callback<DataResponse>() {
-                @Override
-                public void onResponse(Call<DataResponse> getTopHeadlinesByCountryCall,
-                                       Response<DataResponse> response) {
-
-
-                    if (response.body() != null) {
-
-
-                        mAdapter = new MainAdapter(context,response.body().getArticles());
-
-                        recyclerView.setAdapter(mAdapter);
-                        mAdapter.notifyDataSetChanged();
-
-                        Log.d("Values", String.valueOf(response.body().getArticles()));
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<DataResponse> getTopHeadlinesByCountryCall, Throwable t) {
-                    Log.d("Data", t.getLocalizedMessage());
-                    Log.d("Running this", "Running this in headline call");
-
-                }
-            });
-
-            return null;
-        }
 
     }
 }
