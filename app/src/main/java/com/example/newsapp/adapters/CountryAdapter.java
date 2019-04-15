@@ -2,27 +2,44 @@ package com.example.newsapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.newsapp.Fragments.CountryHeadlineFragment;
+import com.example.newsapp.Fragments.CountryListFragment;
+import com.example.newsapp.Fragments.MainFragment;
 import com.example.newsapp.HeadlinesByCountry;
 import com.example.newsapp.R;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import data.datamodels.Articles;
 
 public class CountryAdapter extends
         RecyclerView.Adapter<CountryAdapter.CountryViewHolder> {
 
     private List<String> mCountryList;
+    private List<Articles> articlesByCountry;
     private LayoutInflater layoutInflater;
-    private Context context;
+    private static Context context;
     private HashMap<String, String> countryData;
+    private static boolean mScreenFlag;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -35,13 +52,35 @@ public class CountryAdapter extends
         this.countryData = countryData;
     }
 
+    public CountryAdapter(Context context, List<Articles> countryList){
+
+        this.context = context;
+        this.articlesByCountry = countryList;
+    }
+
+
     @Override
     public CountryViewHolder onCreateViewHolder(ViewGroup viewGroup,
                                                 int viewType){
-        View view = layoutInflater.inflate(R.layout.card_country_list,
-                viewGroup,false);
-        CountryViewHolder countryViewHolder = new CountryViewHolder(view, countryData);
-        return countryViewHolder;
+
+        if (articlesByCountry != null) {
+
+            View view = layoutInflater.inflate(R.layout.card_country_list,
+                    viewGroup,false);
+
+            CountryViewHolder countryViewHolder = new CountryViewHolder(view, countryData);
+
+            return countryViewHolder;
+        }else
+        {
+            View view = layoutInflater.inflate(R.layout.card_country_list,
+                    viewGroup,false);
+            CountryViewHolder countryViewHolder = new CountryViewHolder(view, countryData);
+
+            return countryViewHolder;
+        }
+
+
     }
 
     @Override
@@ -54,34 +93,56 @@ public class CountryAdapter extends
         return mCountryList.size();
     }
 
-    class CountryViewHolder extends  RecyclerView.ViewHolder{
+   static class CountryViewHolder extends  RecyclerView.ViewHolder{
 
-        TextView tv_country;
-        HashMap<String, String> countryData;
+        private TextView tv_country;
+        private HashMap<String, String> mCountryData;
+       private  int fragmentContainer;
+       private  FragmentManager fragmentManager;
 
-        public CountryViewHolder(View countryView, HashMap<String, String> countryData){
+
+        public CountryViewHolder(View countryView,
+                                 HashMap<String, String> countryData){
             super(countryView);
 
+
             tv_country = countryView.findViewById(R.id.tv_country);
-            this.countryData = countryData;
+            this.mCountryData = countryData;
+
+
+        }
+        public CountryViewHolder(View countryView, List<Articles> articlesData){
+            super(countryView);
 
         }
 
         public void setData(final String currentCountry, final int position){
 
+            this.tv_country.setText(mCountryData.get(currentCountry.toUpperCase()));
 
-            this.tv_country.setText(countryData.get(currentCountry.toUpperCase()));
+            tv_country.setOnClickListener(v -> {
+                FragmentManager fragmentManager = ((AppCompatActivity)context)
+                        .getSupportFragmentManager();
 
-            tv_country.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                MainFragment mainFragment = new MainFragment();
+                FragmentTransaction fragmentTransaction;
+                Bundle bundle = new Bundle();
 
-                    Intent intent =  new Intent(context,HeadlinesByCountry.class);
-                    intent.putExtra("countryValue", currentCountry);
+                bundle.putString("DataFlag", "ArticlesByCountry");
 
-                    context.startActivity(intent);
+                String country = mCountryData.get(currentCountry.toUpperCase());
 
-                }
+                bundle.putString("Country", country);
+                fragmentContainer = R.id.frame_counties_holder;
+
+                mainFragment.setArguments(bundle);
+                fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(fragmentContainer,mainFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commitAllowingStateLoss();
+
+
             });
         }
 
