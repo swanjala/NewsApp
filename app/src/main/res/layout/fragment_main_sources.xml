@@ -8,15 +8,15 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_sources_layout"
-        android:layout_width="403dp"
-        android:layout_height="723dp"
+        android:layout_width="@dimen/fragment_main_sources_rv_layout_margin_width"
+        android:layout_height="@dimen/fragment_main_sources_rv_layout_margin_height"
 
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="@dimen/fragment_main_sources_rv_layoutMargin_start"
+        android:layout_marginLeft="@dimen/fragment_main_sources_rv_margin_left"
+        android:layout_marginTop="@dimen/fragment_main_sources_rv_margin_top"
+        android:layout_marginEnd="@dimen/fragment_main_sources_rv_margin_end"
+        android:layout_marginRight="@dimen/fragment_main_sources_rv_margin_right"
+        android:layout_marginBottom="@dimen/fragment_main_sources_rv_margin_bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

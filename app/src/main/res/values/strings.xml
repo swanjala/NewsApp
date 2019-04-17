@@ -19,4 +19,14 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
+    <string name="categories_card_view_hint">Categories</string>
+    <string name="description_for_news_item">Description for news item</string>
+    <string name="news_article_title_description">Title for news article</string>
+    <string name="description_author_and_country">Name and country of the article author</string>
+    <string name="article_publishing_date">Date the article was published</string>
+    <string name="news_source_name">Name for one a news source</string>
+    <string name="adUnitId">ca-app-pub-3711971625506611/9547685097</string>
+    <string name="example_elon_musk">Example: Elon Musk</string>
+    <string name="fragment_search_news_items_bt_search_text">Search</string>
+    <string name="open_app">Open App</string>
 </resources>
