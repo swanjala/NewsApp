@@ -89,10 +89,8 @@ public class CountryAdapter extends
                                  HashMap<String, String> countryData){
             super(countryView);
 
-
             tv_country = countryView.findViewById(R.id.tv_country);
             this.mCountryData = countryData;
-
 
         }
 
