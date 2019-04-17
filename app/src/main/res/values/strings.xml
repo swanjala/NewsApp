@@ -16,4 +16,7 @@
         <item>Domain Search</item>
         <item>Title Search</item>
     </string-array>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
 </resources>
