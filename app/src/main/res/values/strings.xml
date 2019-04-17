@@ -29,4 +29,7 @@
     <string name="example_elon_musk">Example: Elon Musk</string>
     <string name="fragment_search_news_items_bt_search_text">Search</string>
     <string name="open_app">Open App</string>
+    <string name="data_flag_key">DataFlag</string>
+    <string name="articles_by_country_flag">ArticlesByCountry</string>
+    <string name="country_data_flag">Country</string>
 </resources>

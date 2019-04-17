@@ -64,7 +64,6 @@ public class CountryAdapter extends
             return countryViewHolder;
         }
 
-
     }
 
     @Override
@@ -77,12 +76,12 @@ public class CountryAdapter extends
         return mCountryList.size();
     }
 
-   static class CountryViewHolder extends  RecyclerView.ViewHolder{
+    static class CountryViewHolder extends  RecyclerView.ViewHolder{
 
         private TextView tv_country;
         private HashMap<String, String> mCountryData;
-       private  int fragmentContainer;
-       private  FragmentManager fragmentManager;
+        private  int fragmentContainer;
+        private  FragmentManager fragmentManager;
 
 
         public CountryViewHolder(View countryView,
@@ -107,11 +106,12 @@ public class CountryAdapter extends
                 FragmentTransaction fragmentTransaction;
                 Bundle bundle = new Bundle();
 
-                bundle.putString("DataFlag", "ArticlesByCountry");
+                bundle.putString(context.getString(R.string.data_flag_key),
+                        context.getString(R.string.articles_by_country_flag));
 
                 String country = mCountryData.get(currentCountry.toUpperCase());
 
-                bundle.putString("Country", country);
+                bundle.putString(context.getString(R.string.country_data_flag), country);
 
                 if (((AppCompatActivity) context)
                         .findViewById(R.id.frame_counties_holder) != null) {
