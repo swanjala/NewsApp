@@ -1,5 +1,6 @@
 package com.example.newsapp.Fragments;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,14 +9,12 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.newsapp.R;
 import com.example.newsapp.adapters.CountryAdapter;
-import com.example.newsapp.adapters.MainAdapter;
 
 import java.util.HashMap;
 
@@ -61,33 +60,12 @@ public class CountryListFragment extends Fragment {
                 .get(NewsViewModel.class);
 
 
-        if (getArguments() != null ) {
+        newsViewModel.fetchAllCountries().observe(this, countries -> {
+            CountryAdapter countryAdapter;
+            countryAdapter = new CountryAdapter(getActivity(), countries, countryMap);
+            rv_country_list.setAdapter(countryAdapter);
+            countryAdapter.notifyDataSetChanged();
 
-
-            String country = getArguments().getString("Country");
-
-            if (country != null) {
-
-                newsViewModel.fetchArticlesByCountry(getArguments().getString("Country"))
-                        .observe(this, countryArticles -> {
-
-                            MainAdapter mainAdapter;
-                            mainAdapter = new MainAdapter(getActivity(), countryArticles);
-                            rv_country_list.setAdapter(mainAdapter);
-                            mainAdapter.notifyDataSetChanged();
-
-                        });
-
-            } else {
-
-                newsViewModel.fetchAllCountries().observe(this, countries -> {
-                     CountryAdapter countryAdapter;
-                    countryAdapter = new CountryAdapter(getActivity(), countries, countryMap);
-                    rv_country_list.setAdapter(countryAdapter);
-                    countryAdapter.notifyDataSetChanged();
-
-                });
-            }
-        }}
-
+        });
     }
+}
