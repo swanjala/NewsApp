@@ -57,13 +57,14 @@ public class MainFragment extends Fragment {
 
 
         if (getArguments() != null && getArguments()
-                .getString("DataFlag") != null){
+                .getString(getString(R.string.main_fragment_get_data_flag_key)) != null){
 
             this.model= ViewModelProviders
                     .of(this)
                     .get(NewsViewModel.class);
 
-            DATAFLAG = getArguments().getString("DataFlag");
+            DATAFLAG = getArguments()
+                    .getString(getString(R.string.main_fragment_get_data_flag_key));
 
             if (DATAFLAG.equals(getString(R.string.all_data_flag))){
                 model.fetchAllArticlesNoQuery().observe(this, articlesList ->{
@@ -84,26 +85,29 @@ public class MainFragment extends Fragment {
                     rv_news_layout.setAdapter(mainAdapter);
                     mainAdapter.notifyDataSetChanged();
                 });
-            } else  if(DATAFLAG.equals("domain_search")){
+            } else  if(DATAFLAG.equals(getString(R.string.main_fragment_domain_search_value))){
 
-                model.fetchArticlesByDomain(getArguments().getString("QueryValue"))
+                model.fetchArticlesByDomain(getArguments()
+                        .getString(getString(R.string.main_fragment_query_value)))
                         .observe(this, articlesList -> {
                     mainAdapter = new MainAdapter(getContext(), articlesList);
                     rv_news_layout.setAdapter(mainAdapter);
                     mainAdapter.notifyDataSetChanged();
                 });
             }
-            else  if(DATAFLAG.equals("title_search")){
+            else  if(DATAFLAG.equals(getString(R.string.title_search_value))){
 
-                model.fetchArticlesByTitle(getArguments().getString("QueryValue"))
+                model.fetchArticlesByTitle(getArguments()
+                        .getString(getString(R.string.main_fragment_query_value)))
                         .observe(this, articlesList -> {
                             mainAdapter = new MainAdapter(getContext(), articlesList);
                             rv_news_layout.setAdapter(mainAdapter);
                             mainAdapter.notifyDataSetChanged();
                         });
             }
-            else if(DATAFLAG.equals("data_by_url")){
-                model.fetchArticlesByDomain(getArguments().getString("DataUrl"))
+            else if(DATAFLAG.equals(getString(R.string.main_fragment_data_by_url_value))){
+                model.fetchArticlesByDomain(getArguments()
+                        .getString(getString(R.string.current_url_key)))
                         .observe(this,articlesList -> {
                             mainAdapter = new MainAdapter(getContext(), articlesList);
 
@@ -112,9 +116,12 @@ public class MainFragment extends Fragment {
                         });
             }
 
-            else if(getArguments().getString("DataFlag").equals("ArticlesByCountry")){
+            else if(getArguments()
+                    .getString(getString(R.string.main_fragment_get_data_flag_key))
+                    .equals(getString(R.string.articles_by_country_value))){
 
-                String countryName = getArguments().getString("Country");
+                String countryName = getArguments()
+                        .getString(getString(R.string.country_data_flag));
 
                     mainAdapter = new MainAdapter(getContext(),
                             model.fetchArticlesByCountry(countryName));
