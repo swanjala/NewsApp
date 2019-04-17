@@ -43,4 +43,6 @@
     <string name="title_search_value">title_search</string>
     <string name="main_fragment_data_by_url_value">data_by_url</string>
     <string name="articles_by_country_value">ArticlesByCountry</string>
+    <string name="navigation_handler_title_search_key">Title Search</string>
+    <string name="search_value_error_message">Search value cannot be empty</string>
 </resources>

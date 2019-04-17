@@ -49,7 +49,8 @@ public class SearchFragment extends Fragment {
 
         bt_search.setOnClickListener(v -> {
             String queryValue = et_search_parameter.getText().toString();
-            navigationHandler("Title Search",queryValue);
+            navigationHandler(getString(R.string.navigation_handler_title_search_key)
+                    ,queryValue);
         });
 
 
@@ -74,10 +75,10 @@ public class SearchFragment extends Fragment {
                     .replace(fragmentContainer, mainFragment)
                     .commitAllowingStateLoss();
         }
-        else if (valueType.trim().equals("Title Search")){
+        else if (valueType.trim()
+                .equals(getString(R.string.navigation_handler_title_search_key))){
 
             this.DATAFLAG = "title_search";
-            Log.d("Title search",queryValue);
 
             bundle.putString("DataFlag", DATAFLAG);
             bundle.putString("QueryValue", queryValue);
@@ -92,7 +93,7 @@ public class SearchFragment extends Fragment {
 
         } else {
             Toast.makeText(getContext(),
-                    "Search value cannot be empty",
+                    getString(R.string.search_value_error_message),
                     Toast.LENGTH_LONG).show();
         }
     }
