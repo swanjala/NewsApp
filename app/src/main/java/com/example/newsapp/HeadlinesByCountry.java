@@ -50,9 +50,12 @@ public class HeadlinesByCountry extends AppCompatActivity {
         } else {
             this.LARGE_SCREEN_FLAG = false;
         }
+
+        loadData();
     }
 
     private void loadData() {
+
         CountryListFragment countryListFragment = new CountryListFragment();
         Bundle bundle = new Bundle();
         bundle.putString("DataFlag", "LoadCountries");
