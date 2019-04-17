@@ -37,4 +37,10 @@
     <string name="data_by_url_flag_key">DataFlag</string>
     <string name="data_by_url_value">data_by_url</string>
     <string name="current_url_key">DataUrl</string>
+    <string name="main_fragment_get_data_flag_key">DataFlag</string>
+    <string name="main_fragment_domain_search_value">domain_search</string>
+    <string name="main_fragment_query_value">QueryValue</string>
+    <string name="title_search_value">title_search</string>
+    <string name="main_fragment_data_by_url_value">data_by_url</string>
+    <string name="articles_by_country_value">ArticlesByCountry</string>
 </resources>
