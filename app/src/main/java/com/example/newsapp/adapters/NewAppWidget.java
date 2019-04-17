@@ -55,7 +55,7 @@ public class NewAppWidget extends AppWidgetProvider {
 
                     List.observeForever(articlesList -> {
 
-                        int dataIndex = articlesList.size()-1;
+                        int dataIndex = 0;
                         views.setTextViewText(R.id.tv_news_title,
                                 articlesList.get(dataIndex).getTitle());
                         views.setTextViewText(R.id.tv_description,
@@ -72,9 +72,12 @@ public class NewAppWidget extends AppWidgetProvider {
 
                         views.setOnClickPendingIntent(R.id.bt_open_app, pendingIntent);
 
-                        Picasso.with(context)
-                                .load(articlesList.get(articlesList.size()-1).getUrlToImage())
-                                .into(views,R.id.imageView, new int[]{appWidgetId});
+                        if (articlesList.get(dataIndex).getUrlToImage() != null){
+                            Picasso.with(context)
+                                    .load(articlesList.get(dataIndex).getUrlToImage())
+                                    .into(views, R.id.imageView, new int[]{appWidgetId}
+                                    );
+                        }
 
 
                         appWidgetManager.updateAppWidget(appWidgetId, views);
