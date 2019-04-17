@@ -82,7 +82,8 @@ public class NewsCategoryAdapter extends RecyclerView.Adapter<
 
                 fragmentContainer = R.id.fr_main_holder;
 
-                bundle.putString("sourceCategory", currentCategory);
+                bundle.putString(context.getString(R.string.source_category_key)
+                        , currentCategory);
                 sourcesFragment.setArguments(bundle);
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(fragmentContainer,sourcesFragment);

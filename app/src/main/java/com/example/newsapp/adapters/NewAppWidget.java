@@ -81,7 +81,6 @@ public class NewAppWidget extends AppWidgetProvider {
                     });
 
                 }
-
             }
 
         }.execute(context);
