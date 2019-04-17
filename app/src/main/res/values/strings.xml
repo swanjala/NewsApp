@@ -34,4 +34,7 @@
     <string name="country_data_flag">Country</string>
     <string name="high_contrast_key">show_high_contrast</string>
     <string name="source_category_key">sourceCategory</string>
+    <string name="data_by_url_flag_key">DataFlag</string>
+    <string name="data_by_url_value">data_by_url</string>
+    <string name="current_url_key">DataUrl</string>
 </resources>
