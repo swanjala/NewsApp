@@ -1,34 +1,24 @@
 package com.example.newsapp.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.newsapp.Fragments.CountryHeadlineFragment;
-import com.example.newsapp.Fragments.CountryListFragment;
 import com.example.newsapp.Fragments.MainFragment;
-import com.example.newsapp.HeadlinesByCountry;
 import com.example.newsapp.R;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import data.datamodels.Articles;
 
 public class CountryAdapter extends
@@ -50,12 +40,6 @@ public class CountryAdapter extends
         this.layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.countryData = countryData;
-    }
-
-    public CountryAdapter(Context context, List<Articles> countryList){
-
-        this.context = context;
-        this.articlesByCountry = countryList;
     }
 
 
@@ -111,10 +95,6 @@ public class CountryAdapter extends
 
 
         }
-        public CountryViewHolder(View countryView, List<Articles> articlesData){
-            super(countryView);
-
-        }
 
         public void setData(final String currentCountry, final int position){
 
@@ -123,6 +103,7 @@ public class CountryAdapter extends
             tv_country.setOnClickListener(v -> {
                 FragmentManager fragmentManager = ((AppCompatActivity)context)
                         .getSupportFragmentManager();
+
 
                 MainFragment mainFragment = new MainFragment();
                 FragmentTransaction fragmentTransaction;
@@ -133,9 +114,20 @@ public class CountryAdapter extends
                 String country = mCountryData.get(currentCountry.toUpperCase());
 
                 bundle.putString("Country", country);
-                fragmentContainer = R.id.frame_counties_holder;
+
+                if (((AppCompatActivity) context)
+                        .findViewById(R.id.frame_counties_holder) != null) {
+
+                    fragmentContainer = R.id.frame_counties_holder;
+                } else if (((AppCompatActivity) context)
+                        .findViewById(R.id.frame_detail) != null){
+
+                    fragmentContainer = R.id.frame_detail;
+
+                }
 
                 mainFragment.setArguments(bundle);
+
                 fragmentTransaction = fragmentManager.beginTransaction();
 
                 fragmentTransaction.replace(fragmentContainer,mainFragment);
