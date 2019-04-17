@@ -21,6 +21,7 @@ import data.database.DataManager;
 import data.database.accessobjects.ArticleAccessObject;
 import data.database.accessobjects.SourcesAccessObject;
 import data.datamodels.Articles;
+import data.datamodels.CountryConstants;
 import data.datamodels.DataResponse;
 import data.datamodels.Sources;
 import retrofit2.Call;
@@ -35,7 +36,7 @@ public class ArticleRepository {
     private LiveData<List<Articles>> mAllArticlesByTitle;
     private LiveData<List<Articles>> mAllArticlesNoQuery;
     private LiveData<List<Sources>> mSources;
-    private LiveData<List<Articles>> mArticlesByCountry;
+    private List<Articles> mArticlesByCountry;
     private LiveData<List<String>> mCountries;
     private LiveData<List<String>> mNewsCategories;
     private LiveData<List<Articles>> mNewsBySetToRead;
@@ -79,7 +80,6 @@ public class ArticleRepository {
     }
 
     public void initializeDatabaseValues(Application application, String query){
-        Log.d("initialize ", query);
 
         AppDatabase database = AppDatabase.getDatabase(application);
         articleAccessObject  = database.articleAccessObject();
@@ -148,14 +148,27 @@ public class ArticleRepository {
         return mCountries;
     }
 
-    public LiveData<List<Articles>> getArticlesByCountry(Context context, String country) {
+
+    public List<Articles> getArticlesByCountry(Context context, String country) {
 
         try {
-            new insertDataFromCountry(context,country,articleAccessObject).execute();
+
+            CountryConstants countryConstants = new CountryConstants();
+
+            HashMap countryMap = countryConstants.countryListData();
+
+            for (Object key : countryMap.keySet()) {
+                if (country.equals(countryMap.get(key))) {
+
+                    new insertDataFromCountry(context,key.toString().toLowerCase()
+                            ,articleAccessObject).execute();
+                }
+            }
 
         } finally {
 
-            mArticlesByCountry = articleAccessObject.fetchAllCountryData("%"+country+"%");
+            mArticlesByCountry = articleAccessObject
+                    .fetchAllCountryData("%"+country+"%");
         }
 
         return mArticlesByCountry;
@@ -264,10 +277,15 @@ public class ArticleRepository {
 
                             if (response.body() != null) {
 
+                                CountryConstants countryConstants = new CountryConstants();
+                                String countryQuery = countryConstants
+                                        .countryListData().get(queryValue);
+
                                 articlesByCountry = response.body().getArticles();
                                 for (int index = 0; index < articlesByCountry.size(); index++) {
                                     String author = articlesByCountry.get(index).getAuthor();
-                                    articlesByCountry.get(index).setAuthor(author + queryValue);
+                                    articlesByCountry.get(index)
+                                            .setAuthor(author + "\n"+ countryQuery);
 
                                     mInsertByCountryAccessObject
                                             .createDataIfNotExists(articlesByCountry
@@ -298,7 +316,6 @@ public class ArticleRepository {
         }
 
     }
-
 
 
     public static class insertDataFromTitle extends AsyncTask<String, Void, Void> {
