@@ -11,11 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.newsapp.R;
 import com.example.newsapp.adapters.MainAdapter;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -114,18 +111,17 @@ public class MainFragment extends Fragment {
                             mainAdapter.notifyDataSetChanged();
                         });
             }
-        } else if(getArguments().getString("DataFlag").equals("ArticlesByCountry")){
 
-            String countryName = getArguments().getString("Country");
+            else if(getArguments().getString("DataFlag").equals("ArticlesByCountry")){
 
-            model.fetchArticlesByCountry(countryName).observe(this, articlesList -> {
-                mainAdapter = new MainAdapter(getContext(), articlesList);
-                rv_news_layout.setAdapter(mainAdapter);
-                mainAdapter.notifyDataSetChanged();
-            });
+                String countryName = getArguments().getString("Country");
 
+                    mainAdapter = new MainAdapter(getContext(),
+                            model.fetchArticlesByCountry(countryName));
+                    rv_news_layout.setAdapter(mainAdapter);
+                    mainAdapter.notifyDataSetChanged();
+            }
         }
-
 
         fb_news_items.setOnClickListener(v -> {
              int fragmentContainer;
