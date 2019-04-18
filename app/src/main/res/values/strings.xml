@@ -43,4 +43,7 @@
     <string name="load_by_set_to_read_flag">load_set_to_read</string>
     <string name="load_all_data_flag">all_data</string>
     <string name="database_manager_sources_error">Sources Error</string>
+    <string name="firebase_item_id_value">MainActivity</string>
+    <string name="firebase_main_activity_log_item_name">MainActivityLog</string>
+    <string name="firebase_activity_log">ActivityLog</string>
 </resources>
