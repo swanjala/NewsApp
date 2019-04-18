@@ -33,20 +33,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        this.DATAFLAG = "all_data";
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID,"MainActivity");
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME,"MainActivityLog");
-        bundle.putSerializable(FirebaseAnalytics.Param.CONTENT_TYPE,"ActivityLog");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID,
+                getString(R.string.firebase_item_id_value));
+
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME,
+                getString(R.string.firebase_main_activity_log_item_name));
+
+        bundle.putSerializable(FirebaseAnalytics.Param.CONTENT_TYPE,
+                getString(R.string.firebase_activity_log));
 
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT,bundle);
 
         if (findViewById(R.id.largeScreen) != null){
             this.LARGE_SCREEN_SIZE = true;
-           // loadData();
 
         } else if(findViewById(R.id.cl_country_detail) != null){
             this.LARGE_SCREEN_SIZE = true;
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             this.LARGE_SCREEN_SIZE = false;
         }
 
-        loadData();
+        loadSourcesList();
 
     }
 
@@ -78,9 +81,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadData() {
+
+        this.DATAFLAG = getResources()
+                .getString(R.string.load_all_data_flag);
+
         MainFragment mainFragment = new MainFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("DataFlag", DATAFLAG);
+        bundle.putString(getResources()
+                .getString(R.string.data_flag_key), DATAFLAG);
+
         mainFragment.setArguments(bundle);
         
         if (LARGE_SCREEN_SIZE && findViewById(R.id.frame_detail) != null){
