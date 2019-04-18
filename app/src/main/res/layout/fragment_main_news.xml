@@ -9,14 +9,14 @@
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
-        android:layout_width="285dp"
-        android:layout_height="90dp"
+        android:layout_width="@dimen/fragment_main_news_adview_layout_width"
+        android:layout_height="@dimen/fragment_main_news_adview_layout_height"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
         android:layout_gravity="bottom"
-        android:layout_margin="16dp"
-        ads:adUnitId="ca-app-pub-3711971625506611/9547685097">
+        android:layout_margin="@dimen/fragment_main_news_adview_layout_margin"
+        ads:adUnitId="@string/adUnitId">
 
     </com.google.android.gms.ads.AdView>
 
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:onClick="onClick"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/fragment_main_news_floating_action_bar_layout_margin"
         android:src="@drawable/ic_search_black_24dp"
         android:contentDescription="@string/content_description_search_a_news_item_by_using_a_key_word"/>
 

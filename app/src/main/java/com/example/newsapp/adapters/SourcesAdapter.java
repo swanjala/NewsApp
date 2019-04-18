@@ -88,8 +88,10 @@ public class SourcesAdapter extends
 
                     MainFragment mainFragment = new MainFragment();
                     Bundle bundle = new Bundle();
-                    bundle.putString("DataFlag","data_by_url");
-                    bundle.putString("DataUrl", current.getUrl());
+                    bundle.putString(context.getString(R.string.data_by_url_flag_key)
+                            ,context.getString(R.string.data_by_url_value));
+                    bundle.putString(context.getString(R.string.current_url_key)
+                            , current.getUrl());
 
                     mainFragment.setArguments(bundle);
                     fragmentContainer = R.id.fr_main_holder;

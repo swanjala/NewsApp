@@ -6,21 +6,21 @@
     android:id="@+id/cl_card_constaints"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="6dp"
-    android:elevation="5dp">
+    android:layout_marginTop="@dimen/card_news_data_margin_top"
+    android:elevation="@dimen/card_view_elevation">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cont"
-        android:layout_width="585dp"
-        android:layout_height="305dp">
+        android:layout_width="@dimen/card_news_data_constraint_layout"
+        android:layout_height="@dimen/card_news_data_constraint_layout_height">
 
         <View
             android:id="@+id/view2"
-            android:layout_width="384dp"
-            android:layout_height="2dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="@dimen/card_news_data_view2_layout_width"
+            android:layout_height="@dimen/card_news_data_view2_layout_height"
+            android:layout_marginStart="@dimen/card_news_data_view2_layout_margin_start"
+            android:layout_marginLeft="@dimen/card_news_data_view2_layout_margin_left"
+            android:layout_marginBottom="@dimen/card_news_data_view2_layout_margin_bottom"
             android:background="#E4E4E4"
             app:layout_constraintBottom_toTopOf="@+id/tv_date"
             app:layout_constraintEnd_toEndOf="@+id/tv_description"
@@ -31,11 +31,11 @@
 
         <ImageView
             android:id="@+id/iv_image"
-            android:layout_width="133dp"
-            android:layout_height="144dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="@dimen/card_news_data_image_view_layout_width"
+            android:layout_height="@dimen/card_news_data_image_view_layout_height"
+            android:layout_marginEnd="@dimen/card_news_data_image_view_layout_margin_end"
+            android:layout_marginRight="@dimen/card_news_data_image_view_layout_margin_right"
+            android:layout_marginBottom="@dimen/card_news_data_image_view_layout_margin_bottom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.015"
@@ -46,9 +46,9 @@
 
         <TextView
             android:id="@+id/tv_description"
-            android:layout_width="246dp"
-            android:layout_height="113dp"
-            android:hint="Description"
+            android:layout_width="@dimen/card_news_data_text_view_layout_width"
+            android:layout_height="@dimen/card_news_data_text_view_layout_height"
+            android:contentDescription="@string/description_for_news_item"
             app:layout_constraintBottom_toBottomOf="@+id/iv_image"
             app:layout_constraintEnd_toEndOf="@+id/tv_title"
             app:layout_constraintHorizontal_bias="0.0"
@@ -56,13 +56,13 @@
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="249dp"
-            android:layout_height="28dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="8dp"
-            android:hint="Title"
-            android:textSize="20sp"
+            android:layout_width="@dimen/card_news_data_layout_width"
+            android:layout_height="@dimen/card_news_data_layout_height"
+            android:layout_marginStart="@dimen/card_news_data_layout_margin_start"
+            android:layout_marginLeft="@dimen/card_news_data_layout_margin_left"
+            android:layout_marginBottom="@dimen/card_news_data_layout_text_view_margin_left"
+            android:contentDescription="@string/news_article_title_description"
+            android:textSize="@dimen/card_news_tv_title_text_size"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tv_description"
             app:layout_constraintStart_toEndOf="@+id/iv_image"
@@ -71,23 +71,23 @@
 
         <TextView
             android:id="@+id/tv_author"
-            android:layout_width="112dp"
+            android:layout_width="@dimen/card_news_data_tv_author_layout_width"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="56dp"
-            android:text="Author"
+            android:layout_marginStart="@dimen/card_news_data_tv_author_layot_height_start"
+            android:layout_marginLeft="@dimen/card_news_data_tv_author_layout_margin_left"
+            android:layout_marginTop="@dimen/card_news_data_tv_author_layout_margin_top"
+            android:contentDescription="@string/description_author_and_country"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/iv_image"
             app:layout_constraintTop_toBottomOf="@+id/iv_image" />
 
         <TextView
             android:id="@+id/tv_date"
-            android:layout_width="167dp"
+            android:layout_width="@dimen/card_news_data_tv_date_layout_width"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:text="Date"
+            android:layout_marginStart="@dimen/card_news_data_tv_date_layout_margin_start"
+            android:layout_marginLeft="@dimen/card_news_data_tv_date_layout_margin_left"
+            android:contentDescription="@string/article_publishing_date"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tv_author"
             app:layout_constraintStart_toEndOf="@+id/tv_author"
@@ -96,12 +96,12 @@
 
         <Button
             android:id="@+id/bt_to_read"
-            android:layout_width="28dp"
-            android:layout_height="29dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_width="@dimen/card_news_data_layout_button_to_read_width"
+            android:layout_height="@dimen/card_news_data_layout_button_to_read_height"
+            android:layout_marginStart="@dimen/card_news_data_layout_button_to_read_start"
+            android:layout_marginLeft="@dimen/card_news_data_layout_button_to_read_left"
+            android:layout_marginEnd="@dimen/card_news_data_layout_button_to_read_margin_end"
+            android:layout_marginRight="@dimen/card_news_data_layout_button_to_read_margin_right"
             android:background="@color/colorTransparent"
             android:contentDescription="@string/content_description_add_to_read_list"
             app:layout_constraintBottom_toBottomOf="@+id/bt_mark_as_favorite"
@@ -114,10 +114,10 @@
 
         <Button
             android:id="@+id/bt_mark_as_favorite"
-            android:layout_width="30dp"
-            android:layout_height="29dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_width="@dimen/card_news_data_layout_mark_as_favority_width"
+            android:layout_height="@dimen/card_news_data_layout_mark_as_favority_height"
+            android:layout_marginStart="@dimen/card_news_data_layout_mark_as_favority_margin_start"
+            android:layout_marginLeft="@dimen/card_news_data_layout_mark_as_favority_margin_left"
             android:background="@color/colorTransparent"
             android:contentDescription="@string/content_description_add_news_to_favorites"
             app:layout_constraintBottom_toBottomOf="@+id/tv_date"

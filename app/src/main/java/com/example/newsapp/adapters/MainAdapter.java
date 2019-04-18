@@ -98,7 +98,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
                     PreferenceManager.getDefaultSharedPreferences(context);
 
             contrastFlag = sharedPreferences
-                    .getBoolean("show_high_contrast", false);
+                    .getBoolean(context.getString(R.string.high_contrast_key),
+                            false);
 
             if (contrastFlag){
                 tv_description.setTextColor(context.getResources()

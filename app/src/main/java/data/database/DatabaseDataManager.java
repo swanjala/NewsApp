@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.newsapp.R;
+
 import data.api.ApiManager;
 import data.database.accessobjects.ArticleAccessObject;
 import data.database.accessobjects.SourcesAccessObject;
@@ -43,7 +45,6 @@ public class DatabaseDataManager extends AsyncTask<Void, Void,Void> {
             sourceCall.enqueue(new Callback<DataResponse>() {
                 @Override
                 public void onResponse(Call<DataResponse> call, Response<DataResponse> sourceResponse) {
-                    Log.d("Response sources data", String.valueOf(sourceResponse.body().getSources()));
 
                     if (sourceResponse.body() != null){
                         for (int index = 0; index < sourceResponse.body().getSources().size() ; index++) {
@@ -55,7 +56,8 @@ public class DatabaseDataManager extends AsyncTask<Void, Void,Void> {
 
                 @Override
                 public void onFailure(Call<DataResponse> call, Throwable t) {
-                    Log.d("Sources Error", t.getLocalizedMessage());
+                    Log.d(context.getString(R.string.database_manager_sources_error),
+                            t.getLocalizedMessage());
                 }
             });
 

@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.newsapp.Fragments.CategoriesFragment;
-import com.example.newsapp.Fragments.CountryListFragment;
 import com.example.newsapp.Fragments.MainFragment;
 import com.example.newsapp.Fragments.SourcesFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -71,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        if (findViewById(R.id.cl_country_detail) != null){
            this.LARGE_SCREEN_SIZE = true;
 
-           Log.d("running", "runnig");
            loadCountries();
        }
 
@@ -91,9 +89,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if (findViewById(R.id.fr_main_holder) != null){
             fragmentContainer = R.id.fr_main_holder;
         }
-
-
-        Log.d("Container", String.valueOf(fragmentContainer));
 
         if (!String.valueOf(fragmentContainer).equals("0")) {
 
@@ -158,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.all_news:
-                this.DATAFLAG = "all_data";
+                this.DATAFLAG = getString(R.string.load_all_data_flag);
                 loadData();
                 return true;
 
@@ -176,12 +171,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
 
             case R.id.loadFavorites:
-                this.DATAFLAG = "load_favorites";
+                this.DATAFLAG = getString(R.string.load_favorites_flag);
                 loadData();
                 return true;
 
             case R.id.loadBySetToRead:
-                this.DATAFLAG = "load_set_to_read";
+                this.DATAFLAG = getString(R.string.load_by_set_to_read_flag);
                 loadData();
                 return true;
 
