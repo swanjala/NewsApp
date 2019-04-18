@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
 
 import data.api.ApiManager;
 import data.database.AppDatabase;
-import data.database.DataManager;
 import data.database.accessobjects.ArticleAccessObject;
 import data.database.accessobjects.SourcesAccessObject;
 import data.datamodels.Articles;
@@ -58,16 +57,7 @@ public class ArticleRepository {
         this.application = application;
 
     }
-    public ArticleRepository(Application application, String queryValue){
 
-
-        initializeDatabaseValues(application, queryValue);
-        mTopHeadlinesBySearch = new DataManager
-                .TopHeadlinesBySearch(application,
-                queryValue)
-                .topHeadlinesBySearch;
-
-    }
     public void initializeDatabaseValues(Application application){
         AppDatabase appDatabase = AppDatabase.getDatabase(application);
         articleAccessObject  = appDatabase.articleAccessObject();
@@ -148,6 +138,33 @@ public class ArticleRepository {
         return mCountries;
     }
 
+    public LiveData<List<String>> getNewsCategories() {
+        return mNewsCategories;
+    }
+
+    public void insert(List<Articles> articles){
+        new insertAsyncTask(articleAccessObject).execute(articles);
+
+    }
+
+    public void insertFavorite(boolean setToFavorite, String title){
+
+        HashMap hashMap = new HashMap();
+        hashMap.put("favorite",setToFavorite);
+        hashMap.put("title", title);
+
+        new insertFavoriteArticle(articleAccessObject).execute(hashMap);
+
+    }
+    public void insertSetToRead(boolean setToReadValue, String title){
+        HashMap hashMap = new HashMap();
+        hashMap.put("toReadValue",setToReadValue);
+        hashMap.put("title", title);
+
+
+        new insertSetToRead(articleAccessObject).execute(hashMap);
+
+    }
 
     public List<Articles> getArticlesByCountry(Context context, String country) {
 
@@ -172,51 +189,6 @@ public class ArticleRepository {
         }
 
         return mArticlesByCountry;
-    }
-
-    public LiveData<List<String>> getNewsCategories() {
-        return mNewsCategories;
-    }
-
-    public List<Articles> getTopHeadlinesByDomain(){
-        return mTopHeadlines;
-    }
-
-    public List<Articles> getTopHeadlinesByCountryCategory(){
-        return mTopHeadlinesByCountryCategory;
-    }
-
-    public List<Articles> getmTopHeadlinesByCountry(){
-        return mTopHeadlinesByCountry;
-    }
-
-    public List<Articles> getTopHeadlinesBySearch(){
-        return mTopHeadlinesBySearch;
-    }
-
-
-    public void insert(List<Articles> articles){
-        new insertAsyncTask(articleAccessObject).execute(articles);
-
-    }
-
-    public void insertFavorite(boolean setToFavorite, String title){
-
-        HashMap hashMap = new HashMap();
-        hashMap.put("favorite",setToFavorite);
-        hashMap.put("title", title);
-
-        new insertFavoriteArticle(articleAccessObject).execute(hashMap);
-
-    }
-    public void insertSetToRead(boolean setToReadValue, String title){
-        HashMap hashMap = new HashMap();
-        hashMap.put("toReadValue",setToReadValue);
-        hashMap.put("title", title);
-
-
-        new insertSetToRead(articleAccessObject).execute(hashMap);
-
     }
 
     public static class insertAsyncTask extends AsyncTask<List<Articles>, Void, Void> {
