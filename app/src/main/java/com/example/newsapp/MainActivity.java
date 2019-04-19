@@ -51,23 +51,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (findViewById(R.id.largeScreen) != null){
             this.LARGE_SCREEN_SIZE = true;
 
+            if(DATAFLAG != null) {
+
+                if (DATAFLAG.equals(getString(R.string.load_all_data_flag))) {
+                    loadData();
+                } else if (DATAFLAG.equals(getString(R.string.load_data_sources_flag))) {
+
+                    loadSourcesList();
+                }
+            }
+
         } else if(findViewById(R.id.cl_country_detail) != null){
             this.LARGE_SCREEN_SIZE = true;
             loadCountries();
         } else if (findViewById(R.id.fr_main_holder) != null){
             this.LARGE_SCREEN_SIZE = false;
+
+            if(DATAFLAG != null) {
+                if (DATAFLAG != null && DATAFLAG.equals(getString(R.string.load_all_data_flag))) {
+                    loadData();
+                } else if (DATAFLAG.equals(getString(R.string.load_data_sources_flag))) {
+                    loadSourcesList();
+                }
+            } else {
+                loadSourcesList();
+            }
         }
-
-        loadSourcesList();
-
     }
 
     @Override
-    protected  void onResume() {
-        super.onResume();
+    public  void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
         if (findViewById(R.id.largeScreen) != null){
             this.LARGE_SCREEN_SIZE = true;
-            loadCountries();
+
+            if(DATAFLAG != null) {
+
+                if (DATAFLAG.equals(getString(R.string.load_all_data_flag))) {
+                    loadData();
+                } else if (DATAFLAG.equals(getString(R.string.load_data_sources_flag))) {
+
+                    loadSourcesList();
+                }
+            }
+
+        } else if(findViewById(R.id.fr_main_holder) != null ){
+            this.LARGE_SCREEN_SIZE = false;
+
+            if(DATAFLAG != null){
+                if (DATAFLAG.equals(getString(R.string.load_all_data_flag))){
+                    loadData();
+                }
+            }
         }
 
        if (findViewById(R.id.cl_country_detail) != null){
@@ -92,8 +128,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mainFragment.setArguments(bundle);
         
-        if (LARGE_SCREEN_SIZE && findViewById(R.id.frame_detail) != null){
-            fragmentContainer = R.id.frame_detail;
+        if (LARGE_SCREEN_SIZE && findViewById(R.id.frame_articles) != null){
+            fragmentContainer = R.id.frame_articles;
 
         }else if (findViewById(R.id.fr_main_holder) != null){
             fragmentContainer = R.id.fr_main_holder;
@@ -110,11 +146,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadSourcesList() {
+        this.DATAFLAG =
+                getString(R.string.load_data_sources_flag);
         SourcesFragment sourcesFragment = new SourcesFragment();
         Bundle bundle = new Bundle();
         bundle.putString("sourceCategory","");
         sourcesFragment.setArguments(bundle);
-        fragmentContainer = R.id.fr_main_holder;
+
+        if (LARGE_SCREEN_SIZE){
+            fragmentContainer = R.id.frame_articles;
+        }else {
+            fragmentContainer = R.id.fr_main_holder;
+        }
         fragmentManager = this.getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(fragmentContainer,sourcesFragment)
