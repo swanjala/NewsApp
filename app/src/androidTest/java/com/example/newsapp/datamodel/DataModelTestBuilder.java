@@ -21,6 +21,6 @@ public class DataModelTestBuilder {
         articles.setUrlToImage(urlToImage);
         articles.setPublishedAt(publishedAt);
         articles.setContent(content);
-        return new Articles();
+        return  articles;
     }
 }
