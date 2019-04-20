@@ -1,6 +1,7 @@
 package com.example.newsapp.database;
 
-import com.example.newsapp.TestUtil;
+import android.util.Log;
+
 import com.example.newsapp.datamodel.DataModelTestBuilder;
 
 import org.junit.Test;
@@ -36,9 +37,12 @@ public class DatabaseExecutionTest extends DatabaseTest {
 
         List<Articles> databaseResult =
                 retrieveValue(appDatabase.articleAccessObject()
-                        .fetchAllData("Sky is falling"));
+                        .fetchAllData());
         assertThat(databaseResult, notNullValue());
+
         assertThat(databaseResult.get(0).getTitle(), is("Sky is falling"));
 
     }
+
+
 }
