@@ -16,6 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.newsapp.R;
 import com.example.newsapp.adapters.MainAdapter;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +34,9 @@ public class MainFragment extends Fragment {
 
     @BindView(R.id.rv_news_layout)
     RecyclerView rv_news_layout;
+
+    @BindView(R.id.adView)
+    AdView mAdView;
 
     private MainAdapter mainAdapter;
 
@@ -56,6 +62,15 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+
+        MobileAds.initialize(getContext(),
+                "ca-app-pub-3940256099942544~3347511713");
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        mAdView.bringToFront();
+
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rv_news_layout
                 .getContext());
 
