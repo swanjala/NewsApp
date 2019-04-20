@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_country_list"
         android:layout_width="@dimen/fragment_country_list_recycler_layout_height"
@@ -21,5 +22,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fb_back_to_main"
+        android:layout_width="313dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="@dimen/fragment_main_news_floating_action_bar_layout_margin"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/content_description_search_a_news_item_by_using_a_key_word"
+        android:onClick="onClick"
+        android:src="@drawable/ic_fragment_left_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rv_country_list"
+        app:layout_constraintVertical_bias="0.987" />
+
 
 </android.support.constraint.ConstraintLayout>
