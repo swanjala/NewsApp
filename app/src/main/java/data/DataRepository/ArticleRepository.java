@@ -36,7 +36,7 @@ public class ArticleRepository {
     private LiveData<List<Articles>> mAllArticlesByDomain;
     private LiveData<List<Articles>> mAllArticlesNoQuery;
     private LiveData<List<Sources>> mSources;
-    private List<Articles> mArticlesByCountry;
+    private LiveData<List<Articles>> mArticlesByCountry;
     private LiveData<List<String>> mCountries;
     private LiveData<List<String>> mNewsCategories;
     private LiveData<List<Articles>> mNewsBySetToRead;
@@ -172,7 +172,7 @@ public class ArticleRepository {
 
     }
 
-    public List<Articles> getArticlesByCountry(Context context, String country) {
+    public LiveData<List<Articles>> getArticlesByCountry(Context context, String country) {
 
         try {
 
@@ -254,13 +254,13 @@ public class ArticleRepository {
                                                Response<DataResponse> response) {
 
                             if (response.body() != null) {
-
                                 CountryConstants countryConstants = new CountryConstants();
                                 String countryQuery = countryConstants
-                                        .countryListData().get(queryValue);
+                                        .countryListData().get(queryValue.toUpperCase());
 
                                 articlesByCountry = response.body().getArticles();
                                 for (int index = 0; index < articlesByCountry.size(); index++) {
+
                                     String author = articlesByCountry.get(index).getAuthor();
                                     articlesByCountry.get(index)
                                             .setAuthor(author + "\n"+ countryQuery);
