@@ -16,7 +16,6 @@ import com.example.newsapp.adapters.MainAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import data.datamodels.Articles;
 import viewmodels.NewsViewModel;
 
 public class MainFragment extends Fragment {
@@ -90,9 +89,9 @@ public class MainFragment extends Fragment {
                 model.fetchArticlesByDomain(getArguments()
                         .getString(getString(R.string.main_fragment_query_value)))
                         .observe(this, articlesList -> {
-                    mainAdapter = new MainAdapter(getContext(), articlesList);
-                    rv_news_layout.setAdapter(mainAdapter);
-                    mainAdapter.notifyDataSetChanged();
+                        mainAdapter = new MainAdapter(getContext(), articlesList);
+                        rv_news_layout.setAdapter(mainAdapter);
+                        mainAdapter.notifyDataSetChanged();
                 });
             }
             else  if(DATAFLAG.equals(getString(R.string.title_search_value))){
