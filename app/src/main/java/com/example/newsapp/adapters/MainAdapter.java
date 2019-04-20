@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.newsapp.R;
 import com.squareup.picasso.Picasso;
@@ -36,8 +37,16 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
     public MainAdapter(Context context, List<Articles> articlesList){
         mArticleDataSet = articlesList;
 
-        Collections.sort(articlesList, (o1, o2)
-                -> o1.getPublishedAt().compareTo(o2.getPublishedAt()));
+        if (mArticleDataSet.size() > 0){
+            Collections.sort(articlesList, (o1, o2)
+                    -> o1.getPublishedAt().compareTo(o2.getPublishedAt()));
+        }
+        else{
+            Toast.makeText(context,
+                    context.getString(R.string.no_news_message),
+                    Toast.LENGTH_LONG).show();
+        }
+
         this.layoutInflater = LayoutInflater.from(context);
         this.context = context;
 
