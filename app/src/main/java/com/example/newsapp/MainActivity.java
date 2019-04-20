@@ -118,9 +118,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void loadData() {
 
-        this.DATAFLAG = getResources()
-                .getString(R.string.load_all_data_flag);
-
         MainFragment mainFragment = new MainFragment();
         Bundle bundle = new Bundle();
         bundle.putString(getResources()
