@@ -2,10 +2,12 @@ package com.example.newsapp.Fragments;
 
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.newsapp.MainActivity;
 import com.example.newsapp.R;
 import com.example.newsapp.adapters.CountryAdapter;
 
@@ -27,6 +30,9 @@ public class CountryListFragment extends Fragment {
 
     @BindView(R.id.rv_country_list)
     RecyclerView rv_country_list;
+
+    @BindView(R.id.fb_back_to_main)
+    FloatingActionButton fb_back_to_main;
 
     private NewsViewModel newsViewModel;
 
@@ -66,6 +72,11 @@ public class CountryListFragment extends Fragment {
             rv_country_list.setAdapter(countryAdapter);
             countryAdapter.notifyDataSetChanged();
 
+        });
+
+        fb_back_to_main.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(),MainActivity.class);
+            startActivity(intent);
         });
     }
 }

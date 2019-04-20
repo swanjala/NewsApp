@@ -33,38 +33,77 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        this.DATAFLAG = "all_data";
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID,"MainActivity");
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME,"MainActivityLog");
-        bundle.putSerializable(FirebaseAnalytics.Param.CONTENT_TYPE,"ActivityLog");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID,
+                getString(R.string.firebase_item_id_value));
+
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME,
+                getString(R.string.firebase_main_activity_log_item_name));
+
+        bundle.putSerializable(FirebaseAnalytics.Param.CONTENT_TYPE,
+                getString(R.string.firebase_activity_log));
 
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT,bundle);
 
         if (findViewById(R.id.largeScreen) != null){
             this.LARGE_SCREEN_SIZE = true;
-           // loadData();
+
+            if(DATAFLAG != null) {
+
+                if (DATAFLAG.equals(getString(R.string.load_all_data_flag))) {
+                    loadData();
+                } else if (DATAFLAG.equals(getString(R.string.load_data_sources_flag))) {
+
+                    loadSourcesList();
+                }
+            }
 
         } else if(findViewById(R.id.cl_country_detail) != null){
             this.LARGE_SCREEN_SIZE = true;
             loadCountries();
         } else if (findViewById(R.id.fr_main_holder) != null){
             this.LARGE_SCREEN_SIZE = false;
+
+            if(DATAFLAG != null) {
+                if (DATAFLAG != null && DATAFLAG.equals(getString(R.string.load_all_data_flag))) {
+                    loadData();
+                } else if (DATAFLAG.equals(getString(R.string.load_data_sources_flag))) {
+                    loadSourcesList();
+                }
+            } else {
+                loadSourcesList();
+            }
         }
-
-        loadData();
-
     }
 
     @Override
-    protected  void onResume() {
-        super.onResume();
+    public  void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
         if (findViewById(R.id.largeScreen) != null){
             this.LARGE_SCREEN_SIZE = true;
-            loadCountries();
+
+            if(DATAFLAG != null) {
+
+                if (DATAFLAG.equals(getString(R.string.load_all_data_flag))) {
+                    loadData();
+                } else if (DATAFLAG.equals(getString(R.string.load_data_sources_flag))) {
+
+                    loadSourcesList();
+                }
+            }
+
+        } else if(findViewById(R.id.fr_main_holder) != null ){
+            this.LARGE_SCREEN_SIZE = false;
+
+            if(DATAFLAG != null){
+                if (DATAFLAG.equals(getString(R.string.load_all_data_flag))){
+                    loadData();
+                }
+            }
         }
 
        if (findViewById(R.id.cl_country_detail) != null){
@@ -78,13 +117,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadData() {
+
         MainFragment mainFragment = new MainFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("DataFlag", DATAFLAG);
+        bundle.putString(getResources()
+                .getString(R.string.data_flag_key), DATAFLAG);
+
         mainFragment.setArguments(bundle);
         
-        if (LARGE_SCREEN_SIZE && findViewById(R.id.frame_detail) != null){
-            fragmentContainer = R.id.frame_detail;
+        if (LARGE_SCREEN_SIZE && findViewById(R.id.frame_articles) != null){
+            fragmentContainer = R.id.frame_articles;
 
         }else if (findViewById(R.id.fr_main_holder) != null){
             fragmentContainer = R.id.fr_main_holder;
@@ -101,11 +143,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadSourcesList() {
+        this.DATAFLAG =
+                getString(R.string.load_data_sources_flag);
         SourcesFragment sourcesFragment = new SourcesFragment();
         Bundle bundle = new Bundle();
         bundle.putString("sourceCategory","");
         sourcesFragment.setArguments(bundle);
-        fragmentContainer = R.id.fr_main_holder;
+
+        if (LARGE_SCREEN_SIZE){
+            fragmentContainer = R.id.frame_articles;
+        }else {
+            fragmentContainer = R.id.fr_main_holder;
+        }
         fragmentManager = this.getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(fragmentContainer,sourcesFragment)

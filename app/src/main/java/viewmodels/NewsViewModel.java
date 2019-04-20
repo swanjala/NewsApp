@@ -4,8 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.util.Log;
 
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class NewsViewModel extends AndroidViewModel {
     private LiveData<List<Articles>> newsBySetToRead;
     private LiveData<List<Articles>> articlesByDomain;
     private LiveData<List<Articles>> articlesByTitle;
-    private List<Articles> articlesByCountry;
+    private LiveData<List<Articles>> articlesByCountry;
     private LiveData<List<Sources>> sourcesByNewsCategory;
     private Context context;
 
@@ -64,11 +62,7 @@ public class NewsViewModel extends AndroidViewModel {
     public LiveData<List<String>> fetchAllCountries() {
         return countryLiveData;
     }
-    public List<Articles> fetchArticlesByCountry(String country){
-
-        if (articlesByCountry != null) {
-            articlesByCountry.clear();
-        }
+    public LiveData<List<Articles>> fetchArticlesByCountry(String country){
 
         articlesByCountry  = mRepository.getArticlesByCountry(context,country);
 

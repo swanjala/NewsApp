@@ -9,7 +9,7 @@
 
     <FrameLayout
         android:id="@+id/frame_articles"
-        android:layout_width="@dimen/ac_main_activity_large_layout_width"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/ac_main_activity_large_layout_height"
         android:layout_marginStart="@dimen/ac_main_activity_large_layout_start"
         android:layout_marginLeft="@dimen/ac_main_activity_large_layout_left"

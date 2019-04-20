@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -36,15 +37,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
     public MainAdapter(Context context, List<Articles> articlesList){
         mArticleDataSet = articlesList;
 
-        Collections.sort(articlesList, (o1, o2)
-                -> o1.getPublishedAt().compareTo(o2.getPublishedAt()));
+            Collections.sort(articlesList, (o1, o2)
+                    -> o1.getPublishedAt().compareTo(o2.getPublishedAt()));
+
         this.layoutInflater = LayoutInflater.from(context);
         this.context = context;
 
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent,
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                            int viewType){
         View view = layoutInflater.inflate(R.layout.card_news_data, parent, false);
         MyViewHolder viewHolder = new MyViewHolder(view);
@@ -54,7 +57,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position){
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position){
         Articles currentArticle = mArticleDataSet.get(position);
         holder.setData(currentArticle,position);
     }

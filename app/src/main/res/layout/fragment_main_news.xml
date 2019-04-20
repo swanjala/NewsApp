@@ -6,17 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fb_news_back"
+        android:layout_width="313dp"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="@dimen/fragment_main_news_floating_action_bar_layout_margin"
+        android:contentDescription="@string/content_description_search_a_news_item_by_using_a_key_word"
+        android:onClick="onClick"
+        android:src="@drawable/ic_fragment_left_24dp" />
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
-        android:layout_width="@dimen/fragment_main_news_adview_layout_width"
-        android:layout_height="@dimen/fragment_main_news_adview_layout_height"
+        android:layout_width="198dp"
+        android:layout_height="18dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        ads:adSize="BANNER"
-        android:layout_gravity="bottom"
+        android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fragment_main_news_adview_layout_margin"
-        ads:adUnitId="@string/adUnitId">
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/adUnitId"
+        ads:layout_anchor="@+id/rv_news_layout"
+        ads:layout_anchorGravity="bottom|center">
 
     </com.google.android.gms.ads.AdView>
 
@@ -35,7 +47,9 @@
         android:id="@+id/rv_news_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:stackFromEnd="true" />
+        app:stackFromEnd="true">
+
+    </android.support.v7.widget.RecyclerView>
 
 
 
