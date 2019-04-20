@@ -33,6 +33,7 @@ public class ArticleRepository {
     private SourcesAccessObject sourcesAccessObject;
     private LiveData<List<Articles>> mAllArticles;
     private LiveData<List<Articles>> mAllArticlesByTitle;
+    private LiveData<List<Articles>> mAllArticlesByDomain;
     private LiveData<List<Articles>> mAllArticlesNoQuery;
     private LiveData<List<Sources>> mSources;
     private List<Articles> mArticlesByCountry;
@@ -116,11 +117,16 @@ public class ArticleRepository {
 
         } finally {
 
-            mAllArticlesByTitle = articleAccessObject
+            Pattern pattern = Pattern.compile("(https?://)([^:^/]*)(:\\d*)?(.*)?");
+            Matcher matcher = pattern.matcher(domain);
+            matcher.find();
+            domain  = matcher.group(2).substring(4);
+
+            mAllArticlesByDomain = articleAccessObject
                     .fetchDataByDomain("%"+domain+"%");
         }
 
-        return mAllArticlesByTitle;
+        return mAllArticlesByDomain;
 
     }
 
