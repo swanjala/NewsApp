@@ -1,24 +1,33 @@
-package com.example.newsapp.testing;
+package testing;
 
-public class SingleFragmentActivity extends AppCompatActivity{
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+
+import com.example.newsapp.R;
+
+public class SingleFragmentActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        FrameLayout content = new FragmeLayou(this);
-        content.setLayoutParams(new FragmeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGropu.LayoutParams.MATCH_PARENT));
-        content.setId(R.id.contaier);
+        FrameLayout content = new FrameLayout(this);
+        content.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        content.setId(R.id.frame_main);
         setContentView(content);
     }
 
     public void setFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, fragment, "TEST")
+                .add(R.id.frame_main, fragment, "TEST")
                 .commit();
     }
     public void replaceFragment(Fragment fragment){
-        getSupportFragmentManage().beginTransaction()
-                .replace(R.id.container, fragment).commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_main, fragment).commit();
     }
 }
