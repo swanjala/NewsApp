@@ -47,4 +47,5 @@
     <string name="firebase_main_activity_log_item_name">MainActivityLog</string>
     <string name="firebase_activity_log">ActivityLog</string>
     <string name="load_data_sources_flag">load_sources_flag</string>
+    <string name="no_news_message">No news for this source at the moment, check again later</string>
 </resources>
