@@ -17,17 +17,17 @@ public class SingleFragmentActivity extends AppCompatActivity {
         FrameLayout content = new FrameLayout(this);
         content.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
-        content.setId(R.id.frame_main);
+        content.setId(R.id.fr_main_holder);
         setContentView(content);
     }
 
     public void setFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.frame_main, fragment, "TEST")
-                .commit();
+                .add(R.id.fr_main_holder, fragment, "TEST")
+                .commitAllowingStateLoss();
     }
     public void replaceFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_main, fragment).commit();
+                .replace(R.id.fr_main_holder, fragment).commit();
     }
 }
