@@ -1,10 +1,13 @@
 package com.example.newsapp.Fragments;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +26,9 @@ public class MainFragment extends Fragment {
     @BindView(R.id.fb_news_items)
     FloatingActionButton fb_news_items;
 
+    @BindView(R.id.fb_news_back)
+    FloatingActionButton fb_news_back;
+
     @BindView(R.id.rv_news_layout)
     RecyclerView rv_news_layout;
 
@@ -33,7 +39,7 @@ public class MainFragment extends Fragment {
     private static String DATAFLAG;
 
     @Override
-    public View onCreateView(LayoutInflater layoutInflater,
+    public View onCreateView(@NonNull LayoutInflater layoutInflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
@@ -46,6 +52,7 @@ public class MainFragment extends Fragment {
 
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
@@ -122,10 +129,15 @@ public class MainFragment extends Fragment {
                 String countryName = getArguments()
                         .getString(getString(R.string.country_data_flag));
 
+                model.fetchArticlesByCountry(countryName).observe(this, articlesList -> {
+
                     mainAdapter = new MainAdapter(getContext(),
-                            model.fetchArticlesByCountry(countryName));
+                            articlesList);
                     rv_news_layout.setAdapter(mainAdapter);
                     mainAdapter.notifyDataSetChanged();
+                });
+
+
             }
         }
 
@@ -135,6 +147,7 @@ public class MainFragment extends Fragment {
 
             SearchFragment searchFragment  = new SearchFragment();
             fragmentContainer = R.id.fr_main_holder;
+            assert getFragmentManager() != null;
             fragmentTransaction = getFragmentManager().beginTransaction();
 
             fragmentTransaction.replace(fragmentContainer,searchFragment);
@@ -142,6 +155,23 @@ public class MainFragment extends Fragment {
             fragmentTransaction.commitAllowingStateLoss();
 
         });
+
+        FragmentManager fragmentManager = getFragmentManager();
+
+        assert fragmentManager != null;
+        if (fragmentManager.getBackStackEntryCount()> 0) {
+
+            fb_news_back.setVisibility(View.VISIBLE);
+
+            fb_news_back.setOnClickListener(v -> {
+                    fragmentManager.popBackStack();
+
+            });
+
+        }
+
+
+
 
     }
 }
