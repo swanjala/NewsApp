@@ -1,24 +1,13 @@
 package com.example.newsapp;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.example.newsapp.Fragments.CountryListFragment;
 
 public class HeadlinesByCountry extends AppCompatActivity {
 
-    private static RecyclerView recyclerView;
-
-    private static RecyclerView.Adapter mAdapter;
-    RecyclerView.LayoutManager layoutManager;
 
     private static boolean LARGE_SCREEN_FLAG;
 
