@@ -35,6 +35,7 @@ public class CountryListFragment extends Fragment {
     FloatingActionButton fb_back_to_main;
 
     private NewsViewModel newsViewModel;
+    private HashMap<String, String> countryMap;
 
     private CountryConstants countryConstants = new CountryConstants();
 
@@ -57,8 +58,10 @@ public class CountryListFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager =
                 new LinearLayoutManager(rv_country_list.getContext());
-        HashMap<String, String> countryMap = countryConstants.countryListData();
 
+        if (countryMap!= null) {
+            countryMap = countryConstants.countryListData();
+        }
 
         rv_country_list.setLayoutManager(linearLayoutManager);
 
