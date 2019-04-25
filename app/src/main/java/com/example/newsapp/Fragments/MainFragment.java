@@ -64,12 +64,11 @@ public class MainFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         MobileAds.initialize(getContext(),
-                "ca-app-pub-3940256099942544~3347511713");
+                getString(R.string.mobile_ads_id));
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         mAdView.bringToFront();
-
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rv_news_layout
                 .getContext());
@@ -184,9 +183,6 @@ public class MainFragment extends Fragment {
             });
 
         }
-
-
-
 
     }
 }
