@@ -48,4 +48,8 @@
     <string name="firebase_activity_log">ActivityLog</string>
     <string name="load_data_sources_flag">load_sources_flag</string>
     <string name="no_news_message">No news for this source at the moment, check again later</string>
+    <string name="mobile_ads_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="source_category_flag_key">sourceCategory</string>
+    <string name="load_country_string">LoadCountries</string>
+    <string name="large_string_flag_key">LargeScreen</string>
 </resources>
