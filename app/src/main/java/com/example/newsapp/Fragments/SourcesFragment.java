@@ -47,10 +47,11 @@ public class SourcesFragment extends Fragment {
                 .of(this)
                 .get(NewsViewModel.class);
 
-        if (getArguments().getString("sourceCategory") != null
-                && getArguments().getString("sourceCategory") != "" ){
+        if (getArguments().getString(getString(R.string.source_category_flag_key)) != null
+                && getArguments().getString(getString(R.string.source_category_flag_key)) != "" ){
 
-            model.fetchDataByNewsCategories(getArguments().getString("sourceCategory"))
+            model.fetchDataByNewsCategories(getArguments()
+                    .getString(getString(R.string.source_category_flag_key)))
                     .observe(this, sources -> {
 
                 sourcesAdapter = new SourcesAdapter(getContext(), sources);
