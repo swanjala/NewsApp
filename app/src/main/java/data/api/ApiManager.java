@@ -43,7 +43,6 @@ public class ApiManager {
         this.apiKey = BuildConfig.ApiKey;
     }
 
-
     public Call<DataResponse> getArticles(){
         return callInstance.getInstance().getAllNews(query, apiKey);
     }
