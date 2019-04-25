@@ -29,8 +29,6 @@ public class CountryAdapter extends
     private LayoutInflater layoutInflater;
     private static Context context;
     private HashMap<String, String> countryData;
-    private static boolean mScreenFlag;
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public CountryAdapter(Context context, List<String> countryList,
@@ -81,8 +79,6 @@ public class CountryAdapter extends
         private TextView tv_country;
         private HashMap<String, String> mCountryData;
         private  int fragmentContainer;
-        private  FragmentManager fragmentManager;
-
 
         public CountryViewHolder(View countryView,
                                  HashMap<String, String> countryData){
