@@ -11,7 +11,7 @@ public class HeadlinesByCountry extends AppCompatActivity {
 
     private static boolean LARGE_SCREEN_FLAG;
 
-    private int mainFragmentContainer, detailFragmentContainer;
+    private int mainFragmentContainer;
     private FragmentManager fragmentManager;
 
 
@@ -47,11 +47,13 @@ public class HeadlinesByCountry extends AppCompatActivity {
 
         CountryListFragment countryListFragment = new CountryListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("DataFlag", "LoadCountries");
+        bundle.putString(getString(R.string.data_flag_key),
+                getString(R.string.load_country_string));
 
         if (LARGE_SCREEN_FLAG) {
 
-            bundle.putBoolean("LargeScreen", LARGE_SCREEN_FLAG);
+            bundle.putBoolean(getString(R.string.large_string_flag_key)
+                    , LARGE_SCREEN_FLAG);
 
             mainFragmentContainer = R.id.frame_main;
 
