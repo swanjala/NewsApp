@@ -86,7 +86,7 @@ public class MainFragment extends Fragment {
             DATAFLAG = getArguments()
                     .getString(getString(R.string.main_fragment_get_data_flag_key));
 
-            /* Fetches data using the all data fetch flag */
+            /* Fetches data using data flag: conditional  */
 
             if (DATAFLAG.equals(getString(R.string.all_data_flag))){
                 model.fetchAllArticlesNoQuery().observe(this, articlesList ->{
