@@ -182,6 +182,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /* Method loads the news categories fragment on
+    * load .
+    * This loads first so that the user can get
+    * an opportunity to view news without thinking
+    * about too many details (browse mode) */
+
     public void loadCategories() {
 
         CategoriesFragment categoriesFragment = new CategoriesFragment();
