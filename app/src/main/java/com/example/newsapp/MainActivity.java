@@ -144,6 +144,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /* Method loads sources when called,
+    * sets up the data flag,
+    * sets up the screen by loaded size
+    * loads the initializes the sources fragment
+    */
+
     private void loadSourcesList() {
         this.DATAFLAG =
                 getString(R.string.load_data_sources_flag);
