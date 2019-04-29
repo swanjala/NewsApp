@@ -170,6 +170,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /* Loads the country activity when method is called
+    * factored out to facilite the main detail display
+    * on large screens */
+
     private void loadCountries() {
 
         Intent intent = new Intent(this, HeadlinesByCountry.class);
