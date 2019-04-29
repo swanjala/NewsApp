@@ -43,6 +43,10 @@ public class HeadlinesByCountry extends AppCompatActivity {
         loadData();
     }
 
+    /* Loads counties to the country list fragment
+    * sets up a large screen flag
+    * strats up the country list fragment */
+
     private void loadData() {
 
         CountryListFragment countryListFragment = new CountryListFragment();
