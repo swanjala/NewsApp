@@ -26,6 +26,9 @@ import viewmodels.NewsViewModel;
 
 public class MainFragment extends Fragment {
 
+    /* TODO
+    * - Reengineer all the duplicate values in the main fragment class */
+
     @BindView(R.id.fb_news_items)
     FloatingActionButton fb_news_items;
 
@@ -90,6 +93,10 @@ public class MainFragment extends Fragment {
                     .getString(getString(R.string.main_fragment_get_data_flag_key));
 
             /* Fetches data using data flag: conditional  */
+
+            /* TODO
+            * refactor execution conditionality, from if to case.
+             * Reason: most of the options are referencing integer types*/
 
             if (DATAFLAG.equals(getString(R.string.all_data_flag))){
                 model.fetchAllArticlesNoQuery().observe(this, articlesList ->{
