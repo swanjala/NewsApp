@@ -70,6 +70,9 @@ public class MainFragment extends Fragment {
         mAdView.loadAd(adRequest);
         mAdView.bringToFront();
 
+        /* TODO
+        * map out all the possible outcomes for linear layout for the program*/
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rv_news_layout
                 .getContext());
 
