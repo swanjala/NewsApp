@@ -52,7 +52,6 @@ public class MainFragment extends Fragment {
         View view = layoutInflater.inflate(R.layout.fragment_main_news,
                 container,
                 false);
-
         ButterKnife.bind(this, view);
         return view;
 
@@ -85,8 +84,6 @@ public class MainFragment extends Fragment {
 
             DATAFLAG = getArguments()
                     .getString(getString(R.string.main_fragment_get_data_flag_key));
-
-            /* Fetches data using data flag: conditional  */
 
             if (DATAFLAG.equals(getString(R.string.all_data_flag))){
                 model.fetchAllArticlesNoQuery().observe(this, articlesList ->{

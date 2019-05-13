@@ -36,12 +36,6 @@ public class ApiManager {
         this.query = query;
         this.apiKey = BuildConfig.ApiKey;
     }
-    public ApiManager(Context context, String country, String category){
-        this.callInstance.setInstance(CallInstance.callInstance());
-        this.country = country;
-        this.category = category;
-        this.apiKey = BuildConfig.ApiKey;
-    }
 
     public Call<DataResponse> getArticles(){
         return callInstance.getInstance().getAllNews(query, apiKey);
@@ -58,12 +52,6 @@ public class ApiManager {
     }
     public Call<DataResponse> getTopHeadlines(){
         return callInstance.getInstance().getTopHeadlines(query,apiKey);
-    }
-    public Call<DataResponse> getTopHeadlinesByCountryCategory() {
-        return callInstance.getInstance().getTopHeadlinesByCountryCategory(query, category, apiKey);
-    }
-    public Call<DataResponse> getTopHeadlineBySearch(){
-        return callInstance.getInstance().getTopHeadlineBySearch(query, apiKey);
     }
 
 
