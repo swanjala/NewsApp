@@ -26,9 +26,6 @@ import viewmodels.NewsViewModel;
 
 public class MainFragment extends Fragment {
 
-    /* TODO
-    * - Reengineer all the duplicate values in the main fragment class */
-
     @BindView(R.id.fb_news_items)
     FloatingActionButton fb_news_items;
 
@@ -55,7 +52,6 @@ public class MainFragment extends Fragment {
         View view = layoutInflater.inflate(R.layout.fragment_main_news,
                 container,
                 false);
-
         ButterKnife.bind(this, view);
         return view;
 
@@ -73,9 +69,6 @@ public class MainFragment extends Fragment {
         mAdView.loadAd(adRequest);
         mAdView.bringToFront();
 
-        /* TODO
-        * map out all the possible outcomes for linear layout for the program*/
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rv_news_layout
                 .getContext());
 
@@ -91,12 +84,6 @@ public class MainFragment extends Fragment {
 
             DATAFLAG = getArguments()
                     .getString(getString(R.string.main_fragment_get_data_flag_key));
-
-            /* Fetches data using data flag: conditional  */
-
-            /* TODO
-            * refactor execution conditionality, from if to case.
-             * Reason: most of the options are referencing integer types*/
 
             if (DATAFLAG.equals(getString(R.string.all_data_flag))){
                 model.fetchAllArticlesNoQuery().observe(this, articlesList ->{
