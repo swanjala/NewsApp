@@ -42,10 +42,6 @@ public class NewsViewModel extends AndroidViewModel {
         this.context = application.getApplicationContext();
     }
 
-    public LiveData<List<Articles>> fetchAllArticles() {
-       return articlesLiveData;
-
-    }
     public LiveData<List<Articles>> fetchAllArticlesNoQuery(){
         return articlesNoQueryLiveData;
     }
