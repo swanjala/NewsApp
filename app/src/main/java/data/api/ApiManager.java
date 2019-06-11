@@ -21,37 +21,37 @@ public class ApiManager {
     private String domain, country, category;
 
 
-    private CallInstanceModel callInstance
+    private CallInstanceModel callInstanceModel
             = new CallInstanceModel();
 
 
     public ApiManager(Context context) {
 
-        this.callInstance.setInstance(CallInstance.callInstance());
+        this.callInstanceModel.setInstance(CallInstance.callInstance());
          this.apiKey = BuildConfig.ApiKey;
     }
     public ApiManager(Context context, String query) {
 
-        this.callInstance.setInstance(CallInstance.callInstance());
+        this.callInstanceModel.setInstance(CallInstance.callInstance());
         this.query = query;
         this.apiKey = BuildConfig.ApiKey;
     }
 
     public Call<DataResponse> getArticles(){
-        return callInstance.getInstance().getAllNews(query, apiKey);
+        return callInstanceModel.getInstance().getAllNews(query, apiKey);
     }
 
     public Call<DataResponse> getSources() {
 
-        return callInstance.getInstance().getSources(apiKey);
+        return callInstanceModel.getInstance().getSources(apiKey);
 
     }
 
     public Call<DataResponse> getNewsByDomains(){
-        return callInstance.getInstance().getNewsByDomains(query, apiKey);
+        return callInstanceModel.getInstance().getNewsByDomains(query, apiKey);
     }
     public Call<DataResponse> getTopHeadlines(){
-        return callInstance.getInstance().getTopHeadlines(query,apiKey);
+        return callInstanceModel.getInstance().getTopHeadlines(query,apiKey);
     }
 
 

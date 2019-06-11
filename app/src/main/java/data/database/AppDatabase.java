@@ -54,4 +54,26 @@ public abstract class AppDatabase extends RoomDatabase {
             new DatabaseDataManager(dbContext, INSTANCE).execute();
         }
     };
+
+    public static AppDatabase runUpdateTask(final Context context){
+        dbContext= context;
+
+        if (INSTANCE == null){
+            synchronized (AppDatabase.class){
+                if (INSTANCE == null){
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                            AppDatabase.class, "app_database")
+                            .addCallback(newsSourcesCallBack)
+                            .allowMainThreadQueries()
+                            .fallbackToDestructiveMigration()
+                            .build();
+                }
+
+            }
+        }
+
+        return INSTANCE;
+    }
+
+    public static RoomDatabase.Callback
 }

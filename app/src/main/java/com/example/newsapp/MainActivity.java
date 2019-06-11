@@ -170,10 +170,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    /* Loads the country activity when method is called
-    * factored out to facilite the main detail display
-    * on large screens */
-
     private void loadCountries() {
 
         Intent intent = new Intent(this, HeadlinesByCountry.class);
@@ -181,12 +177,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
-
-    /* Method loads the news categories fragment on
-    * load .
-    * This loads first so that the user can get
-    * an opportunity to view news without thinking
-    * about too many details (browse mode) */
 
     public void loadCategories() {
 

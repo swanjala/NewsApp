@@ -65,9 +65,6 @@ public class CountryListFragment extends Fragment {
 
         rv_country_list.setLayoutManager(linearLayoutManager);
 
-        this.newsViewModel = ViewModelProviders.of(this)
-                .get(NewsViewModel.class);
-
 
         newsViewModel.fetchAllCountries().observe(this, countries -> {
             CountryAdapter countryAdapter;
