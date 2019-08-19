@@ -1,7 +1,5 @@
 package com.example.newsapp.Fragments;
 
-import android.annotation.SuppressLint;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,7 +15,6 @@ import android.view.ViewGroup;
 
 import com.example.newsapp.MainActivity;
 import com.example.newsapp.R;
-import com.example.newsapp.adapters.CountryAdapter;
 
 import java.util.HashMap;
 
