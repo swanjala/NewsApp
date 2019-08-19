@@ -8,53 +8,51 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import android.widget.FrameLayout
 import com.example.newsapp.Fragments.CategoriesFragment
 import com.example.newsapp.Fragments.MainFragment
 import com.example.newsapp.Fragments.SourcesFragment
 import com.google.firebase.analytics.FirebaseAnalytics
-import java.lang.invoke.ConstantCallSite
 
-class MainActivity: AppCompatActivity(){
-    var DATAFLAG:String = ""
-    var LARGE_SCREEN_SIZE:Boolean = false
-    var fragmentContainer:Int = 0
-    lateinit var firebaseAnalytics:FirebaseAnalytics
-    lateinit var fragmentManager:FragmentManager
+class MainActivity : AppCompatActivity() {
+    var DATAFLAG: String = ""
+    var LARGE_SCREEN_SIZE: Boolean = false
+    var fragmentContainer: Int = 0
+    lateinit var firebaseAnalytics: FirebaseAnalytics
+    lateinit var fragmentManager: FragmentManager
 
-    override fun onCreate(savedInstanceState: Bundle?){
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var mFirebaseAnalytics:FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        var bundle:Bundle = Bundle()
+        var mFirebaseAnalytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        var bundle: Bundle = Bundle()
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME,
                 getString(R.string.firebase_main_activity_log_item_name))
         bundle.putSerializable(FirebaseAnalytics.Param.CONTENT_TYPE,
                 getString(R.string.firebase_activity_log))
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
-        if(findViewById<ConstraintLayout>(R.id.largeScreen) != null){
+        if (findViewById<ConstraintLayout>(R.id.largeScreen) != null) {
             this.LARGE_SCREEN_SIZE = true
 
-            if(DATAFLAG != null ){
+            if (DATAFLAG != null) {
 
-                if(DATAFLAG.equals(getString(R.string.load_all_data_flag))){
+                if (DATAFLAG.equals(getString(R.string.load_all_data_flag))) {
                     loadData()
-                } else if (DATAFLAG.equals(getString(R.string.load_data_sources_flag))){
+                } else if (DATAFLAG.equals(getString(R.string.load_data_sources_flag))) {
                     loadSourcesList()
                 }
-            } else if(findViewById<ConstraintLayout>(R.id.cl_country_detail) != null){
+            } else if (findViewById<ConstraintLayout>(R.id.cl_country_detail) != null) {
                 this.LARGE_SCREEN_SIZE = true
                 loadCountries()
-            }else if (findViewById<FrameLayout>(R.id.fr_main_holder) != null ){
+            } else if (findViewById<FrameLayout>(R.id.fr_main_holder) != null) {
                 this.LARGE_SCREEN_SIZE = false;
 
-                if(DATAFLAG != null){
-                    if (DATAFLAG != null && DATAFLAG.equals(getString(R.string.load_data_sources_flag))){
+                if (DATAFLAG != null) {
+                    if (DATAFLAG != null && DATAFLAG.equals(getString(R.string.load_data_sources_flag))) {
                         loadData()
-                    } else if (DATAFLAG.equals(getString(R.string.load_data_sources_flag))){
+                    } else if (DATAFLAG.equals(getString(R.string.load_data_sources_flag))) {
                         loadSourcesList()
                     }
                 } else {
@@ -66,25 +64,25 @@ class MainActivity: AppCompatActivity(){
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
-        if (findViewById<ConstraintLayout>(R.id.largeScreen) != null){
+        if (findViewById<ConstraintLayout>(R.id.largeScreen) != null) {
             this.LARGE_SCREEN_SIZE = true
-            if(DATAFLAG != null){
-                if (DATAFLAG.equals(getString(R.string.load_all_data_flag))){
+            if (DATAFLAG != null) {
+                if (DATAFLAG.equals(getString(R.string.load_all_data_flag))) {
                     loadData();
-                } else if(DATAFLAG.equals(getString(R.string.load_data_sources_flag))){
+                } else if (DATAFLAG.equals(getString(R.string.load_data_sources_flag))) {
                     loadSourcesList()
                 }
             }
-        } else if (findViewById<FrameLayout>(R.id.fr_main_holder) != null){
+        } else if (findViewById<FrameLayout>(R.id.fr_main_holder) != null) {
             this.LARGE_SCREEN_SIZE = false;
 
-            if(DATAFLAG != null){
-                if (DATAFLAG.equals(getString(R.string.load_all_data_flag))){
+            if (DATAFLAG != null) {
+                if (DATAFLAG.equals(getString(R.string.load_all_data_flag))) {
                     loadData()
                 }
             }
         }
-        if (findViewById<ConstraintLayout>(R.id.cl_country_detail) != null){
+        if (findViewById<ConstraintLayout>(R.id.cl_country_detail) != null) {
             this.LARGE_SCREEN_SIZE = true
             loadCountries()
         }
@@ -93,17 +91,17 @@ class MainActivity: AppCompatActivity(){
 
     fun loadData() {
         var mainFragment = MainFragment()
-        var bundle:Bundle = Bundle()
+        var bundle: Bundle = Bundle()
         bundle.putString(resources.getString(R.string.data_flag_key), DATAFLAG)
 
         mainFragment.arguments = bundle
 
-        if (LARGE_SCREEN_SIZE && findViewById<FrameLayout>(R.id.frame_articles) != null){
+        if (LARGE_SCREEN_SIZE && findViewById<FrameLayout>(R.id.frame_articles) != null) {
             fragmentContainer = R.id.frame_articles
-        }else if (findViewById<FrameLayout>(R.id.fr_main_holder) != null){
+        } else if (findViewById<FrameLayout>(R.id.fr_main_holder) != null) {
             fragmentContainer = R.id.fr_main_holder
         }
-        if(fragmentContainer.toString().equals(0)){
+        if (fragmentContainer.toString().equals(0)) {
             fragmentManager = this.supportFragmentManager
             fragmentManager.beginTransaction()
                     .replace(fragmentContainer, mainFragment)
@@ -111,18 +109,18 @@ class MainActivity: AppCompatActivity(){
         }
     }
 
-    fun loadSourcesList(){
+    fun loadSourcesList() {
 
         this.DATAFLAG = getString(R.string.load_all_data_flag)
 
         var sourcesFragment = SourcesFragment()
-        var bundle:Bundle = Bundle()
-        bundle.putString("sourceCategory","")
+        var bundle: Bundle = Bundle()
+        bundle.putString("sourceCategory", "")
         sourcesFragment.arguments = bundle
 
-        if(LARGE_SCREEN_SIZE){
+        if (LARGE_SCREEN_SIZE) {
             fragmentContainer = R.id.frame_articles
-        }else {
+        } else {
             fragmentContainer = R.id.fr_main_holder
         }
         fragmentManager = supportFragmentManager
@@ -131,13 +129,14 @@ class MainActivity: AppCompatActivity(){
                 .commitAllowingStateLoss()
 
     }
-    fun loadCountries(){
+
+    fun loadCountries() {
         var intent = Intent(this, HeadlinesByCountry::class.java)
         startActivity(intent)
     }
 
     fun loadCategories() {
-        var categoriesFragment:CategoriesFragment = CategoriesFragment()
+        var categoriesFragment: CategoriesFragment = CategoriesFragment()
         fragmentContainer = R.id.fr_main_holder
         fragmentManager = this.supportFragmentManager
         fragmentManager.beginTransaction()
@@ -146,30 +145,30 @@ class MainActivity: AppCompatActivity(){
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        var inflater:MenuInflater = menuInflater
+        var inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.main_menu, menu)
         return true;
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
-        return when (item?.itemId){
-            R.id.all_news ->{
+        return when (item?.itemId) {
+            R.id.all_news -> {
                 loadData()
-                 true
+                true
             }
             R.id.news_sources -> {
                 loadSourcesList()
-                 true
+                true
             }
             R.id.news_categories -> {
                 loadCategories()
-                 true
+                true
             }
             R.id.loadFavorites -> {
                 this.DATAFLAG = getString(R.string.load_favorites_flag);
                 loadData()
-                 true
+                true
             }
             R.id.action_settings -> {
                 var startSettingIntent = Intent(this, Settings::class.java)
