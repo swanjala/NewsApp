@@ -15,6 +15,7 @@ import com.example.newsapp.Fragments.SourcesFragment
 import com.google.firebase.analytics.FirebaseAnalytics
 
 class MainActivity : AppCompatActivity() {
+
     var DATAFLAG: String = ""
     var LARGE_SCREEN_SIZE: Boolean = false
     var fragmentContainer: Int = 0
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var fragmentManager: FragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -63,6 +65,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+
         super.onRestoreInstanceState(savedInstanceState)
         if (findViewById<ConstraintLayout>(R.id.largeScreen) != null) {
             this.LARGE_SCREEN_SIZE = true
@@ -90,6 +93,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun loadData() {
+
         var mainFragment = MainFragment()
         var bundle: Bundle = Bundle()
         bundle.putString(resources.getString(R.string.data_flag_key), DATAFLAG)
