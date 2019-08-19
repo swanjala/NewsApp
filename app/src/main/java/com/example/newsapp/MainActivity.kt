@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
                 this.LARGE_SCREEN_SIZE = false;
 
                 if (DATAFLAG != null) {
+
                     if (DATAFLAG != null && DATAFLAG.equals(getString(R.string.load_data_sources_flag))) {
                         loadData()
                     } else if (DATAFLAG.equals(getString(R.string.load_data_sources_flag))) {
