@@ -42,14 +42,6 @@
         <activity
             android:name=".HeadlinesByCountry"
             android:label="Headlines" />
-        <activity
-            android:name=".Settings"
-            android:label="Settings"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
     </application>
 
 </manifest>
