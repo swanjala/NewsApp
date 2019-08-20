@@ -10,4 +10,12 @@ class NewAppWidget : AppWidgetProvider() {
                                      appWidgetId:Int) {
 
     }
+
+    override fun onUpdate(context:Context,
+                          appWidgetManager: AppWidgetManager,
+                          appWidgetIds: Int[]){
+        for (appWidgetId:Int, appWidgetIds ){
+
+        }
+    }
 }
