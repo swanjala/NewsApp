@@ -90,6 +90,8 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                 if (contrastFlag){
                     bt_favorite.foreground = mContext
                             .getDrawable(R.drawable.ic_thumb_up_high_contrast_24dp)
+                } else{
+                    bt_favorite.foreground = mContext.getDrawable(R.drawable.ic_thumb_up_black_24dp)
                 }
             }
 
