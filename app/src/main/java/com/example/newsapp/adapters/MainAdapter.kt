@@ -40,6 +40,7 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
         var tv_date:TextView = view.findViewById(R.id.tv_date)
         var bt_favorite:Button = view.findViewById(R.id.bt_mark_as_favorite)
         var iv_articleImage:ImageView = view.findViewById(R.id.tv_date)
+        var bt_toread:Button = view.findViewById(R.id.bt_to_read)
         var publishedAt:String = ""
         lateinit var userActionViewModel: NewsViewModel
         var contrastFlag:Boolean = false
@@ -100,6 +101,10 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                     var titleQuery ="%" +  current.title.substring(0,10)+ "%"
                     userActionViewModel.setNewsItemsByFavorite(true,titleQuery)
                 })
+            }
+
+            if(current.toRead){
+
             }
 
         }
