@@ -104,7 +104,12 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
             }
 
             if(current.toRead){
+                bt_toread.foreground = mContext.getDrawable(R.drawable.ic_library_add_accent_24dp)
+                bt_toread.setOnClickListener(View.OnClickListener {
 
+                    var titleQuery = "%" + current.title.substring(0,10) + "%"
+                    userActionViewModel.setNewsItemsByFavorite(false, titleQuery)
+                })
             }
 
         }
