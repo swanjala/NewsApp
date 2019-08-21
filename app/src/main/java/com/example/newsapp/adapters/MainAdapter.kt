@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -29,12 +30,33 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
 
     private var layoutInflater:LayoutInflater
 
+    var mArticles = articlesList
+
 
     init {
 
         Collections.sort(articlesList) { o1, o2 -> o1.publishedAt.compareTo(o2.publishedAt) }
 
         layoutInflater = LayoutInflater.from(context)
+    }
+
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MyViewHolder {
+
+        val view:View  = LayoutInflater.from(viewGroup.context)
+                .inflate(R.layout.card_news_data, viewGroup, false)
+
+        return MyViewHolder(view)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onBindViewHolder(myViewHolder:MyViewHolder, position: Int) {
+
+        var currentArticle = mArticles.get(position);
+        myViewHolder.setData(currentArticle,position);
+    }
+
+    override fun getItemCount(): Int {
+        return mArticles.size
     }
 
     class MyViewHolder(var view: View): RecyclerView.ViewHolder(view){
