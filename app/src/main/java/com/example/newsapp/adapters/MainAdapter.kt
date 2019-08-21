@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.newsapp.R
+import com.squareup.picasso.Picasso
 import data.datamodels.Articles
 import kotlinx.android.synthetic.main.card_news_data.view.*
 import viewmodels.NewsViewModel
@@ -119,6 +120,15 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 mContext.startActivity(intent)
             }
+
+            Picasso.with(mContext).load(current.urlToImage)
+                    .fit()
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_launcher_foreground)
+                    .centerCrop()
+                    .into(iv_articleImage)
+
+
 
         }
 
