@@ -2,7 +2,9 @@ package com.example.newsapp.adapters
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import android.preference.PreferenceManager
+import android.support.annotation.RequiresApi
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +21,7 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
         RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
 
     private var layoutInflater:LayoutInflater
-    private var mContext = context
+
 
     init {
 
@@ -40,16 +42,35 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
         lateinit var userActionViewModel: NewsViewModel
         var contrastFlag:Boolean = false
 
+        @RequiresApi(api= Build.VERSION_CODES.M)
         fun setData(current:Articles, position:Int){
+
+            val mContext:Context = view.context
             publishedAt = current.publishedAt
             tv_title.setText(current.title)
             this.tv_description.setText(current.description)
 
             var sharedPreferences:SharedPreferences =
-                    PreferenceManager.getDefaultSharedPreferences(view.context)
+                    PreferenceManager.getDefaultSharedPreferences(mContext)
             contrastFlag =sharedPreferences
-                    .getBoolean(view.context.getString(R.string.high_contrast_key),false)
+                    .getBoolean(mContext.getString(R.string.high_contrast_key),false)
 
+            if(contrastFlag){
+                tv_description.setTextColor(mContext.resources
+                        .getColor(R.color.colorPrimaryDark, null))
+                tv_description.textScaleX = 1.25f
+
+                tv_title.setTextColor(mContext.resources
+                        .getColor(R.color.colorPrimaryDark, null))
+                tv_title.textScaleX = 1.25f
+
+                tv_author.setTextColor(mContext.resources
+                        .getColor(R.color.colorPrimaryDark, null))
+
+                tv_date.setTextColor(mContext.resources
+                        .getColor(R.color.colorPrimaryDark, null))
+
+            }
         }
 
     }
