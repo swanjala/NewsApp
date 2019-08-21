@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import com.example.newsapp.Fragments.MainFragment
 import com.example.newsapp.R
@@ -14,8 +15,26 @@ import data.datamodels.Sources
 class SourcesAdapter(context: Context, sourceList: List<Sources>) :
         RecyclerView.Adapter<SourcesAdapter.SourceViewHolder>() {
 
-    init {
-        var layoutInflater = LayoutInflater.from(context)
+
+    var mSourceList = sourceList
+    var layoutInflater = LayoutInflater.from(context)
+
+
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): SourceViewHolder {
+
+        var view: View = layoutInflater.inflate(R.layout.card_source_data, viewGroup, false)
+        return SourceViewHolder(view)
+
+    }
+
+    override fun onBindViewHolder(sourceViewHolder: SourceViewHolder, position: Int) {
+
+        var currentSource: Sources = mSourceList.get(position)
+        sourceViewHolder.setData(currentSource, position)
+    }
+
+    override fun getItemCount(): Int {
+        return mSourceList.size
 
     }
 
