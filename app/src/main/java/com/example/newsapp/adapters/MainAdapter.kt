@@ -86,6 +86,11 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                     var titleQuery = "%" + current.title.substring(0,10)+ "%"
                     userActionViewModel.setNewsItemsByFavorite(false,titleQuery)
                 })
+            } else {
+                if (contrastFlag){
+                    bt_favorite.foreground = mContext
+                            .getDrawable(R.drawable.ic_thumb_up_high_contrast_24dp)
+                }
             }
 
         }
