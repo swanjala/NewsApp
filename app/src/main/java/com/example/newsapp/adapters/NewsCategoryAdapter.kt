@@ -11,9 +11,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.newsapp.Fragments.SourcesFragment
 import com.example.newsapp.R
-import kotlinx.android.synthetic.main.card_category_list.view.*
 
-class NewsCategoryAdapter(context: Context, categoryList:List<String>) : RecyclerView.Adapter<NewsCategoryAdapter.NewsCategoryViewHolder>() {
+class NewsCategoryAdapter(context: Context,
+                          categoryList:List<String>) : RecyclerView.Adapter<NewsCategoryAdapter.NewsCategoryViewHolder>() {
 
     lateinit var layoutInflater: LayoutInflater
     var mContext:Context = context

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.newsapp.R;
-import com.example.newsapp.adapters.NewsCategoryAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
