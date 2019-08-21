@@ -93,6 +93,13 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                 } else{
                     bt_favorite.foreground = mContext.getDrawable(R.drawable.ic_thumb_up_black_24dp)
                 }
+
+                bt_favorite.setOnClickListener(View.OnClickListener {
+                    bt_favorite.foreground = mContext.getDrawable(R.drawable.ic_thumb_up_accent_24dp)
+
+                    var titleQuery ="%" +  current.title.substring(0,10)+ "%"
+                    userActionViewModel.setNewsItemsByFavorite(true,titleQuery)
+                })
             }
 
         }
