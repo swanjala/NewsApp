@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.newsapp.R
@@ -37,6 +38,7 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
         var tv_description:TextView = view.findViewById(R.id.tv_description)
         var tv_author:TextView = view.findViewById(R.id.tv_author)
         var tv_date:TextView = view.findViewById(R.id.tv_date)
+        var bt_favorite:Button = view.findViewById(R.id.bt_mark_as_favorite)
         var iv_articleImage:ImageView = view.findViewById(R.id.tv_date)
         var publishedAt:String = ""
         lateinit var userActionViewModel: NewsViewModel
@@ -74,6 +76,12 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
 
             this.tv_author.setText(current.author)
             this.tv_date.setText(publishedAt.substring(0,10) + " | " + publishedAt.substring(11,19))
+
+            if (current.favorite){
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                    bt_favorite.foreground = mContext.getDrawable(R.drawable.ic_thumb_up_accent_24dp)
+                }
+            }
 
         }
 
