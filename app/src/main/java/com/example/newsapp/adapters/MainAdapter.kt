@@ -71,6 +71,10 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                         .getColor(R.color.colorPrimaryDark, null))
 
             }
+
+            this.tv_author.setText(current.author)
+            this.tv_date.setText(publishedAt.substring(0,10) + " | " + publishedAt.substring(11,19))
+
         }
 
     }
