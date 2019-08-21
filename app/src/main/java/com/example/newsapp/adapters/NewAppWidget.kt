@@ -51,10 +51,10 @@ class NewAppWidget : AppWidgetProvider() {
                         views.setTextViewText(R.id.tv_news_title,
                                 articlesList?.get(dataIndex)?.title)
                         views.setTextViewText(R.id.tv_description,
-                                articlesList.get(dataIndex).description)
+                                articlesList?.get(dataIndex)?.description)
 
                         views.setTextViewText(R.id.tv_source_widget,
-                                articlesList.get(dataIndex).publishedAt)
+                                articlesList?.get(dataIndex)?.publishedAt)
 
                         val intent = Intent(context, MainActivity::class.java)
 
