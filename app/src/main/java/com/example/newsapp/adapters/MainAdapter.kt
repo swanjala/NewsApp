@@ -81,6 +81,11 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                     bt_favorite.foreground = mContext.getDrawable(R.drawable.ic_thumb_up_accent_24dp)
                 }
+
+                bt_favorite.setOnClickListener(View.OnClickListener {
+                    var titleQuery = "%" + current.title.substring(0,10)+ "%"
+                    userActionViewModel.setNewsItemsByFavorite(false,titleQuery)
+                })
             }
 
         }
