@@ -1,5 +1,6 @@
 package com.example.newsapp.adapters
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -7,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.preference.PreferenceManager
 import android.support.annotation.RequiresApi
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,7 @@ import android.widget.TextView
 import com.example.newsapp.R
 import com.squareup.picasso.Picasso
 import data.datamodels.Articles
+import kotlinx.android.synthetic.main.card_news_data.*
 import kotlinx.android.synthetic.main.card_news_data.view.*
 import viewmodels.NewsViewModel
 import java.util.*
@@ -128,7 +131,8 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                     .centerCrop()
                     .into(iv_articleImage)
 
-
+            this.userActionViewModel = ViewModelProviders.of(mContext as FragmentActivity)
+                    .get(NewsViewModel::class.java)
 
         }
 
