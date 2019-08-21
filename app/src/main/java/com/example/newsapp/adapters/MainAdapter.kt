@@ -1,7 +1,9 @@
 package com.example.newsapp.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Build
 import android.preference.PreferenceManager
 import android.support.annotation.RequiresApi
@@ -105,11 +107,17 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
 
             if(current.toRead){
                 bt_toread.foreground = mContext.getDrawable(R.drawable.ic_library_add_accent_24dp)
-                bt_toread.setOnClickListener(View.OnClickListener {
+                bt_toread.setOnClickListener {
 
                     var titleQuery = "%" + current.title.substring(0,10) + "%"
-                    userActionViewModel.setNewsItemsByFavorite(false, titleQuery)
-                })
+                    userActionViewModel.setNewsItemsBySetToRead(false, titleQuery)
+                }
+            }
+
+            tv_description.setOnClickListener{
+                var intent = Intent(Intent.ACTION_VIEW, Uri.parse(current.url))
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                mContext.startActivity(intent)
             }
 
         }
