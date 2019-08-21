@@ -85,10 +85,10 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                     bt_favorite.foreground = mContext.getDrawable(R.drawable.ic_thumb_up_accent_24dp)
                 }
 
-                bt_favorite.setOnClickListener(View.OnClickListener {
+                bt_favorite.setOnClickListener {
                     var titleQuery = "%" + current.title.substring(0,10)+ "%"
                     userActionViewModel.setNewsItemsByFavorite(false,titleQuery)
-                })
+                }
             } else {
                 if (contrastFlag){
                     bt_favorite.foreground = mContext
@@ -97,12 +97,12 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                     bt_favorite.foreground = mContext.getDrawable(R.drawable.ic_thumb_up_black_24dp)
                 }
 
-                bt_favorite.setOnClickListener(View.OnClickListener {
+                bt_favorite.setOnClickListener{
                     bt_favorite.foreground = mContext.getDrawable(R.drawable.ic_thumb_up_accent_24dp)
 
                     var titleQuery ="%" +  current.title.substring(0,10)+ "%"
                     userActionViewModel.setNewsItemsByFavorite(true,titleQuery)
-                })
+                }
             }
 
             if(current.toRead){
