@@ -11,7 +11,13 @@ import data.database.utils.NewsAppTypeConverter
 @TypeConverters(NewsAppTypeConverter::class)
 data class Articles(@PrimaryKey(autoGenerate = true) var id: Int?) {
 
-    @ColumnInfo(name = "author") var author:String,
+    @ColumnInfo(name = "author") var author:String
+    @ColumnInfo(name ="title") var author:String
+
+    @SerializedName("author")
+    @Expose
+    var author:String
+
 
 
 
