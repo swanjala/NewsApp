@@ -1,6 +1,7 @@
 package com.example.newsapp.dependencies
 
 import com.example.newsapp.BuildConfig
+import com.example.newsapp.data.api.AuthInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
