@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import testing.SingleFragmentActivity;
-import viewmodels.NewsViewModel;
+import com.example.newsapp.viewmodels.NewsViewModel;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;

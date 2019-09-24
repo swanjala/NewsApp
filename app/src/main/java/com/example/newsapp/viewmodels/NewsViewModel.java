@@ -1,4 +1,4 @@
-package viewmodels;
+package com.example.newsapp.viewmodels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
@@ -7,9 +7,9 @@ import android.content.Context;
 
 import java.util.List;
 
-import data.DataRepository.ArticleRepository;
-import data.datamodels.Articles;
-import data.datamodels.Sources;
+import com.example.newsapp.data.DataRepository.ArticleRepository;
+import com.example.newsapp.data.datamodels.Articles;
+import com.example.newsapp.data.datamodels.Sources;
 
 
 public class NewsViewModel extends AndroidViewModel {

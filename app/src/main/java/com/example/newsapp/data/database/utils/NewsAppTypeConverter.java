@@ -1,17 +1,10 @@
-package data.database.utils;
+package com.example.newsapp.data.database.utils;
 
-import android.annotation.SuppressLint;
 import android.arch.persistence.room.TypeConverter;
-import android.arch.persistence.room.TypeConverters;
-import android.arch.persistence.room.util.StringUtil;
 
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
-
-import data.datamodels.Sources;
 
 public class NewsAppTypeConverter {
 

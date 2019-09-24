@@ -1,10 +1,8 @@
 package com.example.newsapp.Fragments
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.newsapp.R
 import com.example.newsapp.adapters.NewsCategoryAdapter
-import viewmodels.NewsViewModel
+import com.example.newsapp.viewmodels.NewsViewModel
 
 class CategoriesFragment: Fragment() {
 
@@ -39,13 +37,18 @@ class CategoriesFragment: Fragment() {
         newsViewModel = ViewModelProviders.of(this)
                 .get(NewsViewModel::class.java)
 
-        newsViewModel.fetchNewsCategories().observe(this, categories run->{
+        newsViewModel.fetchNewsCategories().observe(this, catetories run{
             var newsCategoryAdatper = NewsCategoryAdapter(context, categories)
             recyclerView.adapter= newsCategoryAdatper
             newsCategoryAdatper.notifyDataSetChanged()
 
 
+
         })
+
+        /*TODO
+        * Go through the lifecycle stufff before getting into architecture
+        * riff and build and app*/q
 
     }
 

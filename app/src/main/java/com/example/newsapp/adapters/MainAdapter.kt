@@ -18,12 +18,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.newsapp.R
 import com.squareup.picasso.Picasso
-import data.datamodels.Articles
-import kotlinx.android.synthetic.main.card_news_data.*
-import kotlinx.android.synthetic.main.card_news_data.view.*
-import viewmodels.NewsViewModel
+import com.example.newsapp.data.datamodels.Articles
+import com.example.newsapp.viewmodels.NewsViewModel
 import java.util.*
-import kotlin.coroutines.coroutineContext
 
 class MainAdapter(context: Context, articlesList:List<Articles>):
         RecyclerView.Adapter<MainAdapter.MyViewHolder>() {

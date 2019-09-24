@@ -1,4 +1,4 @@
-package data.api;
+package com.example.newsapp.data.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

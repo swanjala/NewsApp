@@ -11,8 +11,8 @@ import android.widget.RemoteViews
 import com.example.newsapp.MainActivity
 import com.example.newsapp.R
 import com.squareup.picasso.Picasso
-import data.database.AppDatabase
-import data.datamodels.Articles
+import com.example.newsapp.data.database.AppDatabase
+import com.example.newsapp.data.datamodels.Articles
 
 class NewAppWidget : AppWidgetProvider() {
 

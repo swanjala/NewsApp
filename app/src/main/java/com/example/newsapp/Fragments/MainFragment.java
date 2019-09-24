@@ -21,7 +21,7 @@ import com.google.android.gms.ads.MobileAds;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import viewmodels.NewsViewModel;
+import com.example.newsapp.viewmodels.NewsViewModel;
 
 public class MainFragment extends Fragment {
 

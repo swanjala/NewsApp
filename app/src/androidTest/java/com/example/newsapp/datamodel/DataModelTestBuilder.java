@@ -1,6 +1,6 @@
 package com.example.newsapp.datamodel;
 
-import data.datamodels.Articles;
+import com.example.newsapp.data.datamodels.Articles;
 
 public class DataModelTestBuilder {
 

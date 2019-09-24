@@ -1,4 +1,4 @@
-package data.api;
+package com.example.newsapp.data.api;
 
 public class CallInstanceModel {
 

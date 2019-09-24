@@ -20,8 +20,8 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import data.datamodels.CountryConstants;
-import viewmodels.NewsViewModel;
+import com.example.newsapp.data.datamodels.CountryConstants;
+import com.example.newsapp.viewmodels.NewsViewModel;
 
 public class CountryListFragment extends Fragment {
 

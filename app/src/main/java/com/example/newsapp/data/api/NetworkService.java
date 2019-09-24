@@ -1,6 +1,6 @@
-package data.api;
+package com.example.newsapp.data.api;
 
-import data.datamodels.DataResponse;
+import com.example.newsapp.data.datamodels.DataResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

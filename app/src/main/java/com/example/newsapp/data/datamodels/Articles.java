@@ -1,7 +1,6 @@
-package data.datamodels;
+package com.example.newsapp.data.datamodels;
 
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
@@ -9,7 +8,7 @@ import android.arch.persistence.room.TypeConverters;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import data.database.utils.NewsAppTypeConverter;
+import com.example.newsapp.data.database.utils.NewsAppTypeConverter;
 
 @Entity(tableName="articles",
         indices = {@Index(value = "description", unique = true)})

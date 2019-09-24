@@ -6,7 +6,7 @@ import android.support.test.InstrumentationRegistry;
 import org.junit.After;
 import org.junit.Before;
 
-import data.database.AppDatabase;
+import com.example.newsapp.data.database.AppDatabase;
 
 public class DatabaseTest {
 

@@ -14,7 +14,7 @@ import com.example.newsapp.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import viewmodels.NewsViewModel;
+import com.example.newsapp.viewmodels.NewsViewModel;
 
 public class SourcesFragment extends Fragment {
 

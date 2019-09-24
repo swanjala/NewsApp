@@ -1,7 +1,5 @@
 package com.example.newsapp.database;
 
-import android.util.Log;
-
 import com.example.newsapp.datamodel.DataModelTestBuilder;
 
 import org.junit.Test;
@@ -9,7 +7,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import data.datamodels.Articles;
+import com.example.newsapp.data.datamodels.Articles;
 
 import static com.example.newsapp.LiveDataTestManager.retrieveValue;
 

@@ -1,4 +1,4 @@
-package data.database;
+package com.example.newsapp.data.database;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
@@ -8,11 +8,11 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import data.database.accessobjects.ArticleAccessObject;
-import data.database.accessobjects.SourcesAccessObject;
-import data.database.utils.NewsAppTypeConverter;
-import data.datamodels.Articles;
-import data.datamodels.Sources;
+import com.example.newsapp.data.database.accessobjects.ArticleAccessObject;
+import com.example.newsapp.data.database.accessobjects.SourcesAccessObject;
+import com.example.newsapp.data.database.utils.NewsAppTypeConverter;
+import com.example.newsapp.data.datamodels.Articles;
+import com.example.newsapp.data.datamodels.Sources;
 
 
 @Database(entities = {Articles.class, Sources.class}, version = 17)

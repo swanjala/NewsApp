@@ -1,10 +1,9 @@
-package data.datamodels
+package com.example.newsapp.data.datamodels
 
 import android.arch.persistence.room.*
-import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import data.database.utils.NewsAppTypeConverter
+import com.example.newsapp.data.database.utils.NewsAppTypeConverter
 
 @Entity(tableName = "articles")
 

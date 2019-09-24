@@ -1,4 +1,4 @@
-package data.DataRepository;
+package com.example.newsapp.data.DataRepository;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
@@ -15,14 +15,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import data.api.ApiManager;
-import data.database.AppDatabase;
-import data.database.accessobjects.ArticleAccessObject;
-import data.database.accessobjects.SourcesAccessObject;
-import data.datamodels.Articles;
-import data.datamodels.CountryConstants;
-import data.datamodels.DataResponse;
-import data.datamodels.Sources;
+import com.example.newsapp.data.api.ApiManager;
+import com.example.newsapp.data.database.AppDatabase;
+import com.example.newsapp.data.database.accessobjects.ArticleAccessObject;
+import com.example.newsapp.data.database.accessobjects.SourcesAccessObject;
+import com.example.newsapp.data.datamodels.Articles;
+import com.example.newsapp.data.datamodels.CountryConstants;
+import com.example.newsapp.data.datamodels.DataResponse;
+import com.example.newsapp.data.datamodels.Sources;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

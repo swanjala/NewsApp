@@ -1,4 +1,4 @@
-package data.DataRepository.repositorymodel;
+package com.example.newsapp.data.DataRepository.repositorymodel;
 
 public class Source {
 

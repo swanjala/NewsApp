@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.newsapp.Fragments.MainFragment
 import com.example.newsapp.R
-import data.datamodels.Sources
+import com.example.newsapp.data.datamodels.Sources
 
 class SourcesAdapter(context: Context, sourceList: List<Sources>) :
         RecyclerView.Adapter<SourcesAdapter.SourceViewHolder>() {

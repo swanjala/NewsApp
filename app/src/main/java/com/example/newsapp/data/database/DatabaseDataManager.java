@@ -1,4 +1,4 @@
-package data.database;
+package com.example.newsapp.data.database;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -6,10 +6,10 @@ import android.util.Log;
 
 import com.example.newsapp.R;
 
-import data.api.ApiManager;
-import data.database.accessobjects.ArticleAccessObject;
-import data.database.accessobjects.SourcesAccessObject;
-import data.datamodels.DataResponse;
+import com.example.newsapp.data.api.ApiManager;
+import com.example.newsapp.data.database.accessobjects.ArticleAccessObject;
+import com.example.newsapp.data.database.accessobjects.SourcesAccessObject;
+import com.example.newsapp.data.datamodels.DataResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

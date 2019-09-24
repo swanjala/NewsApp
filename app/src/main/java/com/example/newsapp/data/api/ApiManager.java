@@ -1,4 +1,4 @@
-package data.api;
+package com.example.newsapp.data.api;
 
 import android.content.Context;
 
@@ -6,8 +6,8 @@ import com.example.newsapp.BuildConfig;
 
 import java.util.List;
 
-import data.datamodels.Articles;
-import data.datamodels.DataResponse;
+import com.example.newsapp.data.datamodels.Articles;
+import com.example.newsapp.data.datamodels.DataResponse;
 import retrofit2.Call;
 
 public class ApiManager {

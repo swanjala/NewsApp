@@ -1,4 +1,4 @@
-package data.database.accessobjects;
+package com.example.newsapp.data.database.accessobjects;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -8,7 +8,7 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import data.datamodels.Articles;
+import com.example.newsapp.data.datamodels.Articles;
 
 
 @Dao
