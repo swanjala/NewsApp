@@ -12,7 +12,6 @@ import com.example.newsapp.MainActivity
 import com.example.newsapp.R
 import com.squareup.picasso.Picasso
 import com.example.newsapp.data.database.AppDatabase
-import com.example.newsapp.data.datamodels.Articles
 
 class NewAppWidget : AppWidgetProvider() {
 

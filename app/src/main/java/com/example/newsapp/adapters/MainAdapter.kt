@@ -18,7 +18,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.newsapp.R
 import com.squareup.picasso.Picasso
-import com.example.newsapp.data.datamodels.Articles
 import com.example.newsapp.viewmodels.NewsViewModel
 import java.util.*
 
