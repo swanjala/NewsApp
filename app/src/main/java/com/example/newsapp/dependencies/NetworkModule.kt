@@ -2,6 +2,9 @@ package com.example.newsapp.dependencies
 
 import com.example.newsapp.BuildConfig
 import com.example.newsapp.data.api.AuthInterceptor
+import com.example.newsapp.utils.Constants.Companion.BASE_URL
+import com.example.newsapp.utils.Constants.Companion.CONNECTION_TIMEOUT
+import com.example.newsapp.utils.Constants.Companion.WRITE_TIMEOUT
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -28,7 +31,7 @@ class NetworkModule{
         return OkHttpClient().newBuilder()
                 .addInterceptor(AuthInterceptor())
                 .addInterceptor(httpLoggingInterceptor)
-                .connectTimeout(CONNECT_TIMEOUT.toLong(), TimeUnit.SECONDS)
+                .connectTimeout(CONNECTION_TIMEOUT.toLong(), TimeUnit.SECONDS)
                 .writeTimeout(WRITE_TIMEOUT.toLong(),TimeUnit.MICROSECONDS)
                 .build()
     }
@@ -41,5 +44,6 @@ class NetworkModule{
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(LiveDataCallAdapterFactory())
+                .build()
     }
 }
