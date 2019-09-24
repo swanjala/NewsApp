@@ -25,5 +25,4 @@ abstract class FragmentModule{
     @ContributesAndroidInjector
     internal abstract fun contributesSourcesFragment():SourcesFragment
 
-
 }

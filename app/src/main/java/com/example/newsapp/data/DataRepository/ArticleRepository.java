@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.example.newsapp.data.api.ApiManager;
 import com.example.newsapp.data.database.AppDatabase;
 import com.example.newsapp.data.database.accessobjects.ArticleAccessObject;
 import com.example.newsapp.data.database.accessobjects.SourcesAccessObject;

@@ -2,6 +2,7 @@ package com.example.newsapp.dependencies
 
 import com.example.newsapp.BuildConfig
 import com.example.newsapp.data.api.AuthInterceptor
+import com.example.newsapp.data.api.LiveDataCallAdapterFactory
 import com.example.newsapp.utils.Constants.Companion.BASE_URL
 import com.example.newsapp.utils.Constants.Companion.CONNECTION_TIMEOUT
 import com.example.newsapp.utils.Constants.Companion.WRITE_TIMEOUT
