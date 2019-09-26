@@ -29,7 +29,7 @@ public class MainFragmentTest {
 
     @Before
     public void init() {
-        EspressoTestUtil.activityLoader(activityRule);
+        EspressoTestUtil.INSTANCE.activityLoader(activityRule);
         SourcesFragment sourcesFragment = new SourcesFragment();
         Bundle bundle = new Bundle();
         bundle.putString("sourceCategory","");
