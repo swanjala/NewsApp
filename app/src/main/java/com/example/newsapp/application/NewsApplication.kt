@@ -1,6 +1,8 @@
 package com.example.newsapp.application
 
 import android.app.Application
+import com.example.newsapp.dependencies.AppModule
+import com.example.newsapp.dependencies.ApplicationComponent
 
 class NewsApplication: Application() {
 
@@ -11,8 +13,8 @@ class NewsApplication: Application() {
         applicationComponent = initDagger(this)
     }
 
-    private fun initDagger(application:NewsApplication):ApplicationComponent =
+    private fun initDagger(application:NewsApplication): ApplicationComponent =
             DaggerApplicationComponent.builder()
-                    .appModule(ApplicationModule(application))
+                    .appModule(AppModule(application))
                     .build()
 }
