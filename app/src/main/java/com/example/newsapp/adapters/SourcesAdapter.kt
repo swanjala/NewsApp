@@ -56,7 +56,7 @@ class SourcesAdapter(context: Context, sourceList: List<Sources>) :
             var bundle = Bundle()
             bundle.putString(mContext.getString(R.string.data_by_url_flag_key),
                     mContext.getString(R.string.data_by_url_value))
-            bundle.putString(mContext.getString(R.string.current_url_key), current.getUrl())
+            bundle.putString(mContext.getString(R.string.current_url_key), current.url)
 
             mainFragment.arguments = bundle
 
