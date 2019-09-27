@@ -15,13 +15,13 @@ import retrofit2.Response
 
 class DatabaseDataManager : AsyncTask<Void, Void, Void> {
 
-    private val articleAccessObject: ArticleAccessObject
+    private lateinit var articleAccessObject: ArticleAccessObject
     private var sourcesAccessObject: SourcesAccessObject? = null
 
-    private var apiManager: ApiManager? = null
+    private lateinit var apiManager: ApiManager
 
     private var context: Context? = null
-    private val query: String?
+    private lateinit var  query: String
 
     constructor(context: Context, appDatabase: AppDatabase, query: String) {
         articleAccessObject = appDatabase.articleAccessObject()
