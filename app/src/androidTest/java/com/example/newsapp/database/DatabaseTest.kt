@@ -10,7 +10,7 @@ import com.example.newsapp.data.database.AppDatabase
 
 open class DatabaseTest {
 
-    protected var appDatabase: AppDatabase
+    protected lateinit var appDatabase: AppDatabase
 
     @Before
     fun init() {
