@@ -24,11 +24,14 @@ class MainDataRepositoryImpl @Inject constructor(networkService: NetworkService,
                                                  appDatabase: AppDatabase,
                                                  articlesAccessObject: ArticleAccessObject,
                                                  sourcesAccessObject: SourcesAccessObject
-                                                appExecutor: AppExecutor):MainDataRepository{
+                                                 appExecutor: AppExecutor):MainDataRepository{
     private var mAppExecutors = appExecutor
     private var mNetworkService = networkService
 
-    private lateinit var articlesDataAccessObject: ArticleAccessObject
+    @Inject
+    private var articlesDataAccessObject = articlesAccessObject.fetchAllData()
+
+
     private lateinit var sourcesAccessObject: SourcesAccessObject
 
     private lateinit var mCountries : LiveData<List<String>>
@@ -45,13 +48,6 @@ class MainDataRepositoryImpl @Inject constructor(networkService: NetworkService,
     private lateinit var mSources : LiveData<List<Sources>>
     private lateinit var mSourceByNewsCategory: LiveData<List<Sources>>
 
-    override fun setDb(appDatabase: AppDatabase) {
-        articlesDataAccessObject = articlesAccessObject
-    }
-
-    fun getAllArticlesNoQueryParam(): LiveData<List<Articles>> {
-        return articlesAccessObject.fetchAllData()
-    }
 
     fun getFetchNewsSource():LiveData<Resource<List<Sources>>>{
 
