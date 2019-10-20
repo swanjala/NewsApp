@@ -21,7 +21,7 @@ class CategoriesFragment : Fragment() {
     override fun onCreateView(layoutInflater: LayoutInflater,
                               viewgroup: ViewGroup?, savedInstanceState: Bundle?): View {
 
-        var view = layoutInflater.inflate(R.layout.fragment_categories,
+        val view = layoutInflater.inflate(R.layout.fragment_categories,
                 viewgroup, false)
         return view
     }
@@ -29,9 +29,9 @@ class CategoriesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        var linearLayoutManager: LinearLayoutManager = LinearLayoutManager(view!!.context)
+        val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(view!!.context)
 
-        var recyclerView: RecyclerView = view!!.findViewById(R.id.rv_news_categories)
+        val recyclerView: RecyclerView = view!!.findViewById(R.id.rv_news_categories)
 
         recyclerView.layoutManager = linearLayoutManager
 
