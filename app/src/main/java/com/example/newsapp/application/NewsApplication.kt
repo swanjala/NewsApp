@@ -3,6 +3,7 @@ package com.example.newsapp.application
 import android.app.Application
 import com.example.newsapp.dependencies.AppModule
 import com.example.newsapp.dependencies.ApplicationComponent
+import com.example.newsapp.dependencies.DaggerApplicationComponent
 
 class NewsApplication: Application() {
 

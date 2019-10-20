@@ -1,5 +1,6 @@
 package com.example.newsapp.Fragments
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -50,9 +51,9 @@ class SourcesFragment : Fragment() {
 
             model!!.fetchDataByNewsCategories(arguments!!
                     .getString(getString(R.string.source_category_flag_key)))
-                    .observe(this, { sources ->
+                    .observe(this, Observer{ sources ->
 
-                        sourcesAdapter = SourcesAdapter(context!!, sources)
+                        sourcesAdapter = SourcesAdapter(context!!, sources!!)
                         rv_sources_layout!!.adapter = sourcesAdapter
                         sourcesAdapter!!.notifyDataSetChanged()
 
@@ -60,9 +61,9 @@ class SourcesFragment : Fragment() {
 
         } else {
 
-            model!!.fetchAllSources().observe(this, { sources ->
+            model!!.fetchAllSources()?.observe(this, Observer{ sources ->
 
-                sourcesAdapter = SourcesAdapter(context!!, sources)
+                sourcesAdapter = SourcesAdapter(context!!, sources!!)
                 rv_sources_layout!!.adapter = sourcesAdapter
                 sourcesAdapter!!.notifyDataSetChanged()
 

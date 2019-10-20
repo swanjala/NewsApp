@@ -17,6 +17,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.newsapp.R
+import com.example.newsapp.data.datamodels.Articles
 import com.squareup.picasso.Picasso
 import com.example.newsapp.viewmodels.NewsViewModel
 import java.util.*
@@ -31,7 +32,7 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
 
     init {
 
-        Collections.sort(articlesList) { o1, o2 -> o1.publishedAt.compareTo(o2.publishedAt) }
+        Collections.sort(articlesList) { o1, o2 -> o1.publishedAt!!.compareTo(o2.publishedAt!!) }
 
         layoutInflater = LayoutInflater.from(context)
     }
@@ -73,11 +74,11 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
         fun setData(current:Articles, position:Int){
 
             val mContext:Context = view.context
-            publishedAt = current.publishedAt
+            publishedAt = current.publishedAt!!
             tv_title.setText(current.title)
             this.tv_description.setText(current.description)
 
-            var sharedPreferences:SharedPreferences =
+            val sharedPreferences:SharedPreferences =
                     PreferenceManager.getDefaultSharedPreferences(mContext)
             contrastFlag =sharedPreferences
                     .getBoolean(mContext.getString(R.string.high_contrast_key),false)
@@ -108,7 +109,7 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                 }
 
                 bt_favorite.setOnClickListener {
-                    var titleQuery = "%" + current.title.substring(0,10)+ "%"
+                    var titleQuery = "%" + current.title!!.substring(0,10)+ "%"
                     userActionViewModel.setNewsItemsByFavorite(false,titleQuery)
                 }
             } else {
@@ -122,7 +123,7 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                 bt_favorite.setOnClickListener{
                     bt_favorite.foreground = mContext.getDrawable(R.drawable.ic_thumb_up_accent_24dp)
 
-                    var titleQuery ="%" +  current.title.substring(0,10)+ "%"
+                    var titleQuery ="%" +  current.title!!.substring(0,10)+ "%"
                     userActionViewModel.setNewsItemsByFavorite(true,titleQuery)
                 }
             }
@@ -131,7 +132,7 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                 bt_toread.foreground = mContext.getDrawable(R.drawable.ic_library_add_accent_24dp)
                 bt_toread.setOnClickListener {
 
-                    var titleQuery = "%" + current.title.substring(0,10) + "%"
+                    var titleQuery = "%" + current.title!!.substring(0,10) + "%"
                     userActionViewModel.setNewsItemsBySetToRead(false, titleQuery)
                 }
             }

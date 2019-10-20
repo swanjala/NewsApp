@@ -12,6 +12,7 @@ import com.example.newsapp.MainActivity
 import com.example.newsapp.R
 import com.squareup.picasso.Picasso
 import com.example.newsapp.data.database.AppDatabase
+import com.example.newsapp.data.datamodels.Articles
 
 class NewAppWidget : AppWidgetProvider() {
 
@@ -39,7 +40,7 @@ class NewAppWidget : AppWidgetProvider() {
                 override fun doInBackground(vararg context:Context): LiveData<List<Articles>>{
                     val db= AppDatabase.getDatabase(context[0])
 
-                    return db.articleAccessObject().fetchAllData()
+                    return db!!.articleAccessObject().fetchAllData()
                 }
 
                 override fun onPostExecute(List:LiveData<List<Articles>>?){

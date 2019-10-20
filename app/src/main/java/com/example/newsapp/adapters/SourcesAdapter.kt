@@ -70,10 +70,10 @@ class SourcesAdapter(context: Context, sourceList: List<Sources>) :
 
             }
 
-            tv_category.text = (current.category.substring(0, 1).toUpperCase()
-                    + current.category.substring(1))
+            tv_category.text = (current.category?.substring(0, 1)!!.toUpperCase()
+                    + current.category?.substring(1))
             tv_language.setText(current.language)
-            this.tv_country.setText(current.country.toUpperCase())
+            this.tv_country.setText(current.country?.toUpperCase())
 
         }
 

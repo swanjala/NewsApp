@@ -1,5 +1,6 @@
 package com.example.newsapp.Fragments
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +20,7 @@ import java.util.HashMap
 
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.example.newsapp.adapters.CountryAdapter
 import com.example.newsapp.data.datamodels.CountryConstants
 import com.example.newsapp.viewmodels.NewsViewModel
 
@@ -59,9 +61,8 @@ class CountryListFragment : Fragment() {
         rv_country_list!!.layoutManager = linearLayoutManager
 
 
-        newsViewModel!!.fetchAllCountries().observe(this, { countries ->
-            val countryAdapter: CountryAdapter
-            countryAdapter = CountryAdapter(activity, countries, countryMap)
+        newsViewModel!!.fetchAllCountries()?.observe(this, Observer { countries ->
+            val countryAdapter = CountryAdapter(activity!!, countries!!, countryMap!!)
             rv_country_list!!.adapter = countryAdapter
             countryAdapter.notifyDataSetChanged()
 

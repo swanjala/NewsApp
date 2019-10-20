@@ -3,12 +3,14 @@ package com.example.newsapp.data.DataRepository
 import android.app.Application
 import android.arch.lifecycle.LiveData
 import android.content.Context
+import android.icu.lang.UCharacter.GraphemeClusterBreak.V
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.AsyncTask
 import android.os.Handler
 import android.util.Log
 import android.widget.Toast
+import com.example.newsapp.data.api.NetworkService
 
 import java.util.HashMap
 import java.util.regex.Matcher
@@ -21,9 +23,13 @@ import com.example.newsapp.data.datamodels.Articles
 import com.example.newsapp.data.datamodels.CountryConstants
 import com.example.newsapp.data.datamodels.DataResponse
 import com.example.newsapp.data.datamodels.Sources
+import com.example.newsapp.dependencies.AppModule_ProvideNetworkServiceFactory
+import com.example.newsapp.dependencies.NetworkModule
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.PipedReader
+import javax.inject.Inject
 
 class ArticleRepository(private val application: Application) {
 
@@ -55,12 +61,12 @@ class ArticleRepository(private val application: Application) {
     val dataByFavorite: LiveData<List<Articles>>
         get() {
             mNewsByFavorite = articleAccessObject!!.fetchDataByFavorite()
-            return mNewsByFavorite
+            return mNewsByFavorite!!
         }
     val dataBySetToRead: LiveData<List<Articles>>
         get() {
             mNewsBySetToRead = articleAccessObject!!.fetchDataByToRead()
-            return mNewsBySetToRead
+            return mNewsBySetToRead!!
         }
 
 
@@ -71,8 +77,8 @@ class ArticleRepository(private val application: Application) {
 
     fun initializeDatabaseValues(application: Application) {
         val appDatabase = AppDatabase.getDatabase(application)
-        articleAccessObject = appDatabase.articleAccessObject()
-        sourcesAccessObject = appDatabase.sourcesAccessObject()
+        articleAccessObject = appDatabase?.articleAccessObject()
+        sourcesAccessObject = appDatabase?.sourcesAccessObject()
         sources = sourcesAccessObject!!.fetchAllData()
         countries = sourcesAccessObject!!.fetchCountryLists()
         allArticlesNoQuery = articleAccessObject!!.fetchAllData()
@@ -83,8 +89,8 @@ class ArticleRepository(private val application: Application) {
     fun initializeDatabaseValues(application: Application, query: String) {
 
         val database = AppDatabase.getDatabase(application)
-        articleAccessObject = database.articleAccessObject()
-        sourcesAccessObject = database.sourcesAccessObject()
+        articleAccessObject = database?.articleAccessObject()
+        sourcesAccessObject = database?.sourcesAccessObject()
     }
 
     fun getmAllArticles(): LiveData<List<Articles>>? {
@@ -95,7 +101,7 @@ class ArticleRepository(private val application: Application) {
     fun getSourcesByNewsCategory(categoryQuery: String): LiveData<List<Sources>> {
 
         mSourcesByNewsCategory = sourcesAccessObject!!.fetchNewsNamesByCategory(categoryQuery)
-        return mSourcesByNewsCategory
+        return mSourcesByNewsCategory!!
     }
 
     fun getArticlesByTitle(context: Context, title: String): LiveData<List<Articles>> {
@@ -108,7 +114,7 @@ class ArticleRepository(private val application: Application) {
             mAllArticlesByTitle = articleAccessObject!!.fetchAllData("%$title%")
         }
 
-        return mAllArticlesByTitle
+        return mAllArticlesByTitle!!
 
     }
 
@@ -116,7 +122,7 @@ class ArticleRepository(private val application: Application) {
         var domain = domain
 
         try {
-            insertDataFromDomain(context, domain, articleAccessObject).execute()
+            insertDataFromDomain(context, domain, articleAccessObject!!).execute()
 
         } finally {
 
@@ -129,32 +135,32 @@ class ArticleRepository(private val application: Application) {
                     .fetchDataByDomain("%$domain%")
         }
 
-        return mAllArticlesByDomain
+        return mAllArticlesByDomain!!
 
     }
 
     fun insert(articles: List<Articles>) {
-        insertAsyncTask(articleAccessObject).execute(articles)
+        insertAsyncTask(articleAccessObject!!).execute(articles)
 
     }
 
     fun insertFavorite(setToFavorite: Boolean, title: String) {
 
-        val hashMap = HashMap()
+        val hashMap = HashMap<String,Any>()
         hashMap.put("favorite", setToFavorite)
         hashMap.put("title", title)
 
-        insertFavoriteArticle(articleAccessObject).execute(hashMap)
+        insertFavoriteArticle(articleAccessObject!!).execute(hashMap)
 
     }
 
     fun insertSetToRead(setToReadValue: Boolean, title: String) {
-        val hashMap = HashMap()
+        val hashMap = HashMap<String,Any>()
         hashMap.put("toReadValue", setToReadValue)
         hashMap.put("title", title)
 
 
-        insertSetToRead(articleAccessObject).execute(hashMap)
+        insertSetToRead(articleAccessObject!!).execute(hashMap)
 
     }
 
@@ -179,7 +185,7 @@ class ArticleRepository(private val application: Application) {
                     .fetchAllCountryData("%$country%")
         }
 
-        return mArticlesByCountry
+        return mArticlesByCountry!!
     }
 
     class insertAsyncTask internal constructor(private val mAsyckTaskAccessObject: ArticleAccessObject) : AsyncTask<List<Articles>, Void, Void>() {
@@ -196,14 +202,21 @@ class ArticleRepository(private val application: Application) {
     }
 
 
-    class insertDataFromCountry internal constructor(private val context: Context, private val queryValue: String, private val mInsertByCountryAccessObject: ArticleAccessObject) : AsyncTask<String, Void, Void>() {
+
+    class insertDataFromCountry
+
+    @Inject internal constructor(private val context: Context,
+                                 private val queryValue: String,
+                                 networkService: NetworkService,
+                                 private val mInsertByCountryAccessObject: ArticleAccessObject)
+        : AsyncTask<String, Void, Void>() {
         private var articlesByCountry: List<Articles>? = null
         private val modifiedArticleList: List<Articles>? = null
 
         override fun doInBackground(vararg strings: String): Void? {
             if (strings != null) {
 
-                val apiManager = ApiManager(context, queryValue)
+                //val apiManager = ApiManager(context, queryValue)
 
                 val connectivityManager = context
                         .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -214,7 +227,7 @@ class ArticleRepository(private val application: Application) {
 
                 if (isConnected) {
 
-                    val call = apiManager.getTopHeadlines()
+                    val call = networkService.getHeadlines()
                     call.enqueue(object : Callback<DataResponse> {
                         override fun onResponse(call: Call<DataResponse>,
                                                 response: Response<DataResponse>) {
@@ -258,14 +271,17 @@ class ArticleRepository(private val application: Application) {
     }
 
 
-    class insertDataFromTitle internal constructor(private val context: Context, private val queryValue: String,
-                                                   private val mInsertByTitleAccessObject: ArticleAccessObject) : AsyncTask<String, Void, Void>() {
+    class insertDataFromTitle
+    @Inject
+    internal constructor(private val context: Context,
+                         private val queryValue: String,
+                         networkService: NetworkService,
+                         private val mInsertByTitleAccessObject: ArticleAccessObject) : AsyncTask<String, Void, Void>() {
         private var articlesByTitle: List<Articles>? = null
 
         override fun doInBackground(vararg strings: String): Void? {
             if (strings != null) {
 
-                val apiManager = ApiManager(context, queryValue)
 
                 val connectivityManager = context
                         .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -276,7 +292,7 @@ class ArticleRepository(private val application: Application) {
 
                 if (isConnected) {
 
-                    val call = apiManager.getArticles()
+                    val call = networkService.getArticles()
                     call.enqueue(object : Callback<DataResponse> {
                         override fun onResponse(call: Call<DataResponse>,
                                                 response: Response<DataResponse>) {
@@ -312,7 +328,13 @@ class ArticleRepository(private val application: Application) {
 
     }
 
-    class insertDataFromDomain internal constructor(private val context: Context, domain: String, private val mInsertByTitleAccessObject: ArticleAccessObject) : AsyncTask<String, Void, Void>() {
+    class insertDataFromDomain
+    @Inject
+    internal constructor(private val context: Context,
+                         domain: String,
+                         networkService: NetworkService,
+                         private val mInsertByTitleAccessObject: ArticleAccessObject) : AsyncTask<String, Void, Void>() {
+
         private var queryValue: String? = null
         private var articlesByDomain: List<Articles>? = null
 
@@ -328,8 +350,6 @@ class ArticleRepository(private val application: Application) {
         override fun doInBackground(vararg strings: String): Void? {
             if (strings != null) {
 
-                val apiManager = ApiManager(context, queryValue)
-
                 val connectivityManager = context
                         .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
@@ -339,7 +359,7 @@ class ArticleRepository(private val application: Application) {
 
                 if (isConnected) {
 
-                    val call = apiManager.getNewsByDomains()
+                    val call = networkService.getNewsByDomains()
                     call.enqueue(object : Callback<DataResponse> {
                         override fun onResponse(call: Call<DataResponse>,
                                                 response: Response<DataResponse>) {
@@ -375,7 +395,8 @@ class ArticleRepository(private val application: Application) {
 
     }
 
-    class insertFavoriteArticle internal constructor(private val mFavoriteAsyncTaskAccessObject: ArticleAccessObject) : AsyncTask<HashMap<*, *>, Void, Void>() {
+    class insertFavoriteArticle
+    internal constructor(private val mFavoriteAsyncTaskAccessObject: ArticleAccessObject) : AsyncTask<HashMap<*, *>, Void, Void>() {
         override fun doInBackground(vararg hashMaps: HashMap<*, *>): Void? {
             if (hashMaps != null) {
 

@@ -1,6 +1,7 @@
 package com.example.newsapp.Fragments
 
 import android.annotation.SuppressLint
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -19,6 +20,7 @@ import com.google.android.gms.ads.MobileAds
 
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.example.newsapp.adapters.MainAdapter
 import com.example.newsapp.viewmodels.NewsViewModel
 
 class MainFragment : Fragment() {
@@ -79,47 +81,44 @@ class MainFragment : Fragment() {
                     .getString(getString(R.string.main_fragment_get_data_flag_key))
 
             if (DATAFLAG == getString(R.string.all_data_flag)) {
-                model!!.fetchAllArticlesNoQuery().observe(this, { articlesList ->
-                    mainAdapter = MainAdapter(context, articlesList)
+                model!!.fetchAllArticlesNoQuery()?.observe(this, Observer { articlesList ->
+                    mainAdapter = MainAdapter(context!!, articlesList!!)
                     rv_news_layout!!.adapter = mainAdapter
                     mainAdapter!!.notifyDataSetChanged()
 
                 })
             } else if (DATAFLAG == getString(R.string.load_favorites_flag)) {
-                model!!.fetchDataByFavorite().observe(this, { articlesList ->
-                    mainAdapter = MainAdapter(context, articlesList)
+                model!!.fetchDataByFavorite().observe(this, Observer { articlesList ->
+                    mainAdapter = MainAdapter(context!!, articlesList!!)
                     rv_news_layout!!.adapter = mainAdapter
                     mainAdapter!!.notifyDataSetChanged()
                 })
             } else if (DATAFLAG == getString(R.string.load_set_to_read)) {
-                model!!.fetchDataBySetToRead().observe(this, { articlesList ->
-                    mainAdapter = MainAdapter(context, articlesList)
+                model!!.fetchDataBySetToRead().observe(this, Observer { articlesList ->
+                    mainAdapter = MainAdapter(context!!, articlesList!!)
                     rv_news_layout!!.adapter = mainAdapter
                     mainAdapter!!.notifyDataSetChanged()
                 })
             } else if (DATAFLAG == getString(R.string.main_fragment_domain_search_value)) {
 
-                model!!.fetchArticlesByDomain(arguments!!
-                        .getString(getString(R.string.main_fragment_query_value)))
-                        .observe(this, { articlesList ->
-                            mainAdapter = MainAdapter(context, articlesList)
+                model!!.fetchArticlesByDomain(arguments!!.getString(getString(R.string.main_fragment_query_value)))
+                        .observe(this, Observer { articlesList ->
+                            mainAdapter = MainAdapter(context!!, articlesList!!)
                             rv_news_layout!!.adapter = mainAdapter
                             mainAdapter!!.notifyDataSetChanged()
                         })
             } else if (DATAFLAG == getString(R.string.title_search_value)) {
 
-                model!!.fetchArticlesByTitle(arguments!!
-                        .getString(getString(R.string.main_fragment_query_value)))
-                        .observe(this, { articlesList ->
-                            mainAdapter = MainAdapter(context, articlesList)
+                model!!.fetchArticlesByTitle(arguments!!.getString(getString(R.string.main_fragment_query_value)))
+                        .observe(this, Observer { articlesList ->
+                            mainAdapter = MainAdapter(context!!, articlesList!!)
                             rv_news_layout!!.adapter = mainAdapter
                             mainAdapter!!.notifyDataSetChanged()
                         })
             } else if (DATAFLAG == getString(R.string.main_fragment_data_by_url_value)) {
-                model!!.fetchArticlesByDomain(arguments!!
-                        .getString(getString(R.string.current_url_key)))
-                        .observe(this, { articlesList ->
-                            mainAdapter = MainAdapter(context, articlesList)
+                model!!.fetchArticlesByDomain(arguments!!.getString(getString(R.string.current_url_key)))
+                        .observe(this, Observer { articlesList ->
+                            mainAdapter = MainAdapter(context!!, articlesList!!)
 
                             rv_news_layout!!.adapter = mainAdapter
                             mainAdapter!!.notifyDataSetChanged()
@@ -130,10 +129,10 @@ class MainFragment : Fragment() {
                 val countryName = arguments!!
                         .getString(getString(R.string.country_data_flag))
 
-                model!!.fetchArticlesByCountry(countryName).observe(this, { articlesList ->
+                model!!.fetchArticlesByCountry(countryName).observe(this, Observer{ articlesList ->
 
-                    mainAdapter = MainAdapter(context,
-                            articlesList)
+                    mainAdapter = MainAdapter(context!!,
+                            articlesList!!)
                     rv_news_layout!!.adapter = mainAdapter
                     mainAdapter!!.notifyDataSetChanged()
                 })

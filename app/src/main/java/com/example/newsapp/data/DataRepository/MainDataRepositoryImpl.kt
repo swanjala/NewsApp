@@ -23,13 +23,17 @@ import javax.inject.Singleton
 class MainDataRepositoryImpl @Inject constructor(networkService: NetworkService,
                                                  appDatabase: AppDatabase,
                                                  articlesAccessObject: ArticleAccessObject,
-                                                 sourcesAccessObject: SourcesAccessObject
+                                                 sourcesAccessObject: SourcesAccessObject,
                                                  appExecutor: AppExecutor):MainDataRepository{
+    override fun setDb(appDatabase: AppDatabase) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private var mAppExecutors = appExecutor
     private var mNetworkService = networkService
 
-    @Inject
-    private var articlesDataAccessObject = articlesAccessObject.fetchAllData()
+//    @Inject
+//    private var articlesDataAccessObject = articlesAccessObject.fetchAllData()
 
 
     private lateinit var sourcesAccessObject: SourcesAccessObject

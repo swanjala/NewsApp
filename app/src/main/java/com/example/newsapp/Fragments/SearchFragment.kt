@@ -25,7 +25,8 @@ class SearchFragment : Fragment() {
     @BindView(R.id.bt_search)
     internal var bt_search: Button? = null
     private var fragmentContainer: Int = 0
-    private var fragmentManager: FragmentManager? = null
+
+    private var DATAFLAG = ""
 
 
     override fun onCreateView(layoutInflater: LayoutInflater,
@@ -54,6 +55,7 @@ class SearchFragment : Fragment() {
 
         val mainFragment = MainFragment()
         val bundle = Bundle()
+        val fragmentManager = this.fragmentManager
 
         if (valueType == "Domain Search") {
 
@@ -64,7 +66,6 @@ class SearchFragment : Fragment() {
             mainFragment.arguments = bundle
 
             fragmentContainer = R.id.fr_main_holder
-            fragmentManager = getFragmentManager()
             fragmentManager!!.beginTransaction()
                     .replace(fragmentContainer, mainFragment)
                     .commitAllowingStateLoss()
@@ -77,7 +78,6 @@ class SearchFragment : Fragment() {
             mainFragment.arguments = bundle
 
             fragmentContainer = R.id.fr_main_holder
-            fragmentManager = getFragmentManager()
             fragmentManager!!.beginTransaction()
                     .replace(fragmentContainer, mainFragment)
                     .commitAllowingStateLoss()
