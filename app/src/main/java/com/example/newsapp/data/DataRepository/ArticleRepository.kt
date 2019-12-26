@@ -105,6 +105,7 @@ class ArticleRepository(private val application: Application) {
     }
 
     fun getArticlesByTitle(context: Context, title: String): LiveData<List<Articles>> {
+/*
 
         try {
             insertDataFromTitle(context, title, articleAccessObject).execute()
@@ -113,6 +114,7 @@ class ArticleRepository(private val application: Application) {
 
             mAllArticlesByTitle = articleAccessObject!!.fetchAllData("%$title%")
         }
+*/
 
         return mAllArticlesByTitle!!
 
@@ -120,8 +122,9 @@ class ArticleRepository(private val application: Application) {
 
     fun getArticlesByDomain(context: Context, domain: String): LiveData<List<Articles>> {
         var domain = domain
+        mAllArticlesByDomain = articleAccessObject!!.fetchDataByDomain("%$domain%")
 
-        try {
+        /*  try {
             insertDataFromDomain(context, domain, articleAccessObject!!).execute()
 
         } finally {
@@ -133,7 +136,7 @@ class ArticleRepository(private val application: Application) {
 
             mAllArticlesByDomain = articleAccessObject!!
                     .fetchDataByDomain("%$domain%")
-        }
+        }*/
 
         return mAllArticlesByDomain!!
 
@@ -146,27 +149,27 @@ class ArticleRepository(private val application: Application) {
 
     fun insertFavorite(setToFavorite: Boolean, title: String) {
 
-        val hashMap = HashMap<String,Any>()
+        val hashMap = HashMap<String, Any>()
         hashMap.put("favorite", setToFavorite)
         hashMap.put("title", title)
 
-        insertFavoriteArticle(articleAccessObject!!).execute(hashMap)
+            //insertFavoriteArticle(articleAccessObject!!).execute(hashMap)
 
     }
 
     fun insertSetToRead(setToReadValue: Boolean, title: String) {
-        val hashMap = HashMap<String,Any>()
+        val hashMap = HashMap<String, Any>()
         hashMap.put("toReadValue", setToReadValue)
         hashMap.put("title", title)
 
 
-        insertSetToRead(articleAccessObject!!).execute(hashMap)
+       // insertSetToRead(articleAccessObject!!).execute(hashMap)
 
     }
 
     fun getArticlesByCountry(context: Context, country: String): LiveData<List<Articles>> {
 
-        try {
+        /*  try {
 
             val countryConstants = CountryConstants()
 
@@ -184,7 +187,7 @@ class ArticleRepository(private val application: Application) {
             mArticlesByCountry = articleAccessObject!!
                     .fetchAllCountryData("%$country%")
         }
-
+*/
         return mArticlesByCountry!!
     }
 
@@ -202,9 +205,7 @@ class ArticleRepository(private val application: Application) {
     }
 
 
-
     class insertDataFromCountry
-
     @Inject internal constructor(private val context: Context,
                                  private val queryValue: String,
                                  networkService: NetworkService,
@@ -219,13 +220,13 @@ class ArticleRepository(private val application: Application) {
                 //val apiManager = ApiManager(context, queryValue)
 
                 val connectivityManager = context
-                        .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                    .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
                 val activeNetwork = connectivityManager.activeNetworkInfo
 
                 val isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
 
-                if (isConnected) {
+                /* if (isConnected) {
 
                     val call = networkService.getHeadlines()
                     call.enqueue(object : Callback<DataResponse> {
@@ -264,23 +265,23 @@ class ArticleRepository(private val application: Application) {
                                 Toast.LENGTH_LONG).show()
                     }
                 }
-            }
-            return null
+            }*/
+                return null
+           // }
+
         }
 
-    }
 
+        class insertDataFromTitle
+        @Inject
+        internal constructor(private val context: Context,
+                             private val queryValue: String,
+                             networkService: NetworkService,
+                             private val mInsertByTitleAccessObject: ArticleAccessObject) : AsyncTask<String, Void, Void>() {
+            private var articlesByTitle: List<Articles>? = null
 
-    class insertDataFromTitle
-    @Inject
-    internal constructor(private val context: Context,
-                         private val queryValue: String,
-                         networkService: NetworkService,
-                         private val mInsertByTitleAccessObject: ArticleAccessObject) : AsyncTask<String, Void, Void>() {
-        private var articlesByTitle: List<Articles>? = null
-
-        override fun doInBackground(vararg strings: String): Void? {
-            if (strings != null) {
+            override fun doInBackground(vararg strings: String): Void? {
+                /*  if (strings != null) {
 
 
                 val connectivityManager = context
@@ -322,42 +323,42 @@ class ArticleRepository(private val application: Application) {
                                 Toast.LENGTH_LONG).show()
                     }
                 }
+            }*/
+                return null
             }
-            return null
+
         }
 
-    }
+        class insertDataFromDomain
+        @Inject
+        internal constructor(private val context: Context,
+                             domain: String,
+                             networkService: NetworkService,
+                             private val mInsertByTitleAccessObject: ArticleAccessObject) : AsyncTask<String, Void, Void>() {
 
-    class insertDataFromDomain
-    @Inject
-    internal constructor(private val context: Context,
-                         domain: String,
-                         networkService: NetworkService,
-                         private val mInsertByTitleAccessObject: ArticleAccessObject) : AsyncTask<String, Void, Void>() {
+            private var queryValue: String? = null
+            private var articlesByDomain: List<Articles>? = null
 
-        private var queryValue: String? = null
-        private var articlesByDomain: List<Articles>? = null
+            init {
+                this.queryValue = domain
 
-        init {
-            this.queryValue = domain
+                val pattern = Pattern.compile("(https?://)([^:^/]*)(:\\d*)?(.*)?")
+                val matcher = pattern.matcher(domain)
+                matcher.find()
+                this.queryValue = matcher.group(2).substring(4)
+            }
 
-            val pattern = Pattern.compile("(https?://)([^:^/]*)(:\\d*)?(.*)?")
-            val matcher = pattern.matcher(domain)
-            matcher.find()
-            this.queryValue = matcher.group(2).substring(4)
-        }
+            override fun doInBackground(vararg strings: String): Void? {
+                if (strings != null) {
 
-        override fun doInBackground(vararg strings: String): Void? {
-            if (strings != null) {
-
-                val connectivityManager = context
+                    val connectivityManager = context
                         .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-                val activeNetwork = connectivityManager.activeNetworkInfo
+                    val activeNetwork = connectivityManager.activeNetworkInfo
 
-                val isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
+                    val isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
 
-                if (isConnected) {
+                    /* if (isConnected) {
 
                     val call = networkService.getNewsByDomains()
                     call.enqueue(object : Callback<DataResponse> {
@@ -389,37 +390,42 @@ class ArticleRepository(private val application: Application) {
                                 Toast.LENGTH_LONG).show()
                     }
                 }
+            }*/
+
+                }
+                return null
             }
-            return null
+
+        /*    class insertFavoriteArticle
+            internal constructor(private val mFavoriteAsyncTaskAccessObject: ArticleAccessObject) : AsyncTask<HashMap<*, *>, Void, Void>() {
+                override fun doInBackground(vararg hashMaps: HashMap<*, *>): Void? {
+                    if (hashMaps != null) {
+
+                        val favorite = hashMaps[0]["favorite"] as Boolean
+                        val title = hashMaps[0]["title"] as String?
+                        mFavoriteAsyncTaskAccessObject.setNewsItemToFavorite(favorite,
+                            title!!)
+                    }
+                    return null
+                }
+
+            }*/
+
+          /*  class insertSetToRead internal constructor(private val mSetToReadAsyncTaskAccessObject: ArticleAccessObject) : AsyncTask<HashMap<*, *>, Void, Void>() {
+                override fun doInBackground(vararg hashMaps: HashMap<*, *>): Void? {
+                    if (hashMaps != null) {
+
+                        val toReadValue = hashMaps[0]["toReadValue"] as Boolean
+                        val title = hashMaps[0]["title"] as String?
+                        mSetToReadAsyncTaskAccessObject.setNewsItemToRead(toReadValue, title!!)
+                    }
+                    return null
+                }
+            }*/
+
         }
-
-    }
-
-    class insertFavoriteArticle
-    internal constructor(private val mFavoriteAsyncTaskAccessObject: ArticleAccessObject) : AsyncTask<HashMap<*, *>, Void, Void>() {
-        override fun doInBackground(vararg hashMaps: HashMap<*, *>): Void? {
-            if (hashMaps != null) {
-
-                val favorite = hashMaps[0]["favorite"] as Boolean
-                val title = hashMaps[0]["title"] as String?
-                mFavoriteAsyncTaskAccessObject.setNewsItemToFavorite(favorite,
-                        title!!)
-            }
             return null
-        }
-
     }
-
-    class insertSetToRead internal constructor(private val mSetToReadAsyncTaskAccessObject: ArticleAccessObject) : AsyncTask<HashMap<*, *>, Void, Void>() {
-        override fun doInBackground(vararg hashMaps: HashMap<*, *>): Void? {
-            if (hashMaps != null) {
-
-                val toReadValue = hashMaps[0]["toReadValue"] as Boolean
-                val title = hashMaps[0]["title"] as String?
-                mSetToReadAsyncTaskAccessObject.setNewsItemToRead(toReadValue, title!!)
-            }
-            return null
-        }
-    }
-
 }
+}
+

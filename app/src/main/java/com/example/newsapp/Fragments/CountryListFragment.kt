@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.newsapp.MainActivity
+
 import com.example.newsapp.R
 
 import java.util.HashMap

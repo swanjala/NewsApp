@@ -53,7 +53,7 @@ class MainDataRepositoryImpl @Inject constructor(networkService: NetworkService,
     private lateinit var mSourceByNewsCategory: LiveData<List<Sources>>
 
 
-    fun getFetchNewsSource():LiveData<Resource<List<Sources>>>{
+    fun getFetchNewsSource(){
 
     }
 
