@@ -1,5 +1,6 @@
 package com.example.newsapp.Fragments
 
+import android.app.Application
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -16,15 +17,18 @@ import butterknife.BindView
 import butterknife.ButterKnife
 
 import com.example.newsapp.adapters.SourcesAdapter
+import com.example.newsapp.viewmodels.MainViewModel_Factory
 import com.example.newsapp.viewmodels.NewsViewModel
+import com.example.newsapp.viewmodels.ViewModelFactory
+import kotlinx.android.synthetic.main.fragment_main_sources.rv_sources_layout
+import javax.inject.Inject
 
-class SourcesFragment : Fragment() {
-
-    @BindView(R.id.rv_sources_layout)
-    internal var rv_sources_layout: RecyclerView? = null
+class SourcesFragment @Inject constructor(): Fragment() {
 
     private var sourcesAdapter: SourcesAdapter? = null
-    private var model: NewsViewModel? = null
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreateView(layoutInflater: LayoutInflater,
                               container: ViewGroup?,
@@ -37,21 +41,18 @@ class SourcesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        val linearLayoutManager = LinearLayoutManager(rv_sources_layout!!
+        val linearLayoutManager = LinearLayoutManager(rv_sources_layout
                 .context)
 
         rv_sources_layout!!.layoutManager = linearLayoutManager
 
-        this.model = ViewModelProviders
-                .of(this)
-                .get(NewsViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this, viewModelFactory)[NewsViewModel::class.java]
 
         if (arguments!!.getString(getString(R.string.source_category_flag_key)) != null && arguments!!.getString(getString(R.string.source_category_flag_key)) !== "") {
 
-            model!!.fetchDataByNewsCategories(arguments!!
+            viewModel.fetchDataByNewsCategories(arguments!!
                     .getString(getString(R.string.source_category_flag_key)))
-                    .observe(this, Observer{ sources ->
+                    .observe(this, Observer { sources ->
 
                         sourcesAdapter = SourcesAdapter(context!!, sources!!)
                         rv_sources_layout!!.adapter = sourcesAdapter
@@ -61,7 +62,7 @@ class SourcesFragment : Fragment() {
 
         } else {
 
-            model!!.fetchAllSources()?.observe(this, Observer{ sources ->
+            viewModel.fetchAllSources()?.observe(this, Observer { sources ->
 
                 sourcesAdapter = SourcesAdapter(context!!, sources!!)
                 rv_sources_layout!!.adapter = sourcesAdapter

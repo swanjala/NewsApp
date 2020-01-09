@@ -5,10 +5,24 @@ import com.example.newsapp.viewmodels.MainViewModel
 import com.example.newsapp.viewmodels.NewsViewModel
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
+import com.example.newsapp.viewmodels.ViewModelFactory
+import android.R.string.no
+import javax.inject.Provider
+import dagger.MapKey
+import java.lang.annotation.ElementType
+import java.lang.annotation.RetentionPolicy
+import kotlin.reflect.KClass
+
 
 @Module
-abstract class ViewModelModule{
+abstract class ViewModelModule {
 
-    @Binds
-    abstract fun bindNewsViewModel(mainViewModel: MainViewModel):ViewModel
+    @MapKey
+    internal annotation class ViewModelKey(val value: KClass<out ViewModel>)
+
+    @Provides
+    fun viewModelFactory(providerMap: NewsViewModel): ViewModelFactory {
+        return ViewModelFactory(providerMap)
+    }
 }

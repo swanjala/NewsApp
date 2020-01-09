@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.ViewModel
 import android.content.Context
 
 import com.example.newsapp.data.DataRepository.ArticleRepository
@@ -12,7 +13,7 @@ import com.example.newsapp.data.datamodels.Sources
 import javax.inject.Inject
 
 
-class NewsViewModel(application: Application) : AndroidViewModel(application) {
+class NewsViewModel(application: Application) : ViewModel() {
 
     internal var mRepository: ArticleRepository
 

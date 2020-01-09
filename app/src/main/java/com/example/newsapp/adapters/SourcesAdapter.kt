@@ -22,14 +22,14 @@ class SourcesAdapter(context: Context, sourceList: List<Sources>) :
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): SourceViewHolder {
 
-        var view: View = layoutInflater.inflate(R.layout.card_source_data, viewGroup, false)
+        val view: View = layoutInflater.inflate(R.layout.card_source_data, viewGroup, false)
         return SourceViewHolder(view)
 
     }
 
     override fun onBindViewHolder(sourceViewHolder: SourceViewHolder, position: Int) {
 
-        var currentSource: Sources = mSourceList.get(position)
+        val currentSource: Sources = mSourceList.get(position)
         sourceViewHolder.setData(currentSource, position)
     }
 
@@ -50,10 +50,10 @@ class SourcesAdapter(context: Context, sourceList: List<Sources>) :
         fun setData(current: Sources, position: Int) {
             tv_name.setText(current.name)
             tv_description.setText(current.description)
-            var fragmentManager = (mContext as AppCompatActivity).supportFragmentManager
+            val fragmentManager = (mContext as AppCompatActivity).supportFragmentManager
 
-            var mainFragment = MainFragment()
-            var bundle = Bundle()
+            val mainFragment = MainFragment()
+            val bundle = Bundle()
             bundle.putString(mContext.getString(R.string.data_by_url_flag_key),
                     mContext.getString(R.string.data_by_url_value))
             bundle.putString(mContext.getString(R.string.current_url_key), current.url)
@@ -61,8 +61,8 @@ class SourcesAdapter(context: Context, sourceList: List<Sources>) :
             mainFragment.arguments = bundle
 
             tv_description.setOnClickListener {
-                var fragmentContainer: Int = R.id.fr_main_holder
-                var fragmentTransaction = fragmentManager.beginTransaction()
+                val fragmentContainer: Int = R.id.fr_main_holder
+                val fragmentTransaction = fragmentManager.beginTransaction()
 
                 fragmentTransaction.replace(fragmentContainer, mainFragment)
                         .addToBackStack(null)

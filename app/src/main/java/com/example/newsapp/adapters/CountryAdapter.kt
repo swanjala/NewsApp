@@ -67,7 +67,7 @@ class CountryAdapter(val context: Context,val countryList:List<String>,
                 bundle.putString(applicationContext.getString(R.string.data_flag_key),
                         applicationContext.getString(R.string.articles_by_country_flag))
 
-                var country = mCountryData.get(currentCountry.toUpperCase())
+                val country = mCountryData.get(currentCountry.toUpperCase())
                 bundle.putString(applicationContext.getString(R.string.country_data_flag), country)
 
                 fragmentContainer = if (findViewById<FrameLayout>(R.id.frame_counties_holder) != null)
