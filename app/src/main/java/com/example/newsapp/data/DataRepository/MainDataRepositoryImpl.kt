@@ -1,7 +1,10 @@
 package com.example.newsapp.data.DataRepository
 
 import android.app.Application
+import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Observer
+import android.content.Context
 import com.example.newsapp.data.DataRepository.repositorymodel.Source
 import com.example.newsapp.data.DataRepository.utils.AppExecutor
 import com.example.newsapp.data.api.NetworkService
@@ -14,68 +17,28 @@ import com.example.newsapp.data.DataRepository.utils.Resource
 import com.example.newsapp.data.DataRepository.utils.ResourceHandler
 import com.example.newsapp.data.api.ApiResponse
 import com.example.newsapp.data.api.SourcesResponse
-
 import javax.inject.Inject
-import javax.inject.Singleton
-/*TODO
-  *  - Implement thread executors*/
-@Singleton
-class MainDataRepositoryImpl @Inject constructor(networkService: NetworkService,
-                                                 appDatabase: AppDatabase,
-                                                 articlesAccessObject: ArticleAccessObject,
-                                                 sourcesAccessObject: SourcesAccessObject,
-                                                 appExecutor: AppExecutor):MainDataRepository{
-    override fun setDb(appDatabase: AppDatabase) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    private var mAppExecutors = appExecutor
-    private var mNetworkService = networkService
-
-//    @Inject
-//    private var articlesDataAccessObject = articlesAccessObject.fetchAllData()
 
 
+class MainDataRepositoryImpl @Inject constructor() {
+
+    @Inject
+    private lateinit var articlesDataAccessObject: ArticleAccessObject
+
+    @Inject
     private lateinit var sourcesAccessObject: SourcesAccessObject
 
-    private lateinit var mCountries : LiveData<List<String>>
 
-    private lateinit var mAllArticles : LiveData<List<Articles>>
-    private lateinit var mArticlesByTitle : LiveData<List<Articles>>
-    private lateinit var mArticlesByDomain : LiveData<List<Articles>>
-    private lateinit var mArticlesNoQueryParams : LiveData<List<Articles>>
-    private lateinit var mArticlesByCountry : LiveData<List<Articles>>
-    private lateinit var mNewsBySetToRead : LiveData<List<Articles>>
-    private lateinit var mNewsByFavorite : LiveData<List<Articles>>
-    private lateinit var mNewsByDomain : LiveData<List<Articles>>
-
-    private lateinit var mSources : LiveData<List<Sources>>
-    private lateinit var mSourceByNewsCategory: LiveData<List<Sources>>
-
-
-    fun getFetchNewsSource(){
-
+    fun getFetchNewsSource(): LiveData<List<String>> {
+        return sourcesAccessObject.fetchCategoryList()
     }
 
-    val allSources: LiveData<Resource<List<Sources>>>
-        get() = object :ResourceHandler<List<Sources>, SourcesResponse>(mAppExecutors){
+    fun fetchAllArticles(): LiveData<List<Articles>> {
+        return articlesDataAccessObject.fetchAllCountryData("Norway")
+    }
 
-            override fun saveCallResult(item:SourcesResponse){
-                sourcesAccessObject.createSourceDataIfNotExists(item.results)
-            }
-            override fun shouldFetch(data:List<Sources>?): Boolean{
-                return data == null || data.isEmpty()
-            }
-            override fun loadFromDb():LiveData<List<Sources>>{
-                return sourcesAccessObject.fetchCategoryList()
-            }
-            override fun createCall():LiveData<ApiResponse<SourcesResponse>>{
-                return mNetworkService.getSources("")
-            }
-    }.asLiveData()
-
-
-
-
+    fun fetchCountries(): LiveData<List<String>> {
+        return sourcesAccessObject.fetchCountryLists()
+    }
 
 }
