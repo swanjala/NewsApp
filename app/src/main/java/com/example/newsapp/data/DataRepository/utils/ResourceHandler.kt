@@ -38,22 +38,22 @@ constructor(private val appExecutor: AppExecutor){
             result.removeSource(apiResourseLiveData)
             result.removeSource(dbSource)
 
-            if(response.isSuccessful()){
-                appExecutor.diskIO().execute{
-                    saveCallResult(processResponse(response)!!)
-                    appExecutor.mainThread().execute{
-                        result.addSource(loadFromDb(),
-                                {newData -> setValue(Resource.success(newData))})
-                    }
-                }
-            } else {
-                onFetchFailed()
-                result.addSource(dbSource,
-                        {newData ->
-                            setValue(Resource.error(response.errorMessage, newData))
-
-                        })
-            }
+//            if(response.isSuccessful()){
+//                appExecutor.diskIO().execute{
+//                    saveCallResult(processResponse(response)!!)
+//                    appExecutor.mainThread().execute{
+//                        result.addSource(loadFromDb(),
+//                                {newData -> setValue(Resource.success(newData))})
+//                    }
+//                }
+//            } else {
+//                onFetchFailed()
+//                result.addSource(dbSource,
+//                        {newData ->
+//                            setValue(Resource.error(response.errorMessage, newData))
+//
+//                        })
+//            }
         }
     }
 

@@ -1,10 +1,14 @@
 package com.example.newsapp.data.database
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.AsyncTask
+import android.os.Build
 import android.util.Log
+import com.example.newsapp.BuildConfig
 
 import com.example.newsapp.R
+import com.example.newsapp.data.api.NetworkService
 
 import com.example.newsapp.data.database.accessobjects.ArticleAccessObject
 import com.example.newsapp.data.database.accessobjects.SourcesAccessObject
@@ -12,21 +16,25 @@ import com.example.newsapp.data.datamodels.DataResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
 class DatabaseDataManager : AsyncTask<Void, Void, Void> {
 
     private lateinit var articleAccessObject: ArticleAccessObject
     private var sourcesAccessObject: SourcesAccessObject? = null
 
-    private lateinit var apiManager: ApiManager
+    @Inject
+    lateinit var apiManager: NetworkService
 
-    private var context: Context? = null
-    private lateinit var  query: String
+    @SuppressLint("StaticFieldLeak")
+    @Inject
+    lateinit var context: Context
+
+    private lateinit var query: String
 
     constructor(context: Context, appDatabase: AppDatabase, query: String) {
         articleAccessObject = appDatabase.articleAccessObject()
         sourcesAccessObject = appDatabase.sourcesAccessObject()
-        this.context = context
         this.query = query
     }
 
@@ -37,9 +45,8 @@ class DatabaseDataManager : AsyncTask<Void, Void, Void> {
 
     override fun doInBackground(vararg params: Void): Void? {
         if (query == null) {
-            apiManager = ApiManager(context)
 
-            val sourceCall = apiManager!!.getSources()
+            val sourceCall = apiManager.getSources(BuildConfig.ApiKey)
             sourceCall.enqueue(object : Callback<DataResponse> {
                 override fun onResponse(call: Call<DataResponse>, sourceResponse: Response<DataResponse>) {
 
@@ -59,20 +66,12 @@ class DatabaseDataManager : AsyncTask<Void, Void, Void> {
 
 
         } else {
-
-            Log.d("datbase manafer", query)
-
-            apiManager = ApiManager(context, query)
-            val call = apiManager!!.getArticles()
+            val call = apiManager.getAllNews(query, BuildConfig.ApiKey)
             call.enqueue(object : Callback<DataResponse> {
                 override fun onResponse(call: Call<DataResponse>, response: Response<DataResponse>) {
 
 
                     if (response.body() != null) {
-
-                        /* Consider removing loop*/
-
-                        Log.d("Data gotten:", response.body().toString())
 
                         for (i in 0 until response.body()!!.articles!!.size) {
 

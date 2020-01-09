@@ -1,5 +1,6 @@
 package com.example.newsapp.viewmodels
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
@@ -8,6 +9,7 @@ import android.content.Context
 import com.example.newsapp.data.DataRepository.ArticleRepository
 import com.example.newsapp.data.datamodels.Articles
 import com.example.newsapp.data.datamodels.Sources
+import javax.inject.Inject
 
 
 class NewsViewModel(application: Application) : AndroidViewModel(application) {
@@ -22,10 +24,12 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     private var newsByFavorite: LiveData<List<Articles>>? = null
     private var newsBySetToRead: LiveData<List<Articles>>? = null
     private var articlesByDomain: LiveData<List<Articles>>? = null
-    private var articlesByTitle: LiveData<List<Articles>>? = null
     private var articlesByCountry: LiveData<List<Articles>>? = null
     private var sourcesByNewsCategory: LiveData<List<Sources>>? = null
-    private val context: Context
+
+    @SuppressLint("StaticFieldLeak")
+    @Inject
+    lateinit var context: Context
 
     init {
         mRepository = ArticleRepository(application)
@@ -45,9 +49,8 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
     fun fetchArticlesByTitle(queryParam: String): LiveData<List<Articles>> {
 
-        articlesByTitle = mRepository.getArticlesByTitle(context, queryParam)
+        return mRepository.getArticlesByTitle(context, queryParam)
 
-        return articlesByTitle
     }
 
     fun fetchAllSources(): LiveData<List<Sources>>? {
@@ -60,9 +63,8 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
     fun fetchArticlesByCountry(country: String): LiveData<List<Articles>> {
 
-        articlesByCountry = mRepository.getArticlesByCountry(context, country)
+        return mRepository.getArticlesByCountry(context, country)
 
-        return articlesByCountry
     }
 
     fun fetchNewsCategories(): LiveData<List<String>>? {
@@ -71,34 +73,31 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
     fun fetchArticlesByDomain(query: String): LiveData<List<Articles>> {
 
-        articlesByDomain = mRepository.getArticlesByDomain(context, query)
-        return articlesByDomain
+        return mRepository.getArticlesByDomain(context, query)
     }
 
     fun fetchDataByNewsCategories(categoryQuery: String): LiveData<List<Sources>> {
-        sourcesByNewsCategory = mRepository.getSourcesByNewsCategory(categoryQuery)
 
-        return sourcesByNewsCategory
+        return  mRepository.getSourcesByNewsCategory(categoryQuery)
     }
 
     fun fetchDataByFavorite(): LiveData<List<Articles>> {
 
-        newsByFavorite = mRepository.dataByFavorite
-        return newsByFavorite
+        return mRepository.dataByFavorite
+
     }
 
     fun fetchDataBySetToRead(): LiveData<List<Articles>> {
-        newsBySetToRead = mRepository.dataBySetToRead
-        return newsBySetToRead
+        return mRepository.dataBySetToRead
     }
 
     fun setNewsItemsByFavorite(setItem: Boolean, query: String) {
 
-        mRepository.insertFavorite(setItem, query)
+        return mRepository.insertFavorite(setItem, query)
     }
 
     fun setNewsItemsBySetToRead(setItem: Boolean, query: String) {
-        mRepository.insertSetToRead(setItem, query)
+        return mRepository.insertSetToRead(setItem, query)
     }
 
 }

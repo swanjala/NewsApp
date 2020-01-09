@@ -23,10 +23,10 @@ import javax.inject.Inject
 class MainDataRepositoryImpl @Inject constructor() {
 
     @Inject
-    private lateinit var articlesDataAccessObject: ArticleAccessObject
+    lateinit var articlesDataAccessObject: ArticleAccessObject
 
     @Inject
-    private lateinit var sourcesAccessObject: SourcesAccessObject
+    lateinit var sourcesAccessObject: SourcesAccessObject
 
 
     fun getFetchNewsSource(): LiveData<List<String>> {
