@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProvider
 import java.lang.RuntimeException
 import javax.inject.Inject
 
-@Suppress("UNCHECKED_CAST")
 class ViewModelFactory @Inject constructor(private val mNewsViewModel: NewsViewModel) : ViewModelProvider.Factory {
 
 

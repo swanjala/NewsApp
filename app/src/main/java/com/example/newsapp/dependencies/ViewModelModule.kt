@@ -12,17 +12,19 @@ import javax.inject.Provider
 import dagger.MapKey
 import java.lang.annotation.ElementType
 import java.lang.annotation.RetentionPolicy
+import javax.inject.Singleton
 import kotlin.reflect.KClass
 
 
 @Module
-abstract class ViewModelModule {
+class ViewModelModule {
 
     @MapKey
     internal annotation class ViewModelKey(val value: KClass<out ViewModel>)
 
     @Provides
-    fun viewModelFactory(providerMap: NewsViewModel): ViewModelFactory {
+    @Singleton
+    internal fun viewModelFactory(providerMap: NewsViewModel): ViewModelFactory {
         return ViewModelFactory(providerMap)
     }
 }
