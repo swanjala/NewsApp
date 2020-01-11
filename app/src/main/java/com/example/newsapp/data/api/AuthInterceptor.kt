@@ -9,7 +9,7 @@ class AuthInterceptor: Interceptor{
 
     override fun intercept(chain: Interceptor.Chain): Response {
         var request:Request = chain.request()
-        var url:HttpUrl = request.url().newBuilder().build()
+        val url:HttpUrl = request.url().newBuilder().build()
         request = request.newBuilder().url(url).build()
         return chain.proceed(request)
     }

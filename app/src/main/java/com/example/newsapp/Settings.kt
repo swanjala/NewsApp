@@ -10,7 +10,7 @@ class Settings : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        var actionBar = supportActionBar
+        val actionBar = supportActionBar
 
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
@@ -19,7 +19,7 @@ class Settings : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        var id: Int = item!!.itemId
+        val id: Int = item!!.itemId
         if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this)
         }

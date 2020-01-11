@@ -3,13 +3,10 @@ package com.example.newsapp.data.database
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.AsyncTask
-import android.os.Build
 import android.util.Log
 import com.example.newsapp.BuildConfig
-
 import com.example.newsapp.R
 import com.example.newsapp.data.api.NetworkService
-
 import com.example.newsapp.data.database.accessobjects.ArticleAccessObject
 import com.example.newsapp.data.database.accessobjects.SourcesAccessObject
 import com.example.newsapp.data.datamodels.DataResponse
