@@ -6,7 +6,6 @@ import com.example.newsapp.data.api.NetworkService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
-import java.net.ContentHandler
 import javax.inject.Singleton
 
 @Module

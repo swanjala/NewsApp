@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var mFirebaseAnalytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        var bundle: Bundle = Bundle()
+        val mFirebaseAnalytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        val bundle: Bundle = Bundle()
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME,
                 getString(R.string.firebase_main_activity_log_item_name))
         bundle.putSerializable(FirebaseAnalytics.Param.CONTENT_TYPE,
@@ -95,8 +95,8 @@ class MainActivity : AppCompatActivity() {
 
     fun loadData() {
 
-        var mainFragment = MainFragment()
-        var bundle: Bundle = Bundle()
+        val mainFragment = MainFragment()
+        val bundle: Bundle = Bundle()
         bundle.putString(resources.getString(R.string.data_flag_key), DATAFLAG)
 
         mainFragment.arguments = bundle
@@ -118,8 +118,8 @@ class MainActivity : AppCompatActivity() {
 
         this.DATAFLAG = getString(R.string.load_all_data_flag)
 
-        var sourcesFragment = SourcesFragment()
-        var bundle: Bundle = Bundle()
+        val sourcesFragment = SourcesFragment()
+        val bundle: Bundle = Bundle()
         bundle.putString("sourceCategory", "")
         sourcesFragment.arguments = bundle
 
@@ -136,12 +136,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun loadCountries() {
-        var intent = Intent(this, HeadlinesByCountry::class.java)
+        val intent = Intent(this, HeadlinesByCountry::class.java)
         startActivity(intent)
     }
 
     fun loadCategories() {
-        var categoriesFragment: CategoriesFragment = CategoriesFragment()
+        val categoriesFragment: CategoriesFragment = CategoriesFragment()
         fragmentContainer = R.id.fr_main_holder
         fragmentManager = this.supportFragmentManager
         fragmentManager.beginTransaction()
@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        var inflater: MenuInflater = menuInflater
+        val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.main_menu, menu)
         return true;
     }
@@ -176,7 +176,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_settings -> {
-                var startSettingIntent = Intent(this, Settings::class.java)
+                val startSettingIntent = Intent(this, Settings::class.java)
                 startActivity(startSettingIntent)
                 true
 

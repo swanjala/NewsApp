@@ -20,15 +20,15 @@ class NewAppWidgetConfigureActivity : Activity() {
     var mOnClickListener = View.OnClickListener {
 
         fun onClick(v:View){
-             var context = this
-             var widgetText = mAppWidgetText.text.toString()
+            val context = this
+            val widgetText = mAppWidgetText.text.toString()
 
             saveTitlePref(context, mAppWidgetId, widgetText )
 
-            var appWidgetManager = AppWidgetManager.getInstance(context)
+            val appWidgetManager = AppWidgetManager.getInstance(context)
             NewAppWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId)
 
-            var resultValue = Intent()
+            val resultValue = Intent()
             setResult(RESULT_OK, resultValue)
             finish()
         }
@@ -45,14 +45,14 @@ class NewAppWidgetConfigureActivity : Activity() {
 
         internal fun saveTitlePref(context: Context, appWidgetId:Int, text:String){
 
-            var prefs:SharedPreferences.Editor = context.getSharedPreferences(PREFS_NAME, 0).edit()
+            val prefs:SharedPreferences.Editor = context.getSharedPreferences(PREFS_NAME, 0).edit()
             prefs.putString(PREF_PREFIX_KEY + appWidgetId, text)
             prefs.apply()
         }
 
        internal fun loadTitlePref(context:Context, appWidgetId:Int):String{
-            var sharedPreferences = context.getSharedPreferences(PREFS_NAME, 0)
-            var titleValue = sharedPreferences.getString(PREF_PREFIX_KEY + appWidgetId, null)
+           val sharedPreferences = context.getSharedPreferences(PREFS_NAME, 0)
+           val titleValue = sharedPreferences.getString(PREF_PREFIX_KEY + appWidgetId, null)
 
             if(titleValue != null){
                 return titleValue
@@ -62,7 +62,7 @@ class NewAppWidgetConfigureActivity : Activity() {
         }
 
       internal  fun deleteTitlePref(context:Context, appWidgetId: Int){
-            var sharedPreferencesEditor = context.getSharedPreferences(PREFS_NAME, 0).edit()
+          val sharedPreferencesEditor = context.getSharedPreferences(PREFS_NAME, 0).edit()
             sharedPreferencesEditor.remove(PREF_PREFIX_KEY + appWidgetId)
             sharedPreferencesEditor.apply()
         }
@@ -74,8 +74,8 @@ class NewAppWidgetConfigureActivity : Activity() {
         setContentView(R.layout.new_app_widget_configure)
         mAppWidgetText = findViewById(R.id.appwidget_text)
 
-         var intent = intent
-        var extras = intent.extras
+        val intent = intent
+        val extras = intent.extras
 
         if (extras != null){
             mAppWidgetId = extras.getInt(

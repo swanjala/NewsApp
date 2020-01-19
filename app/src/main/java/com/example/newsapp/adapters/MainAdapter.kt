@@ -18,8 +18,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.newsapp.R
 import com.example.newsapp.data.datamodels.Articles
-import com.squareup.picasso.Picasso
 import com.example.newsapp.viewmodels.NewsViewModel
+import com.squareup.picasso.Picasso
 import java.util.*
 
 class MainAdapter(context: Context, articlesList:List<Articles>):
@@ -48,7 +48,7 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onBindViewHolder(myViewHolder:MyViewHolder, position: Int) {
 
-        var currentArticle = mArticles.get(position);
+        val currentArticle = mArticles.get(position);
         myViewHolder.setData(currentArticle,position);
     }
 
@@ -109,7 +109,7 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                 }
 
                 bt_favorite.setOnClickListener {
-                    var titleQuery = "%" + current.title!!.substring(0,10)+ "%"
+                    val titleQuery = "%" + current.title!!.substring(0,10)+ "%"
                     userActionViewModel.setNewsItemsByFavorite(false,titleQuery)
                 }
             } else {
@@ -123,7 +123,7 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                 bt_favorite.setOnClickListener{
                     bt_favorite.foreground = mContext.getDrawable(R.drawable.ic_thumb_up_accent_24dp)
 
-                    var titleQuery ="%" +  current.title!!.substring(0,10)+ "%"
+                    val titleQuery ="%" +  current.title!!.substring(0,10)+ "%"
                     userActionViewModel.setNewsItemsByFavorite(true,titleQuery)
                 }
             }
@@ -132,13 +132,13 @@ class MainAdapter(context: Context, articlesList:List<Articles>):
                 bt_toread.foreground = mContext.getDrawable(R.drawable.ic_library_add_accent_24dp)
                 bt_toread.setOnClickListener {
 
-                    var titleQuery = "%" + current.title!!.substring(0,10) + "%"
+                    val titleQuery = "%" + current.title!!.substring(0,10) + "%"
                     userActionViewModel.setNewsItemsBySetToRead(false, titleQuery)
                 }
             }
 
             tv_description.setOnClickListener{
-                var intent = Intent(Intent.ACTION_VIEW, Uri.parse(current.url))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(current.url))
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 mContext.startActivity(intent)
             }

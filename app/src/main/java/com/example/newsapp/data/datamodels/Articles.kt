@@ -4,11 +4,9 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 import android.arch.persistence.room.TypeConverters
-
+import com.example.newsapp.data.database.utils.NewsAppTypeConverter
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-
-import com.example.newsapp.data.database.utils.NewsAppTypeConverter
 
 @Entity(tableName = "articles", indices = [Index(value = ["description"], unique = true)])
 @TypeConverters(NewsAppTypeConverter::class)

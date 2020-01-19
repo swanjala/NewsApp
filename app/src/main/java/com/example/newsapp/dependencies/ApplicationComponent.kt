@@ -1,6 +1,5 @@
 package com.example.newsapp.dependencies
 
-import com.example.newsapp.MainActivity
 import com.example.newsapp.application.NewsApplication
 import dagger.Component
 import javax.inject.Singleton
