@@ -16,9 +16,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 
 class MainActivity : AppCompatActivity() {
 
-    var DATAFLAG: String = ""
-    var LARGE_SCREEN_SIZE: Boolean = false
-    var fragmentContainer: Int = 0
+
     lateinit var firebaseAnalytics: FirebaseAnalytics
     lateinit var fragmentManager: FragmentManager
 
@@ -36,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
         if (findViewById<ConstraintLayout>(R.id.largeScreen) != null) {
-            this.LARGE_SCREEN_SIZE = true
+            LARGE_SCREEN_SIZE = true
 
             if (DATAFLAG != null) {
 
@@ -46,10 +44,10 @@ class MainActivity : AppCompatActivity() {
                     loadSourcesList()
                 }
             } else if (findViewById<ConstraintLayout>(R.id.cl_country_detail) != null) {
-                this.LARGE_SCREEN_SIZE = true
+                LARGE_SCREEN_SIZE = true
                 loadCountries()
             } else if (findViewById<FrameLayout>(R.id.fr_main_holder) != null) {
-                this.LARGE_SCREEN_SIZE = false;
+                LARGE_SCREEN_SIZE = false;
 
                 if (DATAFLAG != null) {
 
@@ -69,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
         super.onRestoreInstanceState(savedInstanceState)
         if (findViewById<ConstraintLayout>(R.id.largeScreen) != null) {
-            this.LARGE_SCREEN_SIZE = true
+            LARGE_SCREEN_SIZE = true
             if (DATAFLAG != null) {
                 if (DATAFLAG.equals(getString(R.string.load_all_data_flag))) {
                     loadData();
@@ -78,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         } else if (findViewById<FrameLayout>(R.id.fr_main_holder) != null) {
-            this.LARGE_SCREEN_SIZE = false;
+            LARGE_SCREEN_SIZE = false;
 
             if (DATAFLAG != null) {
                 if (DATAFLAG.equals(getString(R.string.load_all_data_flag))) {
@@ -87,10 +85,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         if (findViewById<ConstraintLayout>(R.id.cl_country_detail) != null) {
-            this.LARGE_SCREEN_SIZE = true
+            LARGE_SCREEN_SIZE = true
             loadCountries()
         }
-        this.LARGE_SCREEN_SIZE = false
+        LARGE_SCREEN_SIZE = false
     }
 
     fun loadData() {
@@ -116,7 +114,7 @@ class MainActivity : AppCompatActivity() {
 
     fun loadSourcesList() {
 
-        this.DATAFLAG = getString(R.string.load_all_data_flag)
+        DATAFLAG = getString(R.string.load_all_data_flag)
 
         val sourcesFragment = SourcesFragment()
         val bundle: Bundle = Bundle()
@@ -171,7 +169,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.loadFavorites -> {
-                this.DATAFLAG = getString(R.string.load_favorites_flag);
+                DATAFLAG = getString(R.string.load_favorites_flag);
                 loadData()
                 true
             }
@@ -185,4 +183,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    companion object {
+        var DATAFLAG: String = ""
+        var LARGE_SCREEN_SIZE: Boolean = false
+        var fragmentContainer: Int = 0
+    }
+
 }
+

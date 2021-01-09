@@ -15,6 +15,7 @@ import java.lang.annotation.RetentionPolicy
 import javax.inject.Singleton
 import kotlin.reflect.KClass
 
+@Module
 class ViewModelModule {
 
     @MapKey
