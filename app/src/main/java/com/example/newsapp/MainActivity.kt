@@ -16,9 +16,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 
 class MainActivity : AppCompatActivity() {
 
-    var DATAFLAG: String = ""
-    var LARGE_SCREEN_SIZE: Boolean = false
-    var fragmentContainer: Int = 0
     lateinit var firebaseAnalytics: FirebaseAnalytics
     lateinit var fragmentManager: FragmentManager
 
@@ -183,6 +180,13 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    companion object {
+
+        private var DATAFLAG: String = ""
+        private var LARGE_SCREEN_SIZE: Boolean = false
+        private var fragmentContainer: Int = 0
     }
 
 }
