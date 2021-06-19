@@ -33,10 +33,8 @@ class SourcesFragment @Inject constructor(): Fragment() {
     override fun onCreateView(layoutInflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = layoutInflater.inflate(R.layout.fragment_main_sources,
+        return layoutInflater.inflate(R.layout.fragment_main_sources,
                 container, false)
-        ButterKnife.bind(this, view)
-        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -44,33 +42,33 @@ class SourcesFragment @Inject constructor(): Fragment() {
         val linearLayoutManager = LinearLayoutManager(rv_sources_layout
                 .context)
 
-        rv_sources_layout!!.layoutManager = linearLayoutManager
+        rv_sources_layout.layoutManager = linearLayoutManager
 
         val viewModel = ViewModelProviders.of(this, viewModelFactory)[NewsViewModel::class.java]
 
-        if (arguments!!.getString(getString(R.string.source_category_flag_key)) != null && arguments!!.getString(getString(R.string.source_category_flag_key)) !== "") {
+        arguments?.let {
 
-            viewModel.fetchDataByNewsCategories(arguments!!
-                    .getString(getString(R.string.source_category_flag_key)))
+            if (it.getString(getString(R.string.source_category_flag_key)) != null && it.getString(getString(R.string.source_category_flag_key)) !== "") {
+
+                viewModel.fetchDataByNewsCategories(it.getString(getString(R.string.source_category_flag_key)))
                     .observe(this, Observer { sources ->
 
-                        sourcesAdapter = SourcesAdapter(context!!, sources!!)
-                        rv_sources_layout!!.adapter = sourcesAdapter
-                        sourcesAdapter!!.notifyDataSetChanged()
+                        sourcesAdapter = context?.let { it1 -> SourcesAdapter(it1, sources!!) }
+                        rv_sources_layout.adapter = sourcesAdapter
+                        sourcesAdapter?.notifyDataSetChanged()
 
                     })
 
-        } else {
+            } else {
 
-            viewModel.fetchAllSources()?.observe(this, Observer { sources ->
+                viewModel.fetchAllSources()?.observe(this, Observer { sources ->
 
-                sourcesAdapter = SourcesAdapter(context!!, sources!!)
-                rv_sources_layout!!.adapter = sourcesAdapter
-                sourcesAdapter!!.notifyDataSetChanged()
+                    sourcesAdapter = SourcesAdapter(context!!, sources!!)
+                    rv_sources_layout.adapter = sourcesAdapter
+                    sourcesAdapter?.notifyDataSetChanged()
 
-            })
+                })
+            }
         }
-
-
     }
 }

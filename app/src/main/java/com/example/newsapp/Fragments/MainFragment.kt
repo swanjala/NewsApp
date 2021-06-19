@@ -22,35 +22,22 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.example.newsapp.adapters.MainAdapter
 import com.example.newsapp.viewmodels.NewsViewModel
+import kotlinx.android.synthetic.main.fragment_main_news.adView
+import kotlinx.android.synthetic.main.fragment_main_news.fb_news_back
+import kotlinx.android.synthetic.main.fragment_main_news.fb_news_items
+import kotlinx.android.synthetic.main.fragment_main_news.rv_news_layout
 
 class MainFragment : Fragment() {
 
-    @BindView(R.id.fb_news_items)
-    internal var fb_news_items: FloatingActionButton? = null
-
-    @BindView(R.id.fb_news_back)
-    internal var fb_news_back: FloatingActionButton? = null
-
-    @BindView(R.id.rv_news_layout)
-    internal var rv_news_layout: RecyclerView? = null
-
-    @BindView(R.id.adView)
-    internal var mAdView: AdView? = null
-
     private var mainAdapter: MainAdapter? = null
-
     private var model: NewsViewModel? = null
 
     override fun onCreateView(layoutInflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val view = layoutInflater.inflate(R.layout.fragment_main_news,
-                container,
-                false)
-        ButterKnife.bind(this, view)
-        return view
-
+        return layoutInflater.inflate(R.layout.fragment_main_news,
+                container, false)
     }
 
     @SuppressLint("RestrictedApi")
@@ -61,87 +48,80 @@ class MainFragment : Fragment() {
                 getString(R.string.mobile_ads_id))
 
         val adRequest = AdRequest.Builder().build()
-        mAdView!!.loadAd(adRequest)
-        mAdView!!.bringToFront()
+        adView.apply {
+            loadAd(adRequest)
+            bringToFront()
+        }
 
-        val linearLayoutManager = LinearLayoutManager(rv_news_layout!!
-                .context)
+        val linearLayoutManager = LinearLayoutManager(rv_news_layout.context)
+        rv_news_layout.layoutManager = linearLayoutManager
 
-        rv_news_layout!!.layoutManager = linearLayoutManager
+        arguments?.let {
+            if(it.getString(getString(R.string.main_fragment_get_data_flag_key)) != null ){
 
+                model = ViewModelProviders
+                    .of(this).get(NewsViewModel::class.java)
+                DATAFLAG = it.getString(getString(R.string.main_fragment_get_data_flag_key))
 
-        if (arguments != null && arguments!!
-                        .getString(getString(R.string.main_fragment_get_data_flag_key)) != null) {
+                model?.let { newsModel ->
 
-            this.model = ViewModelProviders
-                    .of(this)
-                    .get(NewsViewModel::class.java)
+                    when (DATAFLAG) {
+                        getString(R.string.all_data_flag) -> {
+                            newsModel.fetchAllArticlesNoQuery()?.observe(this, Observer { articlesList ->
+                                mainAdapter = MainAdapter(context!!, articlesList!!)
+                                rv_news_layout.adapter = mainAdapter
+                                mainAdapter?.notifyDataSetChanged()
 
-            DATAFLAG = arguments!!
-                    .getString(getString(R.string.main_fragment_get_data_flag_key))
+                            })
+                        }
+                        getString(R.string.load_favorites_flag) -> {
+                            newsModel.fetchDataByFavorite().observe(this, Observer { articlesList ->
+                                mainAdapter = MainAdapter(context!!, articlesList!!)
+                                rv_news_layout.adapter = mainAdapter
+                                mainAdapter?.notifyDataSetChanged()
+                            })
+                        }
 
-            if (DATAFLAG == getString(R.string.all_data_flag)) {
-                model!!.fetchAllArticlesNoQuery()?.observe(this, Observer { articlesList ->
-                    mainAdapter = MainAdapter(context!!, articlesList!!)
-                    rv_news_layout!!.adapter = mainAdapter
-                    mainAdapter!!.notifyDataSetChanged()
+                        getString(R.string.load_set_to_read) -> {
+                            newsModel.fetchDataBySetToRead().observe(this, Observer { articlesList ->
+                                mainAdapter = MainAdapter(context!!, articlesList!!)
+                                rv_news_layout!!.adapter = mainAdapter
+                                mainAdapter?.notifyDataSetChanged()
+                            })
+                        }
 
-                })
-            } else if (DATAFLAG == getString(R.string.load_favorites_flag)) {
-                model!!.fetchDataByFavorite().observe(this, Observer { articlesList ->
-                    mainAdapter = MainAdapter(context!!, articlesList!!)
-                    rv_news_layout!!.adapter = mainAdapter
-                    mainAdapter!!.notifyDataSetChanged()
-                })
-            } else if (DATAFLAG == getString(R.string.load_set_to_read)) {
-                model!!.fetchDataBySetToRead().observe(this, Observer { articlesList ->
-                    mainAdapter = MainAdapter(context!!, articlesList!!)
-                    rv_news_layout!!.adapter = mainAdapter
-                    mainAdapter!!.notifyDataSetChanged()
-                })
-            } else if (DATAFLAG == getString(R.string.main_fragment_domain_search_value)) {
+                        getString(R.string.main_fragment_domain_search_value)-> {
+                            newsModel.fetchArticlesByDomain(arguments!!.getString(getString(R.string.main_fragment_query_value)))
+                                .observe(this, Observer { articlesList ->
+                                    mainAdapter = MainAdapter(context!!, articlesList!!)
+                                    rv_news_layout.adapter = mainAdapter
+                                    mainAdapter?.notifyDataSetChanged()
+                                })
+                        }
+                        getString(R.string.main_fragment_data_by_url_value) -> {
+                            newsModel.fetchArticlesByDomain(arguments!!.getString(getString(R.string.current_url_key)))
+                                .observe(this, Observer { articlesList ->
+                                    mainAdapter = MainAdapter(context!!, articlesList!!)
+                                    rv_news_layout.adapter = mainAdapter
+                                    mainAdapter?.notifyDataSetChanged()
+                                })
+                        }
+                        else -> {
+                            val countryName = it.getString(getString(R.string.country_data_flag))
 
-                model!!.fetchArticlesByDomain(arguments!!.getString(getString(R.string.main_fragment_query_value)))
-                        .observe(this, Observer { articlesList ->
-                            mainAdapter = MainAdapter(context!!, articlesList!!)
-                            rv_news_layout!!.adapter = mainAdapter
-                            mainAdapter!!.notifyDataSetChanged()
-                        })
-            } else if (DATAFLAG == getString(R.string.title_search_value)) {
-
-                model!!.fetchArticlesByTitle(arguments!!.getString(getString(R.string.main_fragment_query_value)))
-                        .observe(this, Observer { articlesList ->
-                            mainAdapter = MainAdapter(context!!, articlesList!!)
-                            rv_news_layout!!.adapter = mainAdapter
-                            mainAdapter!!.notifyDataSetChanged()
-                        })
-            } else if (DATAFLAG == getString(R.string.main_fragment_data_by_url_value)) {
-                model!!.fetchArticlesByDomain(arguments!!.getString(getString(R.string.current_url_key)))
-                        .observe(this, Observer { articlesList ->
-                            mainAdapter = MainAdapter(context!!, articlesList!!)
-
-                            rv_news_layout!!.adapter = mainAdapter
-                            mainAdapter!!.notifyDataSetChanged()
-                        })
-            } else if (arguments!!
-                            .getString(getString(R.string.main_fragment_get_data_flag_key)) == getString(R.string.articles_by_country_value)) {
-
-                val countryName = arguments!!
-                        .getString(getString(R.string.country_data_flag))
-
-                model!!.fetchArticlesByCountry(countryName).observe(this, Observer{ articlesList ->
-
-                    mainAdapter = MainAdapter(context!!,
-                            articlesList!!)
-                    rv_news_layout!!.adapter = mainAdapter
-                    mainAdapter!!.notifyDataSetChanged()
-                })
-
-
+                            newsModel.fetchArticlesByCountry(countryName).observe(this, Observer{ articlesList ->
+                                mainAdapter = MainAdapter(context!!,
+                                    articlesList!!)
+                                rv_news_layout.adapter = mainAdapter
+                                mainAdapter?.notifyDataSetChanged()
+                            })
+                        }
+                    }
+                }
             }
         }
 
-        fb_news_items!!.setOnClickListener { v ->
+        fb_news_items.setOnClickListener { v ->
             val fragmentContainer: Int
             val fragmentTransaction: FragmentTransaction
 
@@ -159,20 +139,16 @@ class MainFragment : Fragment() {
         val fragmentManager = fragmentManager!!
 
         if (fragmentManager.backStackEntryCount > 0) {
-
-            fb_news_back!!.visibility = View.VISIBLE
-
-            fb_news_back!!.setOnClickListener { v ->
-                fragmentManager.popBackStack()
-
+            fb_news_back.apply {
+                visibility = View.VISIBLE
+                setOnClickListener{
+                    fragmentManager.popBackStack()
+                }
             }
-
         }
-
     }
 
     companion object {
-
         private var DATAFLAG: String? = null
     }
 }
