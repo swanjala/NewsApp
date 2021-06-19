@@ -29,7 +29,7 @@ class CategoriesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(view!!.context)
+        val linearLayoutManager = LinearLayoutManager(view!!.context)
 
         val recyclerView: RecyclerView = view!!.findViewById(R.id.rv_news_categories)
 
