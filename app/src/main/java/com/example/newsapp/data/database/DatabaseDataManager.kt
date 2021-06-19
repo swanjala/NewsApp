@@ -56,7 +56,7 @@ class DatabaseDataManager : AsyncTask<Void, Void, Void> {
                 }
 
                 override fun onFailure(call: Call<DataResponse>, t: Throwable) {
-                    Log.d(context!!.getString(R.string.database_manager_sources_error),
+                    Log.d(context.getString(R.string.database_manager_sources_error),
                             t.localizedMessage)
                 }
             })

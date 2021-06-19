@@ -7,7 +7,6 @@ import javax.inject.Inject
 
 class ViewModelFactory @Inject constructor(private val mNewsViewModel: NewsViewModel) : ViewModelProvider.Factory {
 
-
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         val viewModel: ViewModel
         if (modelClass == NewsViewModel::class.java) {

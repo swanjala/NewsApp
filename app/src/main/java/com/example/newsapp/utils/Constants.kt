@@ -1,7 +1,6 @@
 package com.example.newsapp.utils
 
 class Constants {
-
     companion object {
         var DEBUG: Boolean = true
         var BASE_URL:String = "https://newsapi.org/v2/"

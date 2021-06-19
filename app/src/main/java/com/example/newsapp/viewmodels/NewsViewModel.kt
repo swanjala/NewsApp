@@ -47,9 +47,7 @@ class NewsViewModel(application: Application) : ViewModel() {
     }
 
     fun fetchArticlesByTitle(queryParam: String): LiveData<List<Articles>> {
-
         return mRepository.getArticlesByTitle(context, queryParam)
-
     }
 
     fun fetchAllSources(): LiveData<List<Sources>>? {
@@ -61,9 +59,7 @@ class NewsViewModel(application: Application) : ViewModel() {
     }
 
     fun fetchArticlesByCountry(country: String): LiveData<List<Articles>> {
-
         return mRepository.getArticlesByCountry(context, country)
-
     }
 
     fun fetchNewsCategories(): LiveData<List<String>>? {
@@ -71,19 +67,15 @@ class NewsViewModel(application: Application) : ViewModel() {
     }
 
     fun fetchArticlesByDomain(query: String): LiveData<List<Articles>> {
-
         return mRepository.getArticlesByDomain(context, query)
     }
 
     fun fetchDataByNewsCategories(categoryQuery: String): LiveData<List<Sources>> {
-
         return  mRepository.getSourcesByNewsCategory(categoryQuery)
     }
 
     fun fetchDataByFavorite(): LiveData<List<Articles>> {
-
         return mRepository.dataByFavorite
-
     }
 
     fun fetchDataBySetToRead(): LiveData<List<Articles>> {
@@ -91,12 +83,10 @@ class NewsViewModel(application: Application) : ViewModel() {
     }
 
     fun setNewsItemsByFavorite(setItem: Boolean, query: String) {
-
         return mRepository.insertFavorite(setItem, query)
     }
 
     fun setNewsItemsBySetToRead(setItem: Boolean, query: String) {
         return mRepository.insertSetToRead(setItem, query)
     }
-
 }

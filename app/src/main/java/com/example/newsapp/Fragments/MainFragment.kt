@@ -4,24 +4,17 @@ import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.newsapp.R
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
-
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.example.newsapp.adapters.MainAdapter
 import com.example.newsapp.viewmodels.NewsViewModel
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.fragment_main_news.adView
 import kotlinx.android.synthetic.main.fragment_main_news.fb_news_back
 import kotlinx.android.synthetic.main.fragment_main_news.fb_news_items
