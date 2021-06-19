@@ -33,8 +33,8 @@ class HeadlinesByCountry : AppCompatActivity() {
 
     fun loadData() {
 
-        var countryListFragment = CountryListFragment()
-        var bundle = Bundle()
+        val countryListFragment = CountryListFragment()
+        val bundle = Bundle()
 
         bundle.putString(getString(R.string.data_flag_key), getString(R.string.load_country_string))
 
