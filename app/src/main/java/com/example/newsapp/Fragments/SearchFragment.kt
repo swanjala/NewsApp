@@ -5,46 +5,31 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.example.newsapp.R
+import kotlinx.android.synthetic.main.fragment_search_news_items.bt_search
+import kotlinx.android.synthetic.main.fragment_search_news_items.et_search_parameter
 
 class SearchFragment : Fragment() {
 
 
-    @BindView(R.id.et_search_parameter)
-    internal var et_search_parameter: EditText? = null
-
-    @BindView(R.id.bt_search)
-    internal var bt_search: Button? = null
     private var fragmentContainer: Int = 0
-
-    private var DATAFLAG = ""
-
 
     override fun onCreateView(layoutInflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = layoutInflater
+        return layoutInflater
                 .inflate(R.layout.fragment_search_news_items,
                         container, false)
-        ButterKnife.bind(this, view)
-        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
-        bt_search!!.setOnClickListener { v ->
-            val queryValue = et_search_parameter!!.text.toString()
+        bt_search.setOnClickListener { v ->
+            val queryValue = et_search_parameter.text.toString()
             navigationHandler(getString(R.string.navigation_handler_title_search_key), queryValue)
         }
-
-
     }
 
     private fun navigationHandler(valueType: String, queryValue: String) {
@@ -55,29 +40,34 @@ class SearchFragment : Fragment() {
 
         if (valueType == "Domain Search") {
 
-            this.DATAFLAG = "domain_search"
+            DATAFLAG = "domain_search"
 
-            bundle.putString("DataFlag", DATAFLAG)
-            bundle.putString("QueryValue", queryValue)
+            bundle.apply {
+                putString("DataFlag", DATAFLAG)
+                putString("QueryValue", queryValue)
+            }
+
             mainFragment.arguments = bundle
 
             fragmentContainer = R.id.fr_main_holder
-            fragmentManager!!.beginTransaction()
-                    .replace(fragmentContainer, mainFragment)
-                    .commitAllowingStateLoss()
+            fragmentManager?.beginTransaction()
+                ?.replace(fragmentContainer, mainFragment)
+                ?.commitAllowingStateLoss()
+
         } else if (valueType.trim { it <= ' ' } == getString(R.string.navigation_handler_title_search_key)) {
 
-            this.DATAFLAG = "title_search"
+            DATAFLAG = "title_search"
+            bundle.apply {
+                putString("DataFlag", DATAFLAG)
+                putString("QueryValue", queryValue)
+            }
 
-            bundle.putString("DataFlag", DATAFLAG)
-            bundle.putString("QueryValue", queryValue)
             mainFragment.arguments = bundle
 
             fragmentContainer = R.id.fr_main_holder
             fragmentManager!!.beginTransaction()
                     .replace(fragmentContainer, mainFragment)
                     .commitAllowingStateLoss()
-
 
         } else {
             Toast.makeText(context,
