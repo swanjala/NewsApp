@@ -15,7 +15,6 @@ class Settings : AppCompatActivity() {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
