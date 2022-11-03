@@ -1,4 +1,4 @@
-package com.example.newsapp.news.model
+package com.example.newsapp.news.module
 
 import dagger.Binds
 import dagger.Module

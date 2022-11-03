@@ -1,8 +1,8 @@
-package com.example.newsapp.news.model
+package com.example.newsapp.news.module
 
 import android.util.Log
-import com.example.newsapp.NewsApi
-import com.example.newsapp.network.News
+import com.example.newsapp.network.service.NewsApi
+import com.example.newsapp.network.model.News
 import javax.inject.Inject
 
 interface NewsRemoteDataStore {

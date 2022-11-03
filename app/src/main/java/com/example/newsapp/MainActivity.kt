@@ -5,22 +5,14 @@ import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.newsapp.composables.MainViewComposable
-import com.example.newsapp.news.NewsViewModel
+import com.example.newsapp.news.domain.NewsViewModel
 import com.example.newsapp.ui.theme.NewsAppTheme
 import javax.inject.Inject
-
 
 class MainActivity : ComponentActivity() {
 
@@ -39,28 +31,12 @@ class MainActivity : ComponentActivity() {
                 .detectLeakedClosableObjects()
                 .build()
         )
-            setContent {
-                NewsAppTheme {
-                    // A surface container using the 'background' color from the theme
-                    MainViewComposable(
-                        viewModel.response
-                    )
-
-                }
+        setContent {
+            NewsAppTheme {
+                MainViewComposable(
+                    viewModel.response
+                )
+            }
         }
-
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    NewsAppTheme {
-        Greeting("Android")
     }
 }

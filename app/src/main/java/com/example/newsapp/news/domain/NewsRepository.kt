@@ -1,10 +1,10 @@
-package com.example.newsapp.news.model
+package com.example.newsapp.news.module
 
-import com.example.newsapp.network.News
+import com.example.newsapp.network.model.News
 import javax.inject.Inject
 
 interface NewsRepository {
-    suspend fun getNewsData():News?
+    suspend fun getNewsData(): News?
 }
 
 class NewsRepositoryImpl @Inject constructor(

@@ -1,4 +1,4 @@
-package com.example.newsapp.network
+package com.example.newsapp.network.model
 
 data class Articles(
     val source: Source,

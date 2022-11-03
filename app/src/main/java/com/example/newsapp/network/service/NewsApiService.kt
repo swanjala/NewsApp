@@ -1,6 +1,7 @@
-package com.example.newsapp
+package com.example.newsapp.network.service
 
-import com.example.newsapp.network.News
+import com.example.newsapp.BuildConfig
+import com.example.newsapp.network.model.News
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
