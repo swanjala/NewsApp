@@ -1,6 +1,7 @@
 package com.example.newsapp.composables
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -23,26 +24,12 @@ fun MainViewComposable(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
     ) {
-        LazyColumn {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(state?.articles?.size ?: 0) {
                 state?.articles?.forEach { article ->
-                    article.author?.let { it1 -> Greeting(name = it1) }
+                    ArticleCard(article)
                 }
             }
         }
-        Greeting(name = state?.articles?.size.toString())
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    NewsAppTheme {
-        Greeting("Android")
     }
 }
