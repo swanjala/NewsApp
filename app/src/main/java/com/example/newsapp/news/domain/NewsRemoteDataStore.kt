@@ -1,19 +1,20 @@
 package com.example.newsapp.news.module
 
 import android.util.Log
-import com.example.newsapp.network.service.NewsApi
 import com.example.newsapp.network.model.News
+import com.example.newsapp.network.service.NewsApiService
 import javax.inject.Inject
 
 interface NewsRemoteDataStore {
     suspend fun getAllNews(keyWord: String?): News?
 }
 
-class NewsRemoteDataStoreImpl @Inject constructor() : NewsRemoteDataStore {
-    private val apiService = NewsApi.retrofitService
+class NewsRemoteDataStoreImpl @Inject constructor(
+    private val newsApiService: NewsApiService
+) : NewsRemoteDataStore {
 
     override suspend fun getAllNews(keyWord: String?): News? = try {
-        val response = apiService.getAllNews(keyWord ?: "keyword", 1)
+        val response = newsApiService.getAllNews(keyWord ?: "keyword", 1)
         response.body()
 
     } catch (t: Throwable) {
