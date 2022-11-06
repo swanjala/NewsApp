@@ -15,16 +15,17 @@ import com.example.newsapp.network.model.News
 
 @Composable
 fun MainScreenComposable(
-    response: News,
+    response: LiveData<News>,
     navController: NavController
 ) {
+    val state by response.observeAsState()
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
     ) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(response.articles.size) {
-                response.articles.forEach { article ->
+            items(state?.articles?.size ?: 0) {
+                state?.articles?.forEach { article ->
                     ArticleCard(article, navController)
                 }
             }

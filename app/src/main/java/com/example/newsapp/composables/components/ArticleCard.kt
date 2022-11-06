@@ -1,7 +1,5 @@
 package com.example.newsapp.composables.components
 
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -10,28 +8,28 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.newsapp.composables.navigation.ArticlesScreen
-import com.example.newsapp.composables.navigation.Destinations
 import com.example.newsapp.network.model.Article
-import java.util.*
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
+import java.util.Locale
 
 
 @Composable
 fun ArticleCard(article: Article, navController: NavController) = with(article) {
 
+    val articleLink = URLEncoder.encode(article.url, StandardCharsets.UTF_8.toString())
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,7 +37,9 @@ fun ArticleCard(article: Article, navController: NavController) = with(article) 
             .padding(10.dp)
             .selectable(
                 selected = false,
-                onClick = { navController.navigate(ArticlesScreen.route) }
+                onClick = {
+                    navController.navigate("article/${articleLink}")
+                }
             )
     ) {
         Image(
@@ -79,7 +79,7 @@ fun ArticleCard(article: Article, navController: NavController) = with(article) 
         Button(modifier = Modifier
             .fillMaxHeight()
             .width(10.dp), onClick = {
-            navController.navigate(ArticlesScreen.route)
+            navController.navigate("${ArticlesScreen.route}/${article.url}")
 
         }) {
 
@@ -94,5 +94,4 @@ object ArticleCardDimens {
     val fontSizeLarge = 16.sp
     val fontSizeMedium = 13.sp
     val fontSizeSmall = 12.sp
-
 }

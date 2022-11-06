@@ -7,7 +7,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 
 @Composable
 fun ArticleScreenComposable(url: String) {
-
     AndroidView(factory = {
         WebView(it).apply {
             webViewClient = WebViewClient()
