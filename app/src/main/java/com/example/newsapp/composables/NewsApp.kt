@@ -21,8 +21,7 @@ fun NewsApp(newsViewModel: NewsViewModel, onSaveArticleClicked: () -> Unit) {
         Scaffold {
             NewsNavHost(
                 navController = navController,
-                viewModel = newsViewModel,
-                onSaveArticleClicked = onSaveArticleClicked
+                viewModel = newsViewModel
             )
         }
     }
