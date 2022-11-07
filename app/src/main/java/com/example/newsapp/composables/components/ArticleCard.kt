@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.newsapp.composables.navigation.ArticlesScreen
-import com.example.newsapp.network.model.Article
+import com.example.newsapp.data.network.model.Article
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.util.Locale

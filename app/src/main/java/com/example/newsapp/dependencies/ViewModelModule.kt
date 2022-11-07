@@ -2,7 +2,7 @@ package com.example.newsapp.dependencies
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.newsapp.news.domain.NewsViewModel
+import com.example.newsapp.news.NewsViewModel
 import com.example.newsapp.utils.ViewModelFactory
 import dagger.Binds
 import dagger.MapKey

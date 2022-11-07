@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.newsapp.composables.MainScreenComposable
 import com.example.newsapp.composables.screens.ArticleScreenComposable
-import com.example.newsapp.news.domain.NewsViewModel
+import com.example.newsapp.news.NewsViewModel
 import java.net.URLDecoder
 
 @Composable

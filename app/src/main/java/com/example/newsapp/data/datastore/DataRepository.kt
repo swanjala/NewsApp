@@ -1,15 +1,15 @@
 package com.example.newsapp.news.module
 
-import com.example.newsapp.network.model.News
+import com.example.newsapp.data.network.model.News
 import javax.inject.Inject
 
-interface NewsRepository {
+interface DataRepository {
     suspend fun getNewsData(): News?
 }
 
-class NewsRepositoryImpl @Inject constructor(
+class DataRepositoryImpl @Inject constructor(
     private val newsRemoteDataStore: NewsRemoteDataStore
-): NewsRepository {
+): DataRepository {
     override suspend fun getNewsData(): News? {
         return newsRemoteDataStore.getAllNews("keyword")
     }

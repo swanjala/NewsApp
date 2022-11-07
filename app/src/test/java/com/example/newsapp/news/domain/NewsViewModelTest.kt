@@ -3,7 +3,7 @@ package com.example.newsapp.news.domain
 import com.example.newsapp.di.DaggerTestAppComponent
 import com.example.newsapp.di.TestAppComponent
 import com.example.newsapp.di.TestBaseApplication
-import com.example.newsapp.news.module.NewsRepository
+import com.example.newsapp.news.module.DataRepository
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.MatcherAssert.assertThat
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class NewsViewModelTest {
     @Inject
-    lateinit var newsRepository: NewsRepository
+    lateinit var newsRepository: DataRepository
 
     @Before
     fun setUp() {

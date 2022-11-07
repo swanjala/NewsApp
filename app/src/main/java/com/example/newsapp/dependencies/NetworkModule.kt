@@ -1,6 +1,6 @@
 package com.example.newsapp.dependencies
 
-import com.example.newsapp.network.service.NewsApiService
+import com.example.newsapp.data.network.service.NewsApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module

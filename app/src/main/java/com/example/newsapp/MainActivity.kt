@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import com.example.newsapp.composables.NewsApp
-import com.example.newsapp.news.domain.NewsViewModel
+import com.example.newsapp.news.NewsViewModel
 import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {

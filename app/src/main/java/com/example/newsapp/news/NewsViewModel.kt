@@ -1,16 +1,16 @@
-package com.example.newsapp.news.domain
+package com.example.newsapp.news
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsapp.network.model.News
-import com.example.newsapp.news.module.NewsRepository
+import com.example.newsapp.data.network.model.News
+import com.example.newsapp.news.module.DataRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NewsViewModel @Inject constructor(
-    private val newsRepository: NewsRepository
+    private val newsRepository: DataRepository
 ) : ViewModel() {
 
     private val _response = MutableLiveData<News>()

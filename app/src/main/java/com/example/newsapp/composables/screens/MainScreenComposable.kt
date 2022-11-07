@@ -8,11 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import com.example.newsapp.composables.components.ArticleCard
-import com.example.newsapp.network.model.News
-import com.example.newsapp.news.domain.NewsViewModel
+import com.example.newsapp.news.NewsViewModel
 
 @Composable
 fun MainScreenComposable(
