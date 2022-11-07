@@ -2,7 +2,6 @@ package com.example.newsapp.composables.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.LiveData
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -10,14 +9,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.newsapp.composables.MainScreenComposable
 import com.example.newsapp.composables.screens.ArticleScreenComposable
-import com.example.newsapp.network.model.News
+import com.example.newsapp.news.domain.NewsViewModel
 import java.net.URLDecoder
 
 @Composable
 fun NewsNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    response: LiveData<News>
+    viewModel: NewsViewModel,
 ) {
     NavHost(
         navController = navController,
@@ -25,7 +24,7 @@ fun NewsNavHost(
         modifier = modifier
     ) {
         composable(route = MainScreen.route) {
-            MainScreenComposable(response, navController)
+            MainScreenComposable(viewModel, navController)
         }
         composable(
             route = ArticlesScreen.route,
@@ -33,7 +32,8 @@ fun NewsNavHost(
         ) { backStackEntry ->
             backStackEntry.arguments?.getString("url")?.let { url ->
                 ArticleScreenComposable(
-                    URLDecoder.decode(url, "UTF-8")
+                    URLDecoder.decode(url, "UTF-8"),
+                    navController
                 )
             }
         }

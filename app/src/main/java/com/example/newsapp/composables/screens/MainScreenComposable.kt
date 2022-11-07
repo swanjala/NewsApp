@@ -12,13 +12,14 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import com.example.newsapp.composables.components.ArticleCard
 import com.example.newsapp.network.model.News
+import com.example.newsapp.news.domain.NewsViewModel
 
 @Composable
 fun MainScreenComposable(
-    response: LiveData<News>,
+    viewModel: NewsViewModel,
     navController: NavController
 ) {
-    val state by response.observeAsState()
+    val state by viewModel.response.observeAsState()
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
