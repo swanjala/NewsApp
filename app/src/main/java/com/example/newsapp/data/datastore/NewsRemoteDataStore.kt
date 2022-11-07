@@ -1,7 +1,8 @@
 package com.example.newsapp.news.module
 
 import android.util.Log
-import com.example.newsapp.data.network.model.News
+import androidx.annotation.WorkerThread
+import com.example.newsapp.data.model.News
 import com.example.newsapp.data.network.service.NewsApiService
 import javax.inject.Inject
 
@@ -13,6 +14,7 @@ class NewsRemoteDataStoreImpl @Inject constructor(
     private val newsApiService: NewsApiService
 ) : NewsRemoteDataStore {
 
+    @WorkerThread
     override suspend fun getAllNews(keyWord: String?): News? = try {
         val response = newsApiService.getAllNews(keyWord ?: "keyword", 1)
         response.body()

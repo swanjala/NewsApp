@@ -106,4 +106,20 @@ dependencies {
     // moshi
     implementation "com.squareup.moshi:moshi:$version_moshi"
     implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+
+    // Room
+    implementation "androidx.room:room-ktx:$version_room"
+    kapt "androidx.room:room-compiler:$version_room"
+    androidTestImplementation "androidx.room:room-testing:$version_room"
+
+    // Lifecycle components
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$version_lifecycle"
+
+    // Kotlin components
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.20"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4."
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+
 }

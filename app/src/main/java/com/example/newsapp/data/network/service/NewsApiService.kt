@@ -1,7 +1,7 @@
 package com.example.newsapp.data.network.service
 
 import com.example.newsapp.BuildConfig
-import com.example.newsapp.data.network.model.News
+import com.example.newsapp.data.model.News
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

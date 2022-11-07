@@ -1,5 +1,7 @@
 package com.example.newsapp.dependencies
 
+import com.example.newsapp.data.datastore.NewsLocalDataStore
+import com.example.newsapp.data.datastore.NewsLocalDataStoreImpl
 import com.example.newsapp.news.module.NewsRemoteDataStore
 import com.example.newsapp.news.module.NewsRemoteDataStoreImpl
 import com.example.newsapp.news.module.DataRepository
@@ -10,7 +12,11 @@ import dagger.Module
 @Module
 abstract class NewsModule {
     @Binds
+    abstract fun provideNewsLocalDataStore(newsLocalDataStore: NewsLocalDataStoreImpl): NewsLocalDataStore
+
+    @Binds
     abstract fun provideNewsRemoteDataStore(newsRemoteDataStore: NewsRemoteDataStoreImpl): NewsRemoteDataStore
+
     @Binds
     abstract fun provideNewsRepository(newsRepository: DataRepositoryImpl): DataRepository
 }
