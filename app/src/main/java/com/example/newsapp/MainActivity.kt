@@ -22,7 +22,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
                 NewsApp(
-                    viewModel.response
+                    viewModel,
+                    onSaveArticleClicked = {viewModel.saveNewsArticle()}
                 )
         }
     }

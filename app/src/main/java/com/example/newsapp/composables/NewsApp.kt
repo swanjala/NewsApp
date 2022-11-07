@@ -9,18 +9,20 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.newsapp.composables.navigation.NewsNavHost
 import com.example.newsapp.network.model.News
+import com.example.newsapp.news.domain.NewsViewModel
 import com.example.newsapp.ui.theme.NewsAppTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun NewsApp(newsResponse: LiveData<News>) {
+fun NewsApp(newsViewModel: NewsViewModel, onSaveArticleClicked: () -> Unit) {
     NewsAppTheme {
         val navController = rememberNavController()
 
         Scaffold {
             NewsNavHost(
                 navController = navController,
-                response = newsResponse
+                viewModel = newsViewModel,
+                onSaveArticleClicked = onSaveArticleClicked
             )
         }
     }

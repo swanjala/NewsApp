@@ -17,6 +17,10 @@ class NewsViewModel @Inject constructor(
     val response: LiveData<News>
         get() = _response
 
+    private val _onSave = MutableLiveData<Boolean>(false)
+    val onSave: LiveData<Boolean>
+    get() = _onSave
+
     init {
         viewModelScope.launch {
             getNewsInfo()
@@ -28,5 +32,9 @@ class NewsViewModel @Inject constructor(
         _response.postValue(
             newsValues
         )
+    }
+
+    fun saveNewsArticle() {
+        _onSave.postValue(true)
     }
 }
