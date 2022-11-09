@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ArticleDao {
-    @Query("SELECT * FROM article ORDER BY id ASC")
+    @Query("SELECT * FROM article_table ORDER BY id ASC")
     fun getSavedArticles(): Flow<List<Article>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

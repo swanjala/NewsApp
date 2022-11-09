@@ -118,8 +118,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common-java8:$version_lifecycle"
 
     // Kotlin components
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.20"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4."
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3.4"
 
 }
