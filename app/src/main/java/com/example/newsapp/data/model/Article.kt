@@ -1,27 +1,20 @@
 package com.example.newsapp.data.model
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
-@Entity(tableName = "article")
+@Entity(tableName = "article_table")
 data class Article(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    @ColumnInfo
-    val source: Source,
-    @ColumnInfo
+    val id: Int? = null,
     val author: String?,
-    @ColumnInfo
     val title: String?,
-    @ColumnInfo
     val description: String?,
-    @ColumnInfo
+    val source: Source?,
     val url: String?,
-    @ColumnInfo
     val urlToImage: String?,
-    @ColumnInfo
     val publishedAt: String?,
-    @ColumnInfo
     val content: String?
-)
+) : Serializable
+
