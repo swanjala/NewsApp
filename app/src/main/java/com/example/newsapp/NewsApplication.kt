@@ -1,22 +1,25 @@
 package com.example.newsapp
 
-import com.example.newsapp.dependencies.AppComponent
-import com.example.newsapp.dependencies.DaggerAppComponent
+import android.app.Activity
+import android.app.Application
+import com.example.newsapp.dependencies.AppInjector
 import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
 
-open class NewsApplication : DaggerApplication() {
+@Suppress("UNCHECKED_CAST")
+open class NewsApplication : Application(), HasAndroidInjector {
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return initializeDaggerComponent()
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+
+    override fun onCreate() {
+        super.onCreate()
+        AppInjector.init(this)
     }
 
-    open fun initializeDaggerComponent(): AppComponent {
-        val appComponent: AppComponent =
-            DaggerAppComponent.factory().create(applicationContext)
-
-        appComponent.inject(this)
-
-        return appComponent
-    }
+    override fun androidInjector(): AndroidInjector<Any>? = dispatchingAndroidInjector as
+            AndroidInjector<Any>?
 }
+
