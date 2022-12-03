@@ -10,7 +10,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-abstract class NewsModule {
+abstract class DataStoreModule {
     @Binds
     abstract fun provideNewsLocalDataStore(newsLocalDataStore: NewsLocalDataStoreImpl): NewsLocalDataStore
 

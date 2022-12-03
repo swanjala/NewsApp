@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsapp.data.model.Article
 import com.example.newsapp.data.model.News
 import com.example.newsapp.news.module.DataRepository
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,7 +23,7 @@ class NewsViewModel @Inject constructor(
         get() = _onSave
 
     private val _savedArticles = MutableLiveData<List<Article>>()
-    val savedArticle: LiveData<List<Article>>
+    val savedArticles: LiveData<List<Article>>
         get() = _savedArticles
 
     init {
@@ -43,18 +42,14 @@ class NewsViewModel @Inject constructor(
 
     }
 
-    private suspend fun getSavedArticles() {
+    suspend fun getSavedArticles() {
         val articles = dataRepository.getSavedArticles()
         articles.collect {
             _savedArticles.postValue(it)
         }
     }
 
-    private suspend fun insertArticle(article: Article) {
+    suspend fun saveNewsArticle(article: Article) {
         dataRepository.insertNewArticle(article)
-    }
-
-    fun saveNewsArticle() {
-        _onSave.postValue(true)
     }
 }

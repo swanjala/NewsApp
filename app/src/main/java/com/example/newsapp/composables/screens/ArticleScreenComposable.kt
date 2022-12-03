@@ -5,22 +5,24 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
-import com.example.newsapp.composables.navigation.MainScreen
+import com.example.newsapp.composables.navigation.SavedArticlesScreen
+import com.example.newsapp.news.NewsViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ArticleScreenComposable(url: String, navController: NavController) {
-
+fun ArticleScreenComposable(
+    url: String,
+    navController: NavController
+) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(modifier = Modifier.padding(bottom = 40.dp), onClick = {
-                navController.navigate(MainScreen.route)
+                navController.navigate(SavedArticlesScreen.route)
             }) {
                 Text(text = "Save")
             }

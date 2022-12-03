@@ -7,10 +7,14 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.newsapp.composables.components.ArticleCard
+import com.example.newsapp.composables.navigation.SavedArticlesScreen
 import com.example.newsapp.news.NewsViewModel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreenComposable(
@@ -18,6 +22,7 @@ fun MainScreenComposable(
     navController: NavController
 ) {
     val state by viewModel.response.observeAsState()
+    val coroutineScope = rememberCoroutineScope()
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
@@ -25,7 +30,12 @@ fun MainScreenComposable(
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(state?.articles?.size ?: 0) {
                 state?.articles?.forEach { article ->
-                    ArticleCard(article, navController)
+                    ArticleCard(article, navController) {
+                        coroutineScope.launch {
+                            viewModel.saveNewsArticle(article)
+                            navController.navigate(route = SavedArticlesScreen.route)
+                        }
+                    }
                 }
             }
         }
