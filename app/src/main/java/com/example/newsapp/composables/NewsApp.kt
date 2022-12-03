@@ -10,7 +10,7 @@ import com.example.newsapp.ui.theme.NewsAppTheme
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun NewsApp(newsViewModel: NewsViewModel, onSaveArticleClicked: () -> Unit) {
+fun NewsApp(newsViewModel: NewsViewModel) {
     NewsAppTheme {
         val navController = rememberNavController()
 

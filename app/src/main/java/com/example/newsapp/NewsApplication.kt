@@ -14,12 +14,11 @@ open class NewsApplication : Application(), HasAndroidInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
+    override fun androidInjector(): AndroidInjector<Any>? = dispatchingAndroidInjector as
+            AndroidInjector<Any>?
+
     override fun onCreate() {
         super.onCreate()
         AppInjector.init(this)
     }
-
-    override fun androidInjector(): AndroidInjector<Any>? = dispatchingAndroidInjector as
-            AndroidInjector<Any>?
 }
-

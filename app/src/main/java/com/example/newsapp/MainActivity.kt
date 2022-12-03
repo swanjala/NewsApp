@@ -32,8 +32,7 @@ class MainActivity : ComponentActivity(), HasAndroidInjector {
         super.onCreate(savedInstanceState)
         setContent {
                 NewsApp(
-                    viewModel,
-                    onSaveArticleClicked = {viewModel.saveNewsArticle()}
+                    viewModel
                 )
         }
     }
