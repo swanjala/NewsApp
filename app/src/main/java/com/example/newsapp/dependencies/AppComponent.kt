@@ -33,3 +33,19 @@ interface AppComponent {
 
     fun inject(newsApplication: NewsApplication)
 }
+/*
+* applications
+* never
+* die
+* near
+* violent
+* makers*/
+
+/*
+* Android injector : Installed to allow for the application injector
+* NetworkModule : Contains logic that initializes network dependencies
+* DatabaseModule : Contains logic that initiilizes databse depedencies
+* NewsModule : Contains logic that exposes repository and it's dependencies
+* ViewModelModule: Contains logic that exposes the viewmModels and the viewModel factory
+* MainActivityModule : Allows for the application injection in the activity.
+*/
