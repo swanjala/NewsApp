@@ -13,7 +13,6 @@ import androidx.navigation.NavController
 import com.example.newsapp.composables.components.ArticleCard
 import com.example.newsapp.composables.navigation.SavedArticlesScreen
 import com.example.newsapp.news.NewsViewModel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @Composable

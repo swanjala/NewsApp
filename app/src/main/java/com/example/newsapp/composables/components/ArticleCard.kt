@@ -30,7 +30,6 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.util.Locale
 
-
 @Composable
 fun ArticleCard(
     article: Article,
