@@ -23,8 +23,11 @@ interface AppComponent {
 
     @Component.Builder
     interface Builder {
+        // Binds application instance
         @BindsInstance
         fun application(application: Application): Builder
+
+        // Builds the application graph
         fun build(): AppComponent
     }
 
