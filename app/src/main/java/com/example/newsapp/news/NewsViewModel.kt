@@ -39,7 +39,6 @@ class NewsViewModel @Inject constructor(
                 it
             )
         }
-
     }
 
     suspend fun getSavedArticles() {
