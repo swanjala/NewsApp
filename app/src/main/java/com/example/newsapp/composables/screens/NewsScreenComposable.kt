@@ -11,7 +11,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.newsapp.composables.components.ArticleCard
-import com.example.newsapp.composables.navigation.SavedArticlesScreen
 import com.example.newsapp.news.NewsViewModel
 import kotlinx.coroutines.launch
 
@@ -32,7 +31,7 @@ fun MainScreenComposable(
                     ArticleCard(article, navController) {
                         coroutineScope.launch {
                             viewModel.saveNewsArticle(article)
-                            navController.navigate(route = SavedArticlesScreen.route)
+                            navController.popBackStack()
                         }
                     }
                 }

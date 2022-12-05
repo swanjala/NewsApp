@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">NewsApp</string>
+    <string name="home_fragment">HomeFragment</string>
+    <string name="news_fragment">NewsFragment</string>
+    <string name="news_detail_fragment">NewsDetailFragment</string>
+    <string name="button_action_save">Save</string>
+    <string name="button_action_online_articles">Online Articles</string>
+    <string name="button_action_saved_articles">Saved Articles</string>
+    <string name="button_action_article_category">Article Category</string>
 </resources>

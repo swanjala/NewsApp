@@ -12,9 +12,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.newsapp.composables.components.ArticleCard
-import com.example.newsapp.composables.navigation.ArticlesScreen
 import com.example.newsapp.news.NewsViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun SavedArticlesScreenComposable(
@@ -38,7 +36,7 @@ fun SavedArticlesScreenComposable(
                 items(articles.size) {
                     articles.forEach { article ->
                         ArticleCard(article = article, navController = navController) {
-                            navController.navigate("${ArticlesScreen.route}/${article.url}")
+                           // navController.navigate("${ArticlesScreen.route}/${article.url}")
                         }
                     }
                 }

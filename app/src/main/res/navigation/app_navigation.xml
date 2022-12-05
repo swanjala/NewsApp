@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/home_dest">
+
+    <fragment
+        android:id="@+id/home_dest"
+        android:name="com.example.newsapp.news.fragments.HomeFragment"
+        android:label="@string/home_fragment">
+
+        <action
+            android:id="@+id/next_action"
+            app:destination="@+id/flow_news_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/flow_news_fragment"
+        android:name="com.example.newsapp.news.fragments.NewsFragment"
+        android:label="@string/news_fragment">
+
+        <action
+            android:id="@+id/next_action"
+            app:destination="@+id/flow_news_detail_fragment"
+            app:popUpTo="@id/home_dest">
+            <argument
+                android:name="articleUrl"
+                android:defaultValue=""
+                app:argType="string" />
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/flow_news_detail_fragment"
+        android:name="com.example.newsapp.news.fragments.NewsDetailsFragment"
+        android:label="@string/news_detail_fragment">
+
+        <action
+            android:id="@+id/next_action"
+            app:popUpTo="@id/flow_news_fragment"></action>
+
+    </fragment>
+
+</navigation>

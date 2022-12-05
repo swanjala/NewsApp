@@ -2,7 +2,17 @@ package com.example.newsapp.composables.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,8 +33,18 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.newsapp.R
+import com.example.newsapp.composables.components.ArticleCardDimens.bottomSpacer
+import com.example.newsapp.composables.components.ArticleCardDimens.childColumBottomPadding
+import com.example.newsapp.composables.components.ArticleCardDimens.childColumnWidth
+import com.example.newsapp.composables.components.ArticleCardDimens.fontSizeMedium
+import com.example.newsapp.composables.components.ArticleCardDimens.imageWidth
+import com.example.newsapp.composables.components.ArticleCardDimens.parentRowHeight
+import com.example.newsapp.composables.components.ArticleCardDimens.parentRowPadding
+import com.example.newsapp.composables.components.ArticleCardDimens.roundedCornerDimens
+import com.example.newsapp.composables.components.ArticleCardDimens.sharedSpacerHeight
 import com.example.newsapp.data.model.Article
 import com.example.newsapp.data.model.Source
+import com.example.newsapp.news.fragments.NewsFragmentDirections
 import com.example.newsapp.ui.theme.NewsAppTheme
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -41,12 +61,13 @@ fun ArticleCard(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp)
-            .padding(10.dp)
+            .height(parentRowHeight)
+            .padding(parentRowPadding)
             .selectable(
                 selected = false,
                 onClick = {
-                    navController?.navigate("article/${articleLink}")
+                   val action = NewsFragmentDirections.nextAction(articleLink)
+                    navController?.navigate(action)
                 }
             )
     ) {
@@ -54,29 +75,29 @@ fun ArticleCard(
             painter = rememberAsyncImagePainter(model = urlToImage),
             contentDescription = null,
             modifier = Modifier
-                .width(120.dp)
+                .width(imageWidth)
                 .fillMaxHeight()
-                .clip(RoundedCornerShape(16.dp)),
+                .clip(RoundedCornerShape(roundedCornerDimens)),
             alignment = Alignment.Center,
             contentScale = ContentScale.Crop
         )
-        Spacer(modifier = Modifier.width(10.dp))
+        Spacer(modifier = Modifier.width(sharedSpacerHeight))
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .wrapContentHeight()
-                .width(160.dp)
-                .padding(bottom = 20.dp)
+                .width(childColumnWidth)
+                .padding(bottom = childColumBottomPadding)
         ) {
             Text(
                 text = title ?: "",
                 fontWeight = FontWeight.Bold,
                 fontSize = ArticleCardDimens.fontSizeLarge
             )
-            Text(text = author ?: "", fontSize = 13.sp)
+            Text(text = author ?: "", fontSize = fontSizeMedium)
             Text(
                 text = publishedAt?.format(locale = Locale.getDefault()) ?: "",
-                fontSize = ArticleCardDimens.fontSizeMedium
+                fontSize = fontSizeMedium
             )
             Text(
                 text = description ?: "",
@@ -84,24 +105,21 @@ fun ArticleCard(
                 fontSize = ArticleCardDimens.fontSizeSmall
             )
         }
-        Spacer(modifier = Modifier.width(10.dp))
+        Spacer(modifier = Modifier.width(sharedSpacerHeight))
         Column(
             modifier = Modifier.fillMaxHeight(),
            verticalArrangement = Arrangement.Center,
         ) {
             SaveButton(
-                modifier = Modifier,
-                navController = navController,
                 onArticleClicked
             )
         }
-
     }
-    Spacer(modifier = Modifier.height(30.dp))
+    Spacer(modifier = Modifier.height(bottomSpacer))
 }
 
 @Composable
-fun SaveButton(modifier: Modifier, navController: NavController?, clickAction: () -> Unit) {
+fun SaveButton(clickAction: () -> Unit) {
     Box(modifier = Modifier.clickable(true, onClick =
         clickAction
     )) {
@@ -114,9 +132,20 @@ fun SaveButton(modifier: Modifier, navController: NavController?, clickAction: (
 }
 
 object ArticleCardDimens {
+    //fonts
     val fontSizeLarge = 16.sp
     val fontSizeMedium = 13.sp
     val fontSizeSmall = 12.sp
+
+    //views
+    val parentRowHeight =200.dp
+    val parentRowPadding = 10.dp
+    val imageWidth = 120.dp
+    val roundedCornerDimens = 16.dp
+    val sharedSpacerHeight = 10.dp
+    val childColumnWidth = 160.dp
+    val childColumBottomPadding = 20.dp
+    val bottomSpacer = 30.dp
 }
 
 @Preview(showBackground = true)
