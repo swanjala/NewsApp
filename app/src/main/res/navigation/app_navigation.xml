@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
     app:startDestination="@id/home_dest">
 
@@ -12,36 +11,58 @@
 
         <action
             android:id="@+id/next_action"
-            app:destination="@+id/flow_news_fragment" />
+            app:destination="@+id/news_fragment_destination" />
+        <action
+            android:id="@+id/action_home_dest_to_saved_news_detail_destination"
+            app:destination="@id/saved_news_destination" />
+        <action
+            android:id="@+id/action_home_dest_to_news_categories"
+            app:destination="@id/news_categories" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/flow_news_fragment"
+        android:id="@+id/news_fragment_destination"
         android:name="com.example.newsapp.news.fragments.NewsFragment"
         android:label="@string/news_fragment">
 
         <action
             android:id="@+id/next_action"
-            app:destination="@+id/flow_news_detail_fragment"
-            app:popUpTo="@id/home_dest">
-            <argument
-                android:name="articleUrl"
-                android:defaultValue=""
-                app:argType="string" />
-        </action>
+            app:destination="@+id/news_detail_destination"
+            app:popUpTo="@id/home_dest" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/flow_news_detail_fragment"
+        android:id="@+id/news_detail_destination"
         android:name="com.example.newsapp.news.fragments.NewsDetailsFragment"
         android:label="@string/news_detail_fragment">
+        <argument
+            android:name="article"
+            app:argType="com.example.newsapp.data.model.Article" />
+        <argument
+            android:name="screenType"
+            app:argType="com.example.newsapp.composables.screens.screenmodels.ScreenType" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/saved_news_destination"
+        android:name="com.example.newsapp.news.fragments.SavedArticlesFragment"
+        android:label="@string/saved_news_fragment">
 
         <action
             android:id="@+id/next_action"
-            app:popUpTo="@id/flow_news_fragment"></action>
+            app:destination="@id/news_detail_destination" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/news_categories"
+        android:name="com.example.newsapp.news.fragments.CategoriesFragment"
+        android:label="categories_fragment">
+        <action
+            android:id="@+id/action_news_categories_to_news_detail_destination"
+            app:destination="@id/news_fragment_destination" />
     </fragment>
 
 </navigation>
