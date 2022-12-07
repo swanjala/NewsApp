@@ -5,23 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.composables.screens.NewsListScreen
 import com.example.newsapp.composables.screens.screenmodels.ScreenType
 import com.example.newsapp.data.model.Article
-import com.example.newsapp.data.model.News
 import com.example.newsapp.news.NewsViewModel
 import com.example.newsapp.ui.theme.NewsAppTheme
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NewsFragment : Fragment() {
-
+class SavedArticlesFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -40,14 +38,17 @@ class NewsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        lifecycleScope.launch {
+            viewModel.getSavedArticles()
+        }
+
         return ComposeView(requireContext()).apply {
-            setContent {
-                NewsAppTheme {
-                    val onlineNewsState: News? by viewModel.response.observeAsState()
-                    onlineNewsState?.let {
+            viewModel.savedArticles.observe(viewLifecycleOwner) { articles ->
+                setContent {
+                    NewsAppTheme {
                         NewsListScreen(
-                            screenType = ScreenType.ONLINE_NEWS_SCREEN,
-                            articles = it.articles,
+                            screenType = ScreenType.SAVED_NEWS_SCREEN,
+                            articles = articles,
                             handleArticleSelected = ::handleArticleSelection
                         )
                     }
@@ -56,9 +57,9 @@ class NewsFragment : Fragment() {
         }
     }
 
-    private fun handleArticleSelection(screenType: ScreenType, article: Article) {
+    private fun handleArticleSelection(screenType: ScreenType,article: Article) {
         val navController = findNavController()
-        val action = NewsFragmentDirections.nextAction(article, screenType)
+        val action = SavedArticlesFragmentDirections.nextAction(article, screenType)
         navController.navigate(action)
     }
 }

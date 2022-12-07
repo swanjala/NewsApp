@@ -1,15 +1,14 @@
 package com.example.newsapp.composables.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -18,8 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -30,17 +29,24 @@ import com.example.newsapp.composables.screens.HomeScreenComposableDimens.parent
 import com.example.newsapp.composables.screens.HomeScreenComposableDimens.roundedCornerDimensions
 import com.example.newsapp.composables.screens.HomeScreenComposableDimens.sharedSpacerHeight
 import com.example.newsapp.composables.screens.HomeScreenComposableDimens.surfaceColumnPadding
+import com.example.newsapp.composables.screens.extensions.HomeButtonResource
+import com.example.newsapp.composables.screens.screenmodels.ScreenType
 import com.example.newsapp.ui.theme.NewsAppTheme
 
 @Composable
-fun HomeScreenComposable(navigationController: NavController?) {
+fun HomeScreenComposable(
+    screenType: ScreenType,
+    navigationController: NavController?
+) {
 
-    val buttonItems = loadButtonItems()
+    val buttonItems = HomeButtonResource.getButtonItems(
+        screenType,
+        LocalContext.current
+    )
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
-                .background(Color.Gray)
                 .fillMaxSize()
                 .padding(start = surfaceColumnPadding),
             verticalArrangement = Arrangement.Center
@@ -70,7 +76,6 @@ fun HomeCategoryCard(
             .height(parentRowHeight)
             .width(parentRowWidth)
             .clip(shape = RoundedCornerShape(roundedCornerDimensions))
-            .background(Color.White)
             .clickable(
                 enabled = true,
                 onClick = {
@@ -94,29 +99,6 @@ fun HomeCategoryCard(
     }
 }
 
-@Composable
-private fun loadButtonItems(): List<HomeButtonItem> {
-    return listOf(
-        HomeButtonItem(
-            title = stringResource(id = R.string.button_action_online_articles),
-            destination = R.id.flow_news_fragment
-        ),
-        HomeButtonItem(
-            title = stringResource(id = R.string.button_action_saved_articles),
-            destination = R.id.flow_news_fragment
-        ),
-        HomeButtonItem(
-            title = stringResource(id = R.string.button_action_article_category),
-            destination = R.id.flow_news_fragment
-        )
-    )
-}
-
-data class HomeButtonItem(
-    val title: String,
-    val destination: Int
-)
-
 object HomeScreenComposableDimens {
     val surfaceColumnPadding = 60.dp
     val sharedSpacerHeight = 10.dp
@@ -129,11 +111,11 @@ object HomeScreenComposableDimens {
 @Preview(showBackground = true)
 @Composable
 fun HomeCategoryCardPreview() {
-   NewsAppTheme {
-       HomeCategoryCard(
-           title = "The Autobots are back!",
-           destinationResource = 0 ,
-           navigationController = null
-       )
-   }
+    NewsAppTheme {
+        HomeCategoryCard(
+            title = "The Autobots are back!",
+            destinationResource = 0,
+            navigationController = null
+        )
+    }
 }
