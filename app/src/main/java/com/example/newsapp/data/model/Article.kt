@@ -7,7 +7,7 @@ import java.io.Serializable
 @Entity(tableName = "article_table")
 data class Article(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = 0,
+    val id: Int?,
     val author: String?,
     val title: String?,
     val description: String?,
@@ -17,4 +17,3 @@ data class Article(
     val publishedAt: String?,
     val content: String?
 ) : Serializable
-
