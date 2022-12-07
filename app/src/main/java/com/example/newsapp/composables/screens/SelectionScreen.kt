@@ -1,6 +1,5 @@
 package com.example.newsapp.composables.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -48,7 +47,6 @@ fun HomeScreenComposable(
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
-                .background(Color.Gray)
                 .fillMaxSize()
                 .padding(start = surfaceColumnPadding),
             verticalArrangement = Arrangement.Center
@@ -78,7 +76,6 @@ fun HomeCategoryCard(
             .height(parentRowHeight)
             .width(parentRowWidth)
             .clip(shape = RoundedCornerShape(roundedCornerDimensions))
-            .background(Color.White)
             .clickable(
                 enabled = true,
                 onClick = {
