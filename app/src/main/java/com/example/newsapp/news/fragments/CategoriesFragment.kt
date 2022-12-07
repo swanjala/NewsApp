@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.newsapp.composables.screens.HomeScreenComposable
 import com.example.newsapp.composables.screens.screenmodels.ScreenType
+import com.example.newsapp.ui.theme.NewsAppTheme
 import dagger.android.support.AndroidSupportInjection
 
 class CategoriesFragment : Fragment() {
@@ -26,11 +27,13 @@ class CategoriesFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                findNavController().apply {
-                    HomeScreenComposable(
-                        screenType = ScreenType.NEWS_CATEGORY,
-                        navigationController = this
-                    )
+                NewsAppTheme {
+                    findNavController().apply {
+                        HomeScreenComposable(
+                            screenType = ScreenType.NEWS_CATEGORY,
+                            navigationController = this
+                        )
+                    }
                 }
             }
         }

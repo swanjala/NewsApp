@@ -5,12 +5,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.newsapp.composables.MainScreenComposable
+import com.example.newsapp.composables.screens.NewsListScreen
+import com.example.newsapp.composables.screens.screenmodels.ScreenType
+import com.example.newsapp.data.model.Article
+import com.example.newsapp.data.model.News
 import com.example.newsapp.news.NewsViewModel
+import com.example.newsapp.ui.theme.NewsAppTheme
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -33,14 +39,26 @@ class NewsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val navController = findNavController()
+
         return ComposeView(requireContext()).apply {
             setContent {
-                MainScreenComposable(
-                    viewModel = viewModel,
-                    navController = navController
-                )
+                NewsAppTheme {
+                    val onlineNewsState: News? by viewModel.response.observeAsState()
+                    onlineNewsState?.let {
+                        NewsListScreen(
+                            screenType = ScreenType.ONLINE_NEWS_SCREEN,
+                            articles = it.articles,
+                            handleArticleSelected = ::handleArticleSelection
+                        )
+                    }
+                }
             }
         }
+    }
+
+    private fun handleArticleSelection(screenType: ScreenType, article: Article) {
+        val navController = findNavController()
+        val action = NewsFragmentDirections.nextAction(article, screenType)
+        navController.navigate(action)
     }
 }

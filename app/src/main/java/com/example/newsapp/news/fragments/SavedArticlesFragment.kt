@@ -5,21 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.composables.screens.NewsListScreen
+import com.example.newsapp.composables.screens.screenmodels.ScreenType
 import com.example.newsapp.data.model.Article
-import com.example.newsapp.data.model.News
 import com.example.newsapp.news.NewsViewModel
 import com.example.newsapp.ui.theme.NewsAppTheme
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,7 +37,6 @@ class SavedArticlesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val navController = findNavController()
 
         lifecycleScope.launch {
             viewModel.getSavedArticles()
@@ -52,12 +47,19 @@ class SavedArticlesFragment : Fragment() {
                 setContent {
                     NewsAppTheme {
                         NewsListScreen(
+                            screenType = ScreenType.SAVED_NEWS_SCREEN,
                             articles = articles,
-                            navController = navController
+                            handleArticleSelected = ::handleArticleSelection
                         )
                     }
                 }
             }
         }
+    }
+
+    private fun handleArticleSelection(screenType: ScreenType,article: Article) {
+        val navController = findNavController()
+        val action = SavedArticlesFragmentDirections.nextAction(article, screenType)
+        navController.navigate(action)
     }
 }
