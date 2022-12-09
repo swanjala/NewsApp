@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.newsapp.composables.navigation.Screen
+import com.example.newsapp.composables.navigation.TopBarAction
 import com.example.newsapp.composables.screens.NewsListScreen
-import com.example.newsapp.composables.screens.screenmodels.ScreenType
+import com.example.newsapp.composables.screens.screenmodels.SourceType
 import com.example.newsapp.data.model.Article
 import com.example.newsapp.news.NewsViewModel
 import com.example.newsapp.ui.theme.NewsAppTheme
@@ -47,19 +49,27 @@ class SavedArticlesFragment : Fragment() {
                 setContent {
                     NewsAppTheme {
                         NewsListScreen(
-                            screenType = ScreenType.SAVED_NEWS_SCREEN,
+                            sourceType = SourceType.LOCAL_SOURCE,
+                            screen = Screen.SavedNews,
                             articles = articles,
-                            handleArticleSelected = ::handleArticleSelection
-                        )
+                            handleArticleSelected = ::handleArticleSelection,
+                        ) { topBarAction ->
+                            when (topBarAction) {
+                                is TopBarAction.Back -> {
+                                    @Suppress("DEPRECATION")
+                                    activity?.onBackPressed()
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     }
 
-    private fun handleArticleSelection(screenType: ScreenType,article: Article) {
+    private fun handleArticleSelection(sourceType: SourceType, article: Article) {
         val navController = findNavController()
-        val action = SavedArticlesFragmentDirections.nextAction(article, screenType)
+        val action = SavedArticlesFragmentDirections.nextAction(article, sourceType)
         navController.navigate(action)
     }
 }

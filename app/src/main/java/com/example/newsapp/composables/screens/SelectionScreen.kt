@@ -3,8 +3,10 @@ package com.example.newsapp.composables.screens
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,6 +16,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -23,20 +26,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.newsapp.R
-import com.example.newsapp.composables.screens.HomeScreenComposableDimens.categorySpacerHeight
+import com.example.newsapp.composables.screens.HomeScreenComposableDimens.categorySpacerWidth
+import com.example.newsapp.composables.screens.HomeScreenComposableDimens.parentHorizontalPadding
 import com.example.newsapp.composables.screens.HomeScreenComposableDimens.parentRowHeight
-import com.example.newsapp.composables.screens.HomeScreenComposableDimens.parentRowWidth
 import com.example.newsapp.composables.screens.HomeScreenComposableDimens.roundedCornerDimensions
 import com.example.newsapp.composables.screens.HomeScreenComposableDimens.sharedSpacerHeight
-import com.example.newsapp.composables.screens.HomeScreenComposableDimens.surfaceColumnPadding
-import com.example.newsapp.composables.screens.extensions.HomeButtonResource
+import com.example.newsapp.composables.screens.screenmodels.HomeButtonItem
+import com.example.newsapp.composables.screens.screenmodels.HomeButtonResource
 import com.example.newsapp.composables.screens.screenmodels.ScreenType
+import com.example.newsapp.composables.screens.screenmodels.SourceType
 import com.example.newsapp.ui.theme.NewsAppTheme
 
 @Composable
 fun HomeScreenComposable(
     screenType: ScreenType,
-    navigationController: NavController?
+    handleHomeSelection: (HomeButtonItem, ScreenType) -> Unit
 ) {
 
     val buttonItems = HomeButtonResource.getButtonItems(
@@ -48,18 +52,17 @@ fun HomeScreenComposable(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = surfaceColumnPadding),
-            verticalArrangement = Arrangement.Center
+                .padding(start = parentHorizontalPadding),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start
         ) {
-            navigationController?.let { navController ->
-                buttonItems.forEach { item ->
-                    HomeCategoryCard(
-                        title = item.title,
-                        destinationResource = item.destination,
-                        navController
-                    )
-                    Spacer(Modifier.height(sharedSpacerHeight))
-                }
+            buttonItems.forEach { item ->
+                HomeCategoryCard(
+                    item = item,
+                    screenType = screenType,
+                    handleHomeSelection = handleHomeSelection
+                )
+                Spacer(Modifier.width(sharedSpacerHeight))
             }
         }
     }
@@ -67,31 +70,36 @@ fun HomeScreenComposable(
 
 @Composable
 fun HomeCategoryCard(
-    title: String,
-    destinationResource: Int,
-    navigationController: NavController?
-) {
+    item: HomeButtonItem,
+    screenType: ScreenType,
+    handleHomeSelection: (HomeButtonItem, ScreenType) -> Unit
+) = with(item) {
+    val onRowClicked = {
+        handleHomeSelection(item, screenType)
+    }
+
     Row(
         modifier = Modifier
             .height(parentRowHeight)
-            .width(parentRowWidth)
+            .width(IntrinsicSize.Max)
             .clip(shape = RoundedCornerShape(roundedCornerDimensions))
             .clickable(
                 enabled = true,
-                onClick = {
-                    navigationController?.navigate(destinationResource)
-                })
+                onClick = onRowClicked
+            )
     ) {
-        Column {
+        Column(
+            modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.Center
+        ) {
             Icon(
-                painter = painterResource(id = R.drawable.add_news),
+                painter = painterResource(id = iconResource),
                 contentDescription = "",
                 tint = Color.Unspecified
             )
         }
-        Spacer(modifier = Modifier.width(categorySpacerHeight))
+        Spacer(modifier = Modifier.width(categorySpacerWidth))
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxHeight(),
             verticalArrangement = Arrangement.Center
         ) {
             Text(text = title)
@@ -100,12 +108,11 @@ fun HomeCategoryCard(
 }
 
 object HomeScreenComposableDimens {
-    val surfaceColumnPadding = 60.dp
     val sharedSpacerHeight = 10.dp
+    val parentHorizontalPadding = 120.dp
     val parentRowHeight = 80.dp
-    val parentRowWidth = 300.dp
     val roundedCornerDimensions = 20.dp
-    val categorySpacerHeight = 25.dp
+    val categorySpacerWidth = 10.dp
 }
 
 @Preview(showBackground = true)
@@ -113,9 +120,14 @@ object HomeScreenComposableDimens {
 fun HomeCategoryCardPreview() {
     NewsAppTheme {
         HomeCategoryCard(
-            title = "The Autobots are back!",
-            destinationResource = 0,
-            navigationController = null
+            item = HomeButtonItem(
+                "Autobots win the battle of Chicago!",
+                R.drawable.ic_online_news,
+                0,
+                SourceType.ONLINE
+            ),
+            screenType = ScreenType.ONLINE_NEWS_SCREEN,
+            handleHomeSelection = { _, _ -> }
         )
     }
 }

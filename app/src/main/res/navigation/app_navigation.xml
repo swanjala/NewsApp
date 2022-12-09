@@ -11,25 +11,36 @@
 
         <action
             android:id="@+id/next_action"
-            app:destination="@+id/news_fragment_destination" />
+            app:destination="@+id/news_fragment_destination"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_home_dest_to_saved_news_detail_destination"
-            app:destination="@id/saved_news_destination" />
+            app:destination="@id/saved_news_destination"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_home_dest_to_news_categories"
-            app:destination="@id/news_categories" />
+            app:destination="@id/news_categories"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/fade_out" />
 
     </fragment>
 
     <fragment
         android:id="@+id/news_fragment_destination"
-        android:name="com.example.newsapp.news.fragments.NewsFragment"
+        android:name="com.example.newsapp.news.fragments.OnlineNewsFragment"
         android:label="@string/news_fragment">
+
+        <argument
+            android:name="requestCategory"
+            app:argType="com.example.newsapp.data.model.NewsCategory" />
 
         <action
             android:id="@+id/next_action"
             app:destination="@+id/news_detail_destination"
-            app:popUpTo="@id/home_dest" />
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/fade_out" />
 
     </fragment>
 
@@ -41,8 +52,8 @@
             android:name="article"
             app:argType="com.example.newsapp.data.model.Article" />
         <argument
-            android:name="screenType"
-            app:argType="com.example.newsapp.composables.screens.screenmodels.ScreenType" />
+            android:name="sourceType"
+            app:argType="com.example.newsapp.composables.screens.screenmodels.SourceType" />
     </fragment>
 
     <fragment
@@ -52,7 +63,9 @@
 
         <action
             android:id="@+id/next_action"
-            app:destination="@id/news_detail_destination" />
+            app:destination="@id/news_detail_destination"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/fade_out" />
 
     </fragment>
 
@@ -60,9 +73,12 @@
         android:id="@+id/news_categories"
         android:name="com.example.newsapp.news.fragments.CategoriesFragment"
         android:label="categories_fragment">
+
         <action
-            android:id="@+id/action_news_categories_to_news_detail_destination"
-            app:destination="@id/news_fragment_destination" />
+            android:id="@+id/next_action"
+            app:destination="@id/news_fragment_destination"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
 
 </navigation>

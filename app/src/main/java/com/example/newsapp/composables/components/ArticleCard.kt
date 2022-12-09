@@ -38,6 +38,7 @@ import com.example.newsapp.composables.components.ArticleCardDimens.sharedRowPad
 import com.example.newsapp.composables.components.ArticleCardDimens.sharedSpacerHeight
 import com.example.newsapp.composables.components.ArticleCardDimens.surfaceTopPadding
 import com.example.newsapp.composables.screens.screenmodels.ScreenType
+import com.example.newsapp.composables.screens.screenmodels.SourceType
 import com.example.newsapp.data.model.Article
 import com.example.newsapp.data.model.Source
 import com.example.newsapp.ui.theme.NewsAppTheme
@@ -45,9 +46,9 @@ import java.util.Locale
 
 @Composable
 fun ArticleCard(
-    screenType: ScreenType,
+    sourceType: SourceType,
     article: Article,
-    handleArticleSelection: (ScreenType, Article) -> Unit
+    handleArticleSelection: (SourceType, Article) -> Unit
 ) = with(article) {
 
     Surface(
@@ -58,7 +59,6 @@ fun ArticleCard(
             bottom = genericPadding
         )
     ) {
-
         Row(
             modifier = Modifier
                 .clip(RoundedCornerShape(roundedCornerDimens))
@@ -66,7 +66,7 @@ fun ArticleCard(
                 .background(Color.Gray.copy(alpha = 0.2f))
                 .selectable(
                     selected = false,
-                    onClick = { handleArticleSelection(screenType, this) }
+                    onClick = { handleArticleSelection(sourceType, this) }
                 )
         ) {
             Image(
@@ -132,7 +132,7 @@ object ArticleCardDimens {
 fun ArticleCardPreview() {
     NewsAppTheme {
         ArticleCard(
-            screenType = ScreenType.ONLINE_NEWS_SCREEN,
+            sourceType = SourceType.ONLINE,
             article = Article(
                 id = 0,
                 author = "Fantastic Author",
