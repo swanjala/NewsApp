@@ -1,6 +1,6 @@
-package com.example.newsapp.news.module
+package com.example.newsapp.data.datastore
 
-import com.example.newsapp.data.datastore.NewsLocalDataStore
+import android.util.Log
 import com.example.newsapp.data.model.Article
 import com.example.newsapp.data.model.News
 import kotlinx.coroutines.flow.Flow
@@ -9,15 +9,15 @@ import javax.inject.Inject
 
 interface DataRepository {
     suspend fun getSavedArticles(): Flow<List<Article>>
-    suspend fun insertNewArticle(article: Article)
+    suspend fun insertNewArticle(article: Article): Boolean
     suspend fun getNewsByCategory(category: String): News?
 }
 
 class DataRepositoryImpl @Inject constructor(
     private val newsRemoteDataStore: NewsRemoteDataStore,
     private val newsLocalDataStore: NewsLocalDataStore
-): DataRepository {
-    override suspend fun getNewsByCategory(category: String) : News? {
+) : DataRepository {
+    override suspend fun getNewsByCategory(category: String): News? {
         return newsRemoteDataStore.getNewsByCategory(category)
     }
 
@@ -25,7 +25,13 @@ class DataRepositoryImpl @Inject constructor(
         return newsLocalDataStore.getSavedArticles()
     }
 
-    override suspend fun insertNewArticle(article: Article) {
-        newsLocalDataStore.insert(article)
+    override suspend fun insertNewArticle(article: Article): Boolean {
+        try {
+            newsLocalDataStore.insert(article)
+        } catch (error: Throwable) {
+            Log.getStackTraceString(error)
+            return false
+        }
+        return true
     }
 }

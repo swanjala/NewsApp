@@ -20,7 +20,7 @@ import dagger.android.support.AndroidSupportInjection
 import java.net.URLDecoder
 import javax.inject.Inject
 
-class NewsDetailsFragment : Fragment() {
+class ArticleReaderFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -28,7 +28,7 @@ class NewsDetailsFragment : Fragment() {
     private val viewModel: NewsViewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[NewsViewModel::class.java]
     }
-    private val selectedArticle: NewsDetailsFragmentArgs by navArgs()
+    private val selectedArticle: ArticleReaderFragmentArgs by navArgs()
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)

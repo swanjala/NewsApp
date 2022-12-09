@@ -1,25 +1,17 @@
 package com.example.newsapp.data.datastore
 
-import android.provider.ContactsContract.Data
 import com.example.newsapp.data.model.Article
-import com.example.newsapp.data.model.News
 import com.example.newsapp.data.model.Source
-import com.example.newsapp.news.module.DataRepository
-import com.example.newsapp.news.module.DataRepositoryImpl
-import com.example.newsapp.news.module.NewsRemoteDataStore
-import com.example.newsapp.utils.UnconfirmedTestDispatcherExtension
 import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.mockk
 import io.mockk.junit5.MockKExtension
+import kotlinx.coroutines.flow.flowOf
 
 import org.junit.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 
-@ExtendWith(MockKExtension::class, UnconfirmedTestDispatcherExtension::class)
+@ExtendWith(MockKExtension::class)
 class DataRepositoryImplTest {
 
     private val newsRemoteDataStore = mockk<NewsRemoteDataStore>()
@@ -30,12 +22,10 @@ class DataRepositoryImplTest {
     }
 
     @Test
-    fun `test returns data`() {
-        coEvery { subject.getNewsData() } returns
-                News(
-                    "",
-                    30,
-                    mutableListOf(
+    fun `test returns saved articles`() {
+        coEvery { subject.getSavedArticles() } returns
+                flowOf(
+                    listOf(
                         Article(
                             id = null,
                             author = "",
@@ -52,5 +42,27 @@ class DataRepositoryImplTest {
                         )
                     )
                 )
+    }
+
+    @Test
+    fun `test save news article`() {
+        coEvery {
+            subject.insertNewArticle(
+                Article(
+                    id = null,
+                    author = "",
+                    title = "",
+                    description = "",
+                    source = Source(
+                        id = null,
+                        name = ""
+                    ),
+                    url = "",
+                    urlToImage = "",
+                    publishedAt = "",
+                    content = ""
+                )
+            )
+        } returns (true)
     }
 }

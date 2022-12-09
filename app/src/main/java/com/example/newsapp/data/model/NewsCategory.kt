@@ -1,7 +1,7 @@
 package com.example.newsapp.data.model
 
 enum class NewsCategory {
-    ALL,
+    KEYWORD,
     BUSINESS,
     ENTERTAINMENT,
     GENERAL,

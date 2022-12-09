@@ -46,7 +46,7 @@
 
     <fragment
         android:id="@+id/news_detail_destination"
-        android:name="com.example.newsapp.news.fragments.NewsDetailsFragment"
+        android:name="com.example.newsapp.news.fragments.ArticleReaderFragment"
         android:label="@string/news_detail_fragment">
         <argument
             android:name="article"
@@ -54,12 +54,7 @@
         <argument
             android:name="sourceType"
             app:argType="com.example.newsapp.composables.screens.screenmodels.SourceType" />
-
-
-        <action
-            android:id="@+id/next_action"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+        />
     </fragment>
 
     <fragment

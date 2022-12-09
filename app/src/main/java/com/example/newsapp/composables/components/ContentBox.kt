@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.newsapp.composables.components.ContentBoxDimens.buttonBottomPadding
 import com.example.newsapp.ui.theme.NewsAppTheme
 
 @Composable
@@ -27,7 +28,7 @@ fun ContentBox(
     Box(
         modifier = Modifier
             .clip(shape)
-            .padding(bottom = 2.dp)
+            .padding(bottom = buttonBottomPadding)
             .composed { modifier }
     ) {
         Box(
@@ -42,6 +43,7 @@ fun ContentBox(
 
 private object ContentBoxDimens {
     val cornerRadius = 16.dp
+    val buttonBottomPadding = 2.dp
 }
 
 @Preview

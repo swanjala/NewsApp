@@ -1,4 +1,4 @@
-package com.example.newsapp.news.module
+package com.example.newsapp.data.datastore
 
 import android.util.Log
 import androidx.annotation.WorkerThread
@@ -18,7 +18,8 @@ class NewsRemoteDataStoreImpl @Inject constructor(
     override suspend fun getNewsByCategory(category: String): News? = try {
         val response = newsApiService.getNewsByCategory(category, 1)
         response.body()
-    } catch (t:Throwable) {
+    } catch (error:Throwable) {
+        Log.getStackTraceString(error)
         null
     }
 }

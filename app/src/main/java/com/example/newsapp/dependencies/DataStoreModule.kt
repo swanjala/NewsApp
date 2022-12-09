@@ -2,10 +2,10 @@ package com.example.newsapp.dependencies
 
 import com.example.newsapp.data.datastore.NewsLocalDataStore
 import com.example.newsapp.data.datastore.NewsLocalDataStoreImpl
-import com.example.newsapp.news.module.NewsRemoteDataStore
-import com.example.newsapp.news.module.NewsRemoteDataStoreImpl
-import com.example.newsapp.news.module.DataRepository
-import com.example.newsapp.news.module.DataRepositoryImpl
+import com.example.newsapp.data.datastore.NewsRemoteDataStore
+import com.example.newsapp.data.datastore.NewsRemoteDataStoreImpl
+import com.example.newsapp.data.datastore.DataRepository
+import com.example.newsapp.data.datastore.DataRepositoryImpl
 import dagger.Binds
 import dagger.Module
 

@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
-import com.example.newsapp.composables.screens.HomeScreenComposable
+import com.example.newsapp.composables.screens.SelectionScreenComposable
 import com.example.newsapp.composables.screens.screenmodels.HomeButtonItem
 import com.example.newsapp.composables.screens.screenmodels.ScreenType
 import com.example.newsapp.composables.screens.screenmodels.ScreenType.NEWS_HOME
@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
             setContent {
                 NewsAppTheme {
                     findNavController().apply {
-                        HomeScreenComposable(
+                        SelectionScreenComposable(
                             screenType = NEWS_HOME,
                             handleHomeSelection = ::handleHomeSectionOptions
                         )
@@ -52,7 +52,7 @@ class HomeFragment : Fragment() {
                         SourceType.ONLINE -> {
                             if (destination == R.id.news_fragment_destination) {
                                 val action = CategoriesFragmentDirections.nextAction(
-                                    NewsCategory.ALL
+                                    NewsCategory.KEYWORD
                                 )
                                 navigationController.navigate(action)
                             }

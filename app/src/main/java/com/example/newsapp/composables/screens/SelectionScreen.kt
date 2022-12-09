@@ -24,7 +24,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.example.newsapp.R
 import com.example.newsapp.composables.screens.HomeScreenComposableDimens.categorySpacerWidth
 import com.example.newsapp.composables.screens.HomeScreenComposableDimens.parentHorizontalPadding
@@ -38,7 +37,7 @@ import com.example.newsapp.composables.screens.screenmodels.SourceType
 import com.example.newsapp.ui.theme.NewsAppTheme
 
 @Composable
-fun HomeScreenComposable(
+fun SelectionScreenComposable(
     screenType: ScreenType,
     handleHomeSelection: (HomeButtonItem, ScreenType) -> Unit
 ) {
@@ -121,7 +120,7 @@ fun HomeCategoryCardPreview() {
     NewsAppTheme {
         HomeCategoryCard(
             item = HomeButtonItem(
-                "Autobots win the battle of Chicago!",
+                "The Autobots win the battle of Chicago!",
                 R.drawable.ic_online_news,
                 0,
                 SourceType.ONLINE

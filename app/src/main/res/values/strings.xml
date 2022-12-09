@@ -21,4 +21,5 @@
     <string name="top_bar_saved_news">Saved News</string>
     <string name="top_bar_news_reader">News Reader</string>
     <string name="action_save">Save</string>
+    <string name="category_business">business</string>
 </resources>

@@ -7,12 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.newsapp.composables.screens.HomeScreenComposable
+import com.example.newsapp.composables.screens.SelectionScreenComposable
 import com.example.newsapp.composables.screens.screenmodels.HomeButtonItem
 import com.example.newsapp.composables.screens.screenmodels.ScreenType
-import com.example.newsapp.composables.screens.screenmodels.SourceType
 import com.example.newsapp.data.model.NewsCategory
 import com.example.newsapp.ui.theme.NewsAppTheme
 import dagger.android.support.AndroidSupportInjection
@@ -32,7 +30,7 @@ class CategoriesFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 NewsAppTheme {
-                    HomeScreenComposable(
+                    SelectionScreenComposable(
                         screenType = ScreenType.NEWS_CATEGORY,
                         handleHomeSelection = ::handleCategoriesNavigation
                     )
