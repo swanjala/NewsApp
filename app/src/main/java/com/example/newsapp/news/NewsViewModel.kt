@@ -1,13 +1,22 @@
 package com.example.newsapp.news
 
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.newsapp.data.datastore.DataRepository
 import com.example.newsapp.data.model.Article
 import com.example.newsapp.data.model.News
 import com.example.newsapp.data.model.NewsCategory
-import com.example.newsapp.news.module.DataRepository
+import com.example.newsapp.data.model.NewsCategory.BUSINESS
+import com.example.newsapp.data.model.NewsCategory.ENTERTAINMENT
+import com.example.newsapp.data.model.NewsCategory.GENERAL
+import com.example.newsapp.data.model.NewsCategory.KEYWORD
+import com.example.newsapp.data.model.NewsCategory.SCIENCE
+import com.example.newsapp.data.model.NewsCategory.SPORTS
+import com.example.newsapp.data.model.NewsCategory.TECHNOLOGY
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,32 +34,36 @@ class NewsViewModel @Inject constructor(
 
     fun updateData(requestCategory: NewsCategory) = viewModelScope.launch {
         when (requestCategory) {
-            NewsCategory.BUSINESS -> {
-                getNewsCategory("business")
+            BUSINESS -> {
+                getNewsCategory(BUSINESS)
             }
-            NewsCategory.ENTERTAINMENT -> {
-                getNewsCategory("entertainment")
+            ENTERTAINMENT -> {
+                getNewsCategory(ENTERTAINMENT)
             }
-            NewsCategory.GENERAL -> {
-                getNewsCategory("general")
+            GENERAL -> {
+                getNewsCategory(GENERAL)
             }
-            NewsCategory.TECHNOLOGY -> {
-                getNewsCategory("technology")
+            TECHNOLOGY -> {
+                getNewsCategory(TECHNOLOGY)
             }
-            NewsCategory.SCIENCE -> {
-                getNewsCategory("science")
+            SCIENCE -> {
+                getNewsCategory(SCIENCE)
             }
-            NewsCategory.SPORTS -> {
-                getNewsCategory("sports")
+            SPORTS -> {
+                getNewsCategory(SPORTS)
             }
             else -> {
-                getNewsCategory("all")
+                getNewsCategory(KEYWORD)
             }
         }
     }
 
-    private suspend fun getNewsCategory(category: String) {
-        val categoryNewsValues = dataRepository.getNewsByCategory(category = category)
+    private suspend fun getNewsCategory(category: NewsCategory) {
+        val categoryNewsValues = dataRepository.getNewsByCategory(
+            category = category.toString().toLowerCase(
+                Locale.current
+            )
+        )
         categoryNewsValues?.let {
             _response.postValue(it)
         }

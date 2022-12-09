@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.example.newsapp.R
 import com.example.newsapp.composables.components.ArticleCardDimens.childColumBottomPadding
 import com.example.newsapp.composables.components.ArticleCardDimens.childColumnWidth
 import com.example.newsapp.composables.components.ArticleCardDimens.fontSizeMedium
@@ -110,12 +111,10 @@ fun ArticleCard(
 }
 
 object ArticleCardDimens {
-    //fonts
     val fontSizeLarge = 13.sp
     val fontSizeMedium = 10.sp
     val fontSizeSmall = 9.sp
 
-    //views
     val parentRowHeight = 150.dp
     val sharedRowPadding = 10.dp
     val imageWidth = 120.dp
@@ -134,7 +133,7 @@ fun ArticleCardPreview() {
         ArticleCard(
             sourceType = SourceType.ONLINE,
             article = Article(
-                id = 0,
+                id = R.drawable.add_news,
                 author = "Fantastic Author",
                 title = "Tectonic surprises",
                 description = "A seismic event across the globe",

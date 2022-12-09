@@ -13,17 +13,17 @@
             android:id="@+id/next_action"
             app:destination="@+id/news_fragment_destination"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/fade_out" />
+            app:exitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_home_dest_to_saved_news_detail_destination"
             app:destination="@id/saved_news_destination"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/fade_out" />
+            app:exitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_home_dest_to_news_categories"
             app:destination="@id/news_categories"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/fade_out" />
+            app:exitAnim="@android:anim/slide_out_right" />
 
     </fragment>
 
@@ -40,13 +40,13 @@
             android:id="@+id/next_action"
             app:destination="@+id/news_detail_destination"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/fade_out" />
+            app:exitAnim="@android:anim/slide_out_right" />
 
     </fragment>
 
     <fragment
         android:id="@+id/news_detail_destination"
-        android:name="com.example.newsapp.news.fragments.NewsDetailsFragment"
+        android:name="com.example.newsapp.news.fragments.ArticleReaderFragment"
         android:label="@string/news_detail_fragment">
         <argument
             android:name="article"
@@ -54,6 +54,7 @@
         <argument
             android:name="sourceType"
             app:argType="com.example.newsapp.composables.screens.screenmodels.SourceType" />
+        />
     </fragment>
 
     <fragment
@@ -65,7 +66,7 @@
             android:id="@+id/next_action"
             app:destination="@id/news_detail_destination"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/fade_out" />
+            app:exitAnim="@android:anim/slide_out_right" />
 
     </fragment>
 
@@ -78,7 +79,7 @@
             android:id="@+id/next_action"
             app:destination="@id/news_fragment_destination"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/fade_out" />
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
 
 </navigation>
