@@ -9,6 +9,17 @@ import retrofit2.http.Query
 private const val API_KEY = BuildConfig.NAP_KEY
 
 interface NewsApiService {
-    @GET("everything?apiKey=$API_KEY")
-    suspend fun getAllNews(@Query("q") q: String, @Query("page") page : Int) :Response<News>
+    @GET("everything")
+    suspend fun getAllNews(
+        @Query("q") q: String,
+        @Query("page") page: Int,
+        @Query("apiKey") apiKey: String = API_KEY
+    ): Response<News>
+
+    @GET("everything")
+    suspend fun getNewsByCategory(
+      @Query("q") newsCategory: String,
+      @Query("page") page: Int,
+      @Query("apiKey") apiKey: String = API_KEY
+    ) : Response<News>
 }

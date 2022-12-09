@@ -7,7 +7,7 @@ import com.example.newsapp.data.network.service.NewsApiService
 import javax.inject.Inject
 
 interface NewsRemoteDataStore {
-    suspend fun getAllNews(keyWord: String?): News?
+    suspend fun getNewsByCategory(category: String): News?
 }
 
 class NewsRemoteDataStoreImpl @Inject constructor(
@@ -15,12 +15,10 @@ class NewsRemoteDataStoreImpl @Inject constructor(
 ) : NewsRemoteDataStore {
 
     @WorkerThread
-    override suspend fun getAllNews(keyWord: String?): News? = try {
-        val response = newsApiService.getAllNews(keyWord ?: "keyword", 1)
+    override suspend fun getNewsByCategory(category: String): News? = try {
+        val response = newsApiService.getNewsByCategory(category, 1)
         response.body()
-
-    } catch (t: Throwable) {
-        Log.d("Failure", "Failure ${t.message}")
+    } catch (t:Throwable) {
         null
     }
 }

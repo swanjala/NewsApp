@@ -1,11 +1,9 @@
-package com.example.newsapp.composables.screens.extensions
+package com.example.newsapp.composables.screens.screenmodels
 
 import android.content.Context
 import com.example.newsapp.R
-import com.example.newsapp.composables.screens.screenmodels.HomeButtonItem
-import com.example.newsapp.composables.screens.screenmodels.ScreenType
-import com.example.newsapp.composables.screens.screenmodels.ScreenType.NEWS_HOME
 import com.example.newsapp.composables.screens.screenmodels.ScreenType.NEWS_CATEGORY
+import com.example.newsapp.composables.screens.screenmodels.ScreenType.NEWS_HOME
 
 object HomeButtonResource {
 
@@ -15,15 +13,21 @@ object HomeButtonResource {
                 listOf(
                     HomeButtonItem(
                         title = context.getString(R.string.button_action_online_articles),
-                        destination = R.id.news_fragment_destination
+                        iconResource = R.drawable.ic_online_news,
+                        destination = R.id.news_fragment_destination,
+                        sourceType = SourceType.ONLINE
                     ),
                     HomeButtonItem(
                         title = context.getString(R.string.button_action_saved_articles),
-                        destination = R.id.saved_news_destination
+                        iconResource = R.drawable.ic_saved_news,
+                        destination = R.id.saved_news_destination,
+                        sourceType = SourceType.LOCAL_SOURCE
                     ),
                     HomeButtonItem(
                         title = context.getString(R.string.button_action_article_category),
-                        destination = R.id.news_categories
+                        iconResource = R.drawable.ic_article_category,
+                        destination = R.id.news_categories,
+                        null
                     )
                 )
             }
@@ -32,31 +36,39 @@ object HomeButtonResource {
                 listOf(
                     HomeButtonItem(
                         title = context.getString(R.string.button_action_category_item_business),
-                        destination = R.id.news_fragment_destination
+                        iconResource = R.drawable.ic_business_news,
+                        destination = R.id.news_fragment_destination,
+                        sourceType = SourceType.ONLINE
                     ),
                     HomeButtonItem(
                         title = context.getString(R.string.button_action_category_item_entertainment),
-                        destination = R.id.news_fragment_destination
+                        iconResource = R.drawable.ic_entertainment_news,
+                        destination = R.id.news_fragment_destination,
+                        sourceType = SourceType.ONLINE
                     ),
                     HomeButtonItem(
                         title = context.getString(R.string.button_action_category_item_general),
-                        destination = R.id.news_fragment_destination
+                        iconResource = R.drawable.ic_general_news,
+                        destination = R.id.news_fragment_destination,
+                        sourceType = SourceType.ONLINE
                     ),
                     HomeButtonItem(
                         title = context.getString(R.string.button_action_category_item_technology),
-                        destination = R.id.news_fragment_destination
-                    ),
-                    HomeButtonItem(
-                        title = context.getString(R.string.button_action_category_item_health),
-                        destination = R.id.news_fragment_destination
+                        iconResource = R.drawable.ic_technology_news,
+                        destination = R.id.news_fragment_destination,
+                        sourceType = SourceType.ONLINE
                     ),
                     HomeButtonItem(
                         title = context.getString(R.string.button_action_category_item_science),
-                        destination = R.id.news_fragment_destination
+                        iconResource = R.drawable.ic_science_news,
+                        destination = R.id.news_fragment_destination,
+                        sourceType = SourceType.ONLINE
                     ),
                     HomeButtonItem(
                         title = context.getString(R.string.button_action_category_item_sports),
-                        destination = R.id.news_fragment_destination
+                        iconResource = R.drawable.ic_sports_news,
+                        destination = R.id.news_fragment_destination,
+                        sourceType = SourceType.ONLINE
                     )
                 )
             }

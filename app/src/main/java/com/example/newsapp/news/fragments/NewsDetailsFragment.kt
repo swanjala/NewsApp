@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.newsapp.R
+import com.example.newsapp.composables.navigation.Screen
+import com.example.newsapp.composables.navigation.TopBarAction
 import com.example.newsapp.composables.screens.ArticleReaderScreenComposable
 import com.example.newsapp.news.NewsViewModel
 import com.example.newsapp.ui.theme.NewsAppTheme
@@ -44,10 +46,17 @@ class NewsDetailsFragment : Fragment() {
                 NewsAppTheme {
                     selectedArticle.apply {
                         ArticleReaderScreenComposable(
-                            screenType = screenType,
+                            sourceType = sourceType,
+                            screen = Screen.ArticleReader,
                             url = URLDecoder.decode(article.url, "UTF-8"),
                             onSaveArticleClicked = ::handleSaveSelectedArticle
-                        )
+                        ) { topBarAction ->
+                            when (topBarAction) {
+                                is TopBarAction.Back -> {
+                                    activity?.onBackPressed()
+                                }
+                            }
+                        }
                     }
                 }
             }
