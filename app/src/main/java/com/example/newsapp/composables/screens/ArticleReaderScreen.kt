@@ -3,6 +3,7 @@ package com.example.newsapp.composables.screens
 import android.annotation.SuppressLint
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
@@ -88,6 +89,7 @@ fun ArticleReaderScreenComposable(
 @Composable
 fun WebViewComposable(url: String) {
     AndroidView(
+        modifier = Modifier.fillMaxSize(),
         factory = { currentContext ->
             WebView(currentContext).apply {
                 webViewClient = WebViewClient()
@@ -104,7 +106,7 @@ fun ArticleScreenComposablePreview() {
         ArticleReaderScreenComposable(
             sourceType = SourceType.ONLINE,
             screen = ArticleReader,
-            url = "",
+            url = "https://www.vg.no/forbruker/teknologi/i/76Ppn9/ber-om-full-aapenhet-etter-twitter-lekkasjer",
             {},
             {}
         )

@@ -57,9 +57,10 @@ class HomeFragment : Fragment() {
                                 navigationController.navigate(action)
                             }
                         }
-                        else -> {
+                        SourceType.LOCAL_SOURCE -> {
                             navigationController.navigate(destination)
                         }
+                        else -> {}
                     }
                 }
 

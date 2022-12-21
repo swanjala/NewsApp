@@ -21,7 +21,7 @@ object AppInjector {
                 }
 
                 override fun onActivityStarted(activity: Activity) {
-                  /*Not yet implemented*/
+                    /*Not yet implemented*/
                 }
 
                 override fun onActivityResumed(activity: Activity) {
@@ -48,7 +48,7 @@ object AppInjector {
     }
 
     private fun handleActivity(activity: Activity) {
-        if  (activity is HasAndroidInjector) {
+        if (activity is HasAndroidInjector) {
             AndroidInjection.inject(activity)
         }
     }

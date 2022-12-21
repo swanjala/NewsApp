@@ -12,6 +12,9 @@ interface ArticleDao {
     @Query("SELECT * FROM article_table ORDER BY id ASC")
     fun getSavedArticles(): Flow<List<Article>>
 
+    @Query("SELECT * FROM article_table ORDER BY id DESC")
+    fun getArticlesWithCertainData(): Flow<List<Article>>
+
     @Insert
     suspend fun insert(article: Article)
 }

@@ -35,34 +35,35 @@ class NewsViewModel @Inject constructor(
     fun updateData(requestCategory: NewsCategory) = viewModelScope.launch {
         when (requestCategory) {
             BUSINESS -> {
-                getNewsCategory(BUSINESS)
+                getNewsCategory(BUSINESS, dynamicPageNumber = 0)
             }
             ENTERTAINMENT -> {
-                getNewsCategory(ENTERTAINMENT)
+                getNewsCategory(ENTERTAINMENT, dynamicPageNumber = 0)
             }
             GENERAL -> {
-                getNewsCategory(GENERAL)
+                getNewsCategory(GENERAL, dynamicPageNumber = 0)
             }
             TECHNOLOGY -> {
-                getNewsCategory(TECHNOLOGY)
+                getNewsCategory(TECHNOLOGY, dynamicPageNumber = 0)
             }
             SCIENCE -> {
-                getNewsCategory(SCIENCE)
+                getNewsCategory(SCIENCE, dynamicPageNumber = 0)
             }
             SPORTS -> {
-                getNewsCategory(SPORTS)
+                getNewsCategory(SPORTS, dynamicPageNumber = 0)
             }
             else -> {
-                getNewsCategory(KEYWORD)
+                getNewsCategory(KEYWORD, dynamicPageNumber = 0)
             }
         }
     }
 
-    private suspend fun getNewsCategory(category: NewsCategory) {
+    private suspend fun getNewsCategory(category: NewsCategory, dynamicPageNumber: Int) {
         val categoryNewsValues = dataRepository.getNewsByCategory(
             category = category.toString().toLowerCase(
                 Locale.current
-            )
+            ),
+            pageNumber = dynamicPageNumber
         )
         categoryNewsValues?.let {
             _response.postValue(it)
