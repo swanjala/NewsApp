@@ -73,7 +73,7 @@ fun PreviewNavigationBar() {
         Scaffold(
             topBar = {
                 NavigationBar(
-                    screen = Screen.OnlineNews
+                    screen = Screen.NewsList
                 ) {
                     // nothing to do here
                 }

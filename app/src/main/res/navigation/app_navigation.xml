@@ -14,11 +14,7 @@
             app:destination="@+id/news_fragment_destination"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
-        <action
-            android:id="@+id/action_home_dest_to_saved_news_detail_destination"
-            app:destination="@id/saved_news_destination"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+
         <action
             android:id="@+id/action_home_dest_to_news_categories"
             app:destination="@id/news_categories"
@@ -29,12 +25,12 @@
 
     <fragment
         android:id="@+id/news_fragment_destination"
-        android:name="com.example.newsapp.news.fragments.OnlineNewsFragment"
+        android:name="com.example.newsapp.news.fragments.NewsListFragment"
         android:label="@string/news_fragment">
 
         <argument
-            android:name="requestCategory"
-            app:argType="com.example.newsapp.data.model.NewsCategory" />
+            android:name="sourceType"
+            app:argType="com.example.newsapp.composables.screens.screenmodels.SourceType" />
 
         <action
             android:id="@+id/next_action"
@@ -55,19 +51,6 @@
             android:name="sourceType"
             app:argType="com.example.newsapp.composables.screens.screenmodels.SourceType" />
         />
-    </fragment>
-
-    <fragment
-        android:id="@+id/saved_news_destination"
-        android:name="com.example.newsapp.news.fragments.SavedArticlesFragment"
-        android:label="@string/saved_news_fragment">
-
-        <action
-            android:id="@+id/next_action"
-            app:destination="@id/news_detail_destination"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
-
     </fragment>
 
     <fragment

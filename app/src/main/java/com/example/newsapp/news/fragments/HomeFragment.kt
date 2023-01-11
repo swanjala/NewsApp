@@ -14,7 +14,6 @@ import com.example.newsapp.composables.screens.screenmodels.HomeButtonItem
 import com.example.newsapp.composables.screens.screenmodels.ScreenType
 import com.example.newsapp.composables.screens.screenmodels.ScreenType.NEWS_HOME
 import com.example.newsapp.composables.screens.screenmodels.SourceType
-import com.example.newsapp.data.model.NewsCategory
 import com.example.newsapp.ui.theme.NewsAppTheme
 import dagger.android.support.AndroidSupportInjection
 
@@ -52,7 +51,15 @@ class HomeFragment : Fragment() {
                         SourceType.ONLINE -> {
                             if (destination == R.id.news_fragment_destination) {
                                 val action = CategoriesFragmentDirections.nextAction(
-                                    NewsCategory.KEYWORD
+                                    SourceType.ONLINE
+                                )
+                                navigationController.navigate(action)
+                            }
+                        }
+                        SourceType.LOCAL_SOURCE -> {
+                            if (destination == R.id.news_fragment_destination) {
+                                val action = CategoriesFragmentDirections.nextAction(
+                                    SourceType.LOCAL_SOURCE
                                 )
                                 navigationController.navigate(action)
                             }
@@ -65,7 +72,12 @@ class HomeFragment : Fragment() {
 
                 ScreenType.NEWS_CATEGORY -> {
                     val action =
-                        CategoriesFragmentDirections.nextAction(NewsCategory.valueOf(title.uppercase()))
+                        CategoriesFragmentDirections.nextAction(
+                            /*Todo
+                            *  update the sources for the category as well
+                            * */
+                           SourceType.ONLINE
+                        )
                     navigationController.navigate(action)
                 }
                 else -> {}

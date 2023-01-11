@@ -7,7 +7,7 @@ sealed class Screen(
     val navigationAction: TopBarAction,
     @StringRes val labelResourceId: Int
 ) {
-    object OnlineNews: Screen(
+    object NewsList: Screen(
         navigationAction = TopBarAction.Back,
         labelResourceId = R.string.top_bar_online_news
     )

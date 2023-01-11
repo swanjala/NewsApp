@@ -20,7 +20,7 @@ object HomeButtonResource {
                     HomeButtonItem(
                         title = context.getString(R.string.button_action_saved_articles),
                         iconResource = R.drawable.ic_saved_news,
-                        destination = R.id.saved_news_destination,
+                        destination = R.id.news_fragment_destination,
                         sourceType = SourceType.LOCAL_SOURCE
                     ),
                     HomeButtonItem(

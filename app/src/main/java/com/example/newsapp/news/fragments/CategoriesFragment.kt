@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.newsapp.composables.screens.SelectionScreenComposable
 import com.example.newsapp.composables.screens.screenmodels.HomeButtonItem
 import com.example.newsapp.composables.screens.screenmodels.ScreenType
-import com.example.newsapp.data.model.NewsCategory
+import com.example.newsapp.composables.screens.screenmodels.SourceType
 import com.example.newsapp.ui.theme.NewsAppTheme
 import dagger.android.support.AndroidSupportInjection
 
@@ -41,7 +41,7 @@ class CategoriesFragment : Fragment() {
 
     private fun handleCategoriesNavigation(item: HomeButtonItem, screenType: ScreenType) {
         val action = CategoriesFragmentDirections.nextAction(
-            NewsCategory.valueOf(item.title.uppercase())
+            SourceType.ONLINE
         )
         findNavController().navigate(action)
     }

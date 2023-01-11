@@ -5,7 +5,7 @@ import org.json.JSONObject
 
 class SourceTypeConverter {
     @TypeConverter
-    fun fromSource(source: Source): String = with(SourceTypeProperties) {
+    fun fromSource(source: ArticleSource): String = with(SourceTypeProperties) {
         return JSONObject().apply {
             put(id, source.id ?: 0)
             put(name, source.name)
@@ -13,9 +13,9 @@ class SourceTypeConverter {
     }
 
     @TypeConverter
-    fun toSource(source: String): Source = with(SourceTypeProperties) {
+    fun toSource(source: String): ArticleSource = with(SourceTypeProperties) {
         val json = JSONObject(source)
-        return Source(json.get(id), json.getString(name))
+        return ArticleSource(json.get(id), json.getString(name))
     }
 }
 
