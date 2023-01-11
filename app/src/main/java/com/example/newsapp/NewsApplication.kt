@@ -11,11 +11,14 @@ import javax.inject.Inject
 @Suppress("UNCHECKED_CAST")
 open class NewsApplication : Application(), HasAndroidInjector {
 
+
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
-    override fun androidInjector(): AndroidInjector<Any>? = dispatchingAndroidInjector as
-            AndroidInjector<Any>?
+    override fun androidInjector(): AndroidInjector<Any>?  {
+       return dispatchingAndroidInjector as
+                AndroidInjector<Any>?
+    }
 
     override fun onCreate() {
         super.onCreate()

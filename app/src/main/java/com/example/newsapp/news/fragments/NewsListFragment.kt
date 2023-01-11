@@ -5,25 +5,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.newsapp.composables.navigation.Screen
 import com.example.newsapp.composables.navigation.TopBarAction
 import com.example.newsapp.composables.screens.NewsListScreen
 import com.example.newsapp.composables.screens.screenmodels.SourceType
+import com.example.newsapp.composables.screens.screenmodels.SourceType.*
 import com.example.newsapp.data.model.Article
-import com.example.newsapp.data.model.News
 import com.example.newsapp.news.NewsViewModel
 import com.example.newsapp.ui.theme.NewsAppTheme
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class OnlineNewsFragment : Fragment() {
+class NewsListFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -32,7 +33,7 @@ class OnlineNewsFragment : Fragment() {
         ViewModelProvider(this, viewModelFactory)[NewsViewModel::class.java]
     }
 
-    private val selectedCategory: OnlineNewsFragmentArgs by navArgs()
+    private val sourcesArguments: NewsListFragmentArgs? by navArgs()
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -41,8 +42,21 @@ class OnlineNewsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
         viewModel.run {
-            updateData(selectedCategory.requestCategory)
+            viewModelScope.launch {
+                when (sourcesArguments?.sourceType) {
+                    ONLINE -> {
+                        getAllNews()
+                    }
+                    LOCAL_SOURCE -> {
+                        getSavedArticles()
+                    }
+                    else -> {
+                        //todo handle an else case here
+                    }
+                }
+            }
         }
     }
 
@@ -55,16 +69,14 @@ class OnlineNewsFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 NewsAppTheme {
-                    val onlineNewsState: News? by viewModel.response.observeAsState()
-                    onlineNewsState?.let {
-                        NewsListScreen(
-                            sourceType = SourceType.ONLINE,
-                            screen = Screen.OnlineNews,
-                            articles = it.articles,
-                            handleArticleSelected = ::handleArticleSelection,
-                            onNavigationActionBarClicked = ::handleNavigationBarAction
-                        )
-                    }
+                    NewsListScreen(
+                        sourceType = ONLINE,
+                        screen = Screen.NewsList,
+                        viewModel = viewModel,
+                        handleArticleSelected = ::handleArticleSelection,
+                        onNavigationActionBarClicked = ::handleNavigationBarAction,
+                        onRetryClicked = ::handleOnRetryClicked
+                    )
                 }
             }
         }
@@ -72,7 +84,7 @@ class OnlineNewsFragment : Fragment() {
 
     private fun handleArticleSelection(screenType: SourceType, article: Article) {
         val navController = findNavController()
-        val action = OnlineNewsFragmentDirections.nextAction(article, screenType)
+        val action = NewsListFragmentDirections.nextAction(article, screenType)
         navController.navigate(action)
     }
 
@@ -81,6 +93,15 @@ class OnlineNewsFragment : Fragment() {
             is TopBarAction.Back -> {
                 activity?.onBackPressed()
             }
+        }
+    }
+
+    private suspend fun handleOnRetryClicked() {
+        /*TODO
+        *  Add a retry mechanism for the online version of data passed
+        * */
+        lifecycleScope.run {
+            viewModel.getAllNews()
         }
     }
 }
