@@ -1,14 +1,13 @@
 package com.example.newsapp.news
 
+import android.util.Log
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.toLowerCase
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.newsapp.composables.composableModels.NewsUiState
 import com.example.newsapp.data.datastore.DataRepository
 import com.example.newsapp.data.model.Article
-import com.example.newsapp.data.model.News
 import com.example.newsapp.data.model.NewsCategory
 import com.example.newsapp.data.model.NewsCategory.BUSINESS
 import com.example.newsapp.data.model.NewsCategory.ENTERTAINMENT
@@ -17,6 +16,9 @@ import com.example.newsapp.data.model.NewsCategory.KEYWORD
 import com.example.newsapp.data.model.NewsCategory.SCIENCE
 import com.example.newsapp.data.model.NewsCategory.SPORTS
 import com.example.newsapp.data.model.NewsCategory.TECHNOLOGY
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,15 +26,13 @@ class NewsViewModel @Inject constructor(
     private val dataRepository: DataRepository
 ) : ViewModel() {
 
-    private val _response = MutableLiveData<News?>()
-    val response: LiveData<News?>
-        get() = _response
-
-    private val _savedArticles = MutableLiveData<List<Article>>()
-    val savedArticles: LiveData<List<Article>>
-        get() = _savedArticles
+    private var _newsUiState = MutableStateFlow(NewsUiState())
+    val uiState: StateFlow<NewsUiState> = _newsUiState.asStateFlow()
 
     fun updateData(requestCategory: NewsCategory) = viewModelScope.launch {
+        /*todo
+          implement categories logic in separate branch
+         */
         when (requestCategory) {
             BUSINESS -> {
                 getNewsCategory(BUSINESS)
@@ -58,21 +58,76 @@ class NewsViewModel @Inject constructor(
         }
     }
 
+    suspend fun getAllNews() {
+        try {
+            val newsItems = dataRepository.getAllNews()
+            _newsUiState.value = when (newsItems) {
+                null -> NewsUiState(errorState = true)
+                else -> NewsUiState(
+                    newsItems = newsItems.articles,
+                    errorState = false
+                )
+            }
+        } catch (
+            error: Throwable
+        ) {
+            NewsUiState(errorState = true)
+        }
+    }
+
+    fun getSources() = viewModelScope.launch {
+        val dataSourceNewsValues = dataRepository.getNewsFromDataSource()
+        dataSourceNewsValues?.let { data ->
+            with(data) {
+                if (status != "ok") {
+                    // Implements the error state of the news ui screen.
+                    _newsUiState.value = NewsUiState(
+                        errorState = true
+                    )
+                } else {
+                    // Implements the ui state for sources state
+                    _newsUiState.value = NewsUiState(
+                        sources = sources
+                    )
+                }
+            }
+        }
+    }
+
     private suspend fun getNewsCategory(category: NewsCategory) {
-        val categoryNewsValues = dataRepository.getNewsByCategory(
-            category = category.toString().toLowerCase(
-                Locale.current
+        try {
+            val newsItems = dataRepository.getNewsByCategory(
+                category = category.toString().toLowerCase(
+                    Locale.current
+                )
             )
-        )
-        categoryNewsValues?.let {
-            _response.postValue(it)
+            newsItems?.let {
+                _newsUiState.value = NewsUiState(
+                    newsItems = it.articles,
+                    errorState = false
+                )
+            }
+        } catch (error: Throwable) {
+            Log.getStackTraceString(error)
+            _newsUiState.value = NewsUiState(
+                errorState = true
+            )
         }
     }
 
     suspend fun getSavedArticles() {
-        val articles = dataRepository.getSavedArticles()
-        articles.collect {
-            _savedArticles.postValue(it)
+        try {
+            dataRepository.getSavedArticles().collect { item ->
+                _newsUiState.value = NewsUiState(
+                    savedArticles = item,
+                    errorState = false
+                )
+            }
+        } catch (error: Throwable) {
+            Log.getStackTraceString(error)
+            _newsUiState.value = NewsUiState(
+                errorState = true
+            )
         }
     }
 
@@ -80,3 +135,4 @@ class NewsViewModel @Inject constructor(
         dataRepository.insertNewArticle(article)
     }
 }
+
