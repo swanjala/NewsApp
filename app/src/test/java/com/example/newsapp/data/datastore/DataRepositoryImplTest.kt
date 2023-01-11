@@ -1,7 +1,7 @@
 package com.example.newsapp.data.datastore
 
 import com.example.newsapp.data.model.Article
-import com.example.newsapp.data.model.Source
+import com.example.newsapp.data.model.ArticleSource
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.junit5.MockKExtension
@@ -31,7 +31,7 @@ class DataRepositoryImplTest {
                             author = "",
                             title = "",
                             description = "",
-                            source = Source(
+                            source = ArticleSource(
                                 id = null,
                                 name = ""
                             ),
@@ -53,7 +53,7 @@ class DataRepositoryImplTest {
                     author = "",
                     title = "",
                     description = "",
-                    source = Source(
+                    source = ArticleSource(
                         id = null,
                         name = ""
                     ),
