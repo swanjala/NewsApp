@@ -38,10 +38,9 @@ import com.example.newsapp.composables.components.ArticleCardDimens.roundedCorne
 import com.example.newsapp.composables.components.ArticleCardDimens.sharedRowPadding
 import com.example.newsapp.composables.components.ArticleCardDimens.sharedSpacerHeight
 import com.example.newsapp.composables.components.ArticleCardDimens.surfaceTopPadding
-import com.example.newsapp.composables.screens.screenmodels.ScreenType
 import com.example.newsapp.composables.screens.screenmodels.SourceType
 import com.example.newsapp.data.model.Article
-import com.example.newsapp.data.model.Source
+import com.example.newsapp.data.model.ArticleSource
 import com.example.newsapp.ui.theme.NewsAppTheme
 import java.util.Locale
 
@@ -137,7 +136,7 @@ fun ArticleCardPreview() {
                 author = "Fantastic Author",
                 title = "Tectonic surprises",
                 description = "A seismic event across the globe",
-                source = Source(
+                source = ArticleSource(
                     id = null,
                     name = "String"
                 ),
