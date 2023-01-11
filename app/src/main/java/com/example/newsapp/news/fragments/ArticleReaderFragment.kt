@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.newsapp.R
 import com.example.newsapp.composables.navigation.Screen
 import com.example.newsapp.composables.navigation.TopBarAction
 import com.example.newsapp.composables.screens.ArticleReaderScreenComposable
@@ -64,8 +63,8 @@ class ArticleReaderFragment : Fragment() {
     }
 
     private suspend fun handleSaveSelectedArticle() {
-        val navigationController = findNavController()
         viewModel.saveNewsArticle(selectedArticle.article)
-        navigationController.navigate(R.id.saved_news_destination)
+        val navigationController = findNavController()
+        navigationController.popBackStack()
     }
 }
