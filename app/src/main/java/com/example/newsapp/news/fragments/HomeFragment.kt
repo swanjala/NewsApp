@@ -10,8 +10,10 @@ import com.example.newsapp.R
 import com.example.newsapp.composables.screens.SelectionScreenComposable
 import com.example.newsapp.composables.screens.screenmodels.HomeButtonItem
 import com.example.newsapp.composables.screens.screenmodels.ScreenType
+import com.example.newsapp.composables.screens.screenmodels.ScreenType.NEWS_CATEGORY
 import com.example.newsapp.composables.screens.screenmodels.ScreenType.NEWS_HOME
-import com.example.newsapp.composables.screens.screenmodels.SourceType
+import com.example.newsapp.composables.screens.screenmodels.SourceType.LOCAL_SOURCE
+import com.example.newsapp.composables.screens.screenmodels.SourceType.ONLINE
 import com.example.newsapp.news.extensions.composeView
 import com.example.newsapp.ui.theme.NewsAppTheme
 import dagger.android.support.AndroidSupportInjection
@@ -27,14 +29,10 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = composeView {
-        NewsAppTheme {
-            findNavController().apply {
-                SelectionScreenComposable(
-                    screenType = NEWS_HOME,
-                    handleHomeSelection = ::handleHomeSectionOptions
-                )
-            }
-        }
+        SelectionScreenComposable(
+            screenType = NEWS_HOME,
+            handleHomeSelection = ::handleHomeSectionOptions
+        )
     }
 
     private fun handleHomeSectionOptions(item: HomeButtonItem, screenType: ScreenType) =
@@ -43,20 +41,22 @@ class HomeFragment : Fragment() {
             when (screenType) {
                 NEWS_HOME -> {
                     when (sourceType) {
-                        SourceType.ONLINE -> {
+                        ONLINE -> {
                             if (destination == R.id.news_fragment_destination) {
-                                val action = CategoriesFragmentDirections.nextAction(
-                                    SourceType.ONLINE
+                                navigationController.navigate(
+                                    CategoriesFragmentDirections.nextAction(
+                                        ONLINE
+                                    )
                                 )
-                                navigationController.navigate(action)
                             }
                         }
-                        SourceType.LOCAL_SOURCE -> {
+                        LOCAL_SOURCE -> {
                             if (destination == R.id.news_fragment_destination) {
-                                val action = CategoriesFragmentDirections.nextAction(
-                                    SourceType.LOCAL_SOURCE
-                                )
-                                navigationController.navigate(action)
+                                    navigationController.navigate(
+                                        CategoriesFragmentDirections.nextAction(
+                                            LOCAL_SOURCE
+                                        )
+                                    )
                             }
                         }
                         else -> {
@@ -65,13 +65,13 @@ class HomeFragment : Fragment() {
                     }
                 }
 
-                ScreenType.NEWS_CATEGORY -> {
+                NEWS_CATEGORY -> {
                     val action =
                         CategoriesFragmentDirections.nextAction(
                             /*Todo
                             *  update the sources for the category as well
                             * */
-                            SourceType.ONLINE
+                            ONLINE
                         )
                     navigationController.navigate(action)
                 }
