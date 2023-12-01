@@ -57,13 +57,14 @@ class NewsViewModel @Inject constructor(
 
     suspend fun getAllNews() {
         try {
-            val newsItems = dataRepository.getAllNews()
-            _newsUiState.value = when (newsItems) {
-                null -> NewsUiState(errorState = true)
-                else -> NewsUiState(
-                    newsItems = newsItems.articles,
-                    errorState = false
-                )
+            dataRepository.getAllNews().collect { newsItem ->
+                _newsUiState.value = when (newsItem) {
+                    null -> NewsUiState(errorState = true)
+                    else -> NewsUiState(
+                        newsItems = newsItem.articles,
+                        errorState = false
+                    )
+                }
             }
         } catch (
             error: Throwable
@@ -114,12 +115,13 @@ class NewsViewModel @Inject constructor(
 
     suspend fun getSavedArticles() {
         try {
-            dataRepository.getSavedArticles().collect { item ->
-                _newsUiState.value = NewsUiState(
-                    savedArticles = item,
-                    errorState = false
-                )
-            }
+            dataRepository.getSavedArticles()
+                .collect { item ->
+                    _newsUiState.value = NewsUiState(
+                        savedArticles = item,
+                        errorState = false
+                    )
+                }
         } catch (error: Throwable) {
             Log.getStackTraceString(error)
             _newsUiState.value = NewsUiState(
