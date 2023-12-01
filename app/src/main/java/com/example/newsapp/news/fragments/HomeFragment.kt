@@ -27,17 +27,13 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        return ComposeView(requireContext()).apply {
-            setContent {
-                NewsAppTheme {
-                    findNavController().apply {
-                        SelectionScreenComposable(
-                            screenType = NEWS_HOME,
-                            handleHomeSelection = ::handleHomeSectionOptions
-                        )
-                    }
-                }
+    ) = composeView {
+        NewsAppTheme {
+            findNavController().apply {
+                SelectionScreenComposable(
+                    screenType = NEWS_HOME,
+                    handleHomeSelection = ::handleHomeSectionOptions
+                )
             }
         }
     }
@@ -76,7 +72,7 @@ class HomeFragment : Fragment() {
                             /*Todo
                             *  update the sources for the category as well
                             * */
-                           SourceType.ONLINE
+                            SourceType.ONLINE
                         )
                     navigationController.navigate(action)
                 }
