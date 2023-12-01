@@ -12,7 +12,7 @@ interface DataRepository {
     suspend fun insertNewArticle(article: Article): Boolean
     suspend fun getNewsByCategory(category: String): News?
     suspend fun getNewsFromDataSource(): Sources?
-    suspend fun getAllNews() : News?
+    suspend fun getAllNews() : Flow<News?>
 }
 
 class DataRepositoryImpl @Inject constructor(
@@ -27,7 +27,7 @@ class DataRepositoryImpl @Inject constructor(
         return newsRemoteDataStore.getNewsFromSource()
     }
 
-    override suspend fun getAllNews(): News? {
+    override suspend fun getAllNews(): Flow<News?> {
         return newsRemoteDataStore.getAllNews()
     }
 
