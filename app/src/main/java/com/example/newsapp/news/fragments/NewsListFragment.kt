@@ -19,6 +19,7 @@ import com.example.newsapp.composables.screens.screenmodels.SourceType
 import com.example.newsapp.composables.screens.screenmodels.SourceType.*
 import com.example.newsapp.data.model.Article
 import com.example.newsapp.news.NewsViewModel
+import com.example.newsapp.news.extensions.composeView
 import com.example.newsapp.ui.theme.NewsAppTheme
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.coroutines.launch
@@ -64,22 +65,15 @@ class NewsListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-
-        return ComposeView(requireContext()).apply {
-            setContent {
-                NewsAppTheme {
-                    NewsListScreen(
-                        sourceType = ONLINE,
-                        screen = Screen.NewsList,
-                        viewModel = viewModel,
-                        handleArticleSelected = ::handleArticleSelection,
-                        onNavigationActionBarClicked = ::handleNavigationBarAction,
-                        onRetryClicked = ::handleOnRetryClicked
-                    )
-                }
-            }
-        }
+    ) = composeView {
+        NewsListScreen(
+            sourceType = ONLINE,
+            screen = Screen.NewsList,
+            viewModel = viewModel,
+            handleArticleSelected = ::handleArticleSelection,
+            onNavigationActionBarClicked = ::handleNavigationBarAction,
+            onRetryClicked = ::handleOnRetryClicked
+        )
     }
 
     private fun handleArticleSelection(screenType: SourceType, article: Article) {

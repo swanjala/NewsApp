@@ -1,4 +1,4 @@
-package com.example.newsapp.news.fragments
+package com.example.newsapp.news.extensions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
