@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
@@ -31,6 +32,7 @@ import com.example.newsapp.composables.components.NavigationBarDimens
 import com.example.newsapp.composables.navigation.Screen
 import com.example.newsapp.composables.navigation.Screen.*
 import com.example.newsapp.composables.navigation.TopBarAction
+import com.example.newsapp.composables.screens.ArticleReaderScreen.buttonSize
 import com.example.newsapp.composables.screens.screenmodels.ScreenType
 import com.example.newsapp.composables.screens.screenmodels.SourceType
 import com.example.newsapp.ui.theme.NewsAppTheme
@@ -63,8 +65,7 @@ fun ArticleReaderScreenComposable(
                                 painter = painterResource(id = R.drawable.ic_save_news),
                                 contentDescription = stringResource(R.string.action_save),
                                 modifier = Modifier
-                                    .width(45.dp)
-                                    .height(45.dp)
+                                    .size(buttonSize)
                             )
                         }
                     }
@@ -83,6 +84,10 @@ fun ArticleReaderScreenComposable(
             WebViewComposable(url)
         }
     }
+}
+
+object ArticleReaderScreen  {
+    val buttonSize = 45.dp
 }
 
 @Composable

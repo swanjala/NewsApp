@@ -30,9 +30,6 @@ class NewsViewModel @Inject constructor(
     val uiState: StateFlow<NewsUiState> = _newsUiState.asStateFlow()
 
     fun updateData(requestCategory: NewsCategory) = viewModelScope.launch {
-        /*todo
-          implement categories logic in separate branch
-         */
         when (requestCategory) {
             BUSINESS -> {
                 getNewsCategory(BUSINESS)
