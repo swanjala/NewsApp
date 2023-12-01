@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -55,13 +54,16 @@ fun SelectionScreenComposable(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start
         ) {
-            buttonItems.forEach { item ->
+            buttonItems.forEachIndexed { index, item ->
                 HomeCategoryCard(
                     item = item,
                     screenType = screenType,
                     handleHomeSelection = handleHomeSelection
                 )
-                Spacer(Modifier.width(sharedSpacerHeight))
+                if (index != buttonItems.size) {
+                    Spacer(Modifier.width(sharedSpacerHeight))
+
+                }
             }
         }
     }
@@ -85,24 +87,17 @@ fun HomeCategoryCard(
             .clickable(
                 enabled = true,
                 onClick = onRowClicked
-            )
+            ),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Column(
-            modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.Center
-        ) {
-            Icon(
-                painter = painterResource(id = iconResource),
-                contentDescription = "",
-                tint = Color.Unspecified
-            )
-        }
+        Icon(
+            painter = painterResource(id = iconResource),
+            contentDescription = "",
+            tint = Color.Unspecified
+        )
         Spacer(modifier = Modifier.width(categorySpacerWidth))
-        Column(
-            modifier = Modifier.fillMaxHeight(),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(text = title)
-        }
+
+        Text(text = title)
     }
 }
 
