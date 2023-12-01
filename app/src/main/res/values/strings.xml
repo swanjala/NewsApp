@@ -22,4 +22,6 @@
     <string name="top_bar_news_reader">News Reader</string>
     <string name="action_save">Save</string>
     <string name="category_business">business</string>
+    <string name="error_string">Unable displaying content from the internet</string>
+    <string name="error_retry">Retry</string>
 </resources>

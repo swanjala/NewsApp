@@ -13,8 +13,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.newsapp.R
 import com.example.newsapp.ui.theme.NewsAppTheme
 
 @Composable
@@ -31,7 +33,7 @@ fun ErrorStateComposable(onRetryClicked: () -> Unit) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Unable displaying content from the internet")
+            Text(stringResource(R.string.error_string))
             Spacer(modifier = Modifier.height(10.dp))
             Button(
                 modifier = Modifier
@@ -42,7 +44,7 @@ fun ErrorStateComposable(onRetryClicked: () -> Unit) {
                     ),
                 onClick = onRetryClicked
             ) {
-                Text("Retry")
+                Text(stringResource(R.string.error_retry))
             }
         }
     }
