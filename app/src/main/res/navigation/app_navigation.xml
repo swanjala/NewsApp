@@ -29,6 +29,10 @@
         android:label="@string/news_fragment">
 
         <argument
+            android:name="sourceCategory"
+            app:argType="string" />
+
+        <argument
             android:name="sourceType"
             app:argType="com.example.newsapp.composables.screens.screenmodels.SourceType" />
 
