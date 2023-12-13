@@ -20,7 +20,6 @@ class NewsViewModel @Inject constructor(
     val uiState: StateFlow<NewsUiState> = _newsUiState.asStateFlow()
 
     fun getNewsByCategory(requestType: String) = viewModelScope.launch {
-
         if (requestType.isEmpty()) {
             getAllNews()
         } else {
