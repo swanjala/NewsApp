@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.newsapp.R
 import com.example.newsapp.composables.screens.screenmodels.ScreenType.NEWS_CATEGORY
 import com.example.newsapp.composables.screens.screenmodels.ScreenType.NEWS_HOME
+import com.example.newsapp.data.model.NewsCategory
 
 object HomeButtonResource {
 
@@ -15,19 +16,22 @@ object HomeButtonResource {
                         title = getString(R.string.button_action_online_articles),
                         iconResource = R.drawable.ic_online_news,
                         destination = R.id.news_fragment_destination,
+                        newsSourceCategory = NewsCategory.EVERYTHING.type,
                         sourceType = SourceType.ONLINE
                     ),
                     HomeButtonItem(
                         title = getString(R.string.button_action_saved_articles),
                         iconResource = R.drawable.ic_saved_news,
                         destination = R.id.news_fragment_destination,
+                        newsSourceCategory = null,
                         sourceType = SourceType.LOCAL_SOURCE
                     ),
                     HomeButtonItem(
                         title = getString(R.string.button_action_article_category),
                         iconResource = R.drawable.ic_article_category,
+                        newsSourceCategory = null,
                         destination = R.id.news_categories,
-                        null
+                        sourceType = null
                     )
                 )
             }
@@ -38,36 +42,49 @@ object HomeButtonResource {
                         title = getString(R.string.button_action_category_item_business),
                         iconResource = R.drawable.ic_business_news,
                         destination = R.id.news_fragment_destination,
+                        newsSourceCategory = NewsCategory.BUSINESS.type,
                         sourceType = SourceType.ONLINE
                     ),
                     HomeButtonItem(
                         title = getString(R.string.button_action_category_item_entertainment),
                         iconResource = R.drawable.ic_entertainment_news,
                         destination = R.id.news_fragment_destination,
+                        newsSourceCategory = NewsCategory.ENTERTAINMENT.type,
                         sourceType = SourceType.ONLINE
                     ),
                     HomeButtonItem(
                         title = getString(R.string.button_action_category_item_general),
                         iconResource = R.drawable.ic_general_news,
                         destination = R.id.news_fragment_destination,
+                        newsSourceCategory = NewsCategory.GENERAL.type,
+                        sourceType = SourceType.ONLINE
+                    ),
+                    HomeButtonItem(
+                        title = getString(R.string.button_action_category_item_health),
+                        iconResource = R.drawable.ic_general_news,
+                        destination = R.id.news_fragment_destination,
+                        newsSourceCategory = NewsCategory.HEALTH.type,
                         sourceType = SourceType.ONLINE
                     ),
                     HomeButtonItem(
                         title = getString(R.string.button_action_category_item_technology),
                         iconResource = R.drawable.ic_technology_news,
                         destination = R.id.news_fragment_destination,
+                        newsSourceCategory = NewsCategory.TECHNOLOGY.type,
                         sourceType = SourceType.ONLINE
                     ),
                     HomeButtonItem(
                         title = getString(R.string.button_action_category_item_science),
                         iconResource = R.drawable.ic_science_news,
                         destination = R.id.news_fragment_destination,
+                        newsSourceCategory = NewsCategory.SCIENCE.type,
                         sourceType = SourceType.ONLINE
                     ),
                     HomeButtonItem(
                         title = getString(R.string.button_action_category_item_sports),
                         iconResource = R.drawable.ic_sports_news,
                         destination = R.id.news_fragment_destination,
+                        newsSourceCategory = NewsCategory.SPORTS.type,
                         sourceType = SourceType.ONLINE
                     )
                 )

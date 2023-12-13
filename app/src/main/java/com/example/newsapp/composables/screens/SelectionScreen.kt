@@ -33,6 +33,7 @@ import com.example.newsapp.composables.screens.screenmodels.HomeButtonItem
 import com.example.newsapp.composables.screens.screenmodels.HomeButtonResource
 import com.example.newsapp.composables.screens.screenmodels.ScreenType
 import com.example.newsapp.composables.screens.screenmodels.SourceType
+import com.example.newsapp.data.model.NewsCategory
 import com.example.newsapp.ui.theme.NewsAppTheme
 
 @Composable
@@ -118,6 +119,7 @@ fun HomeCategoryCardPreview() {
                 "The Autobots win the battle of Chicago!",
                 R.drawable.ic_online_news,
                 0,
+                newsSourceCategory = NewsCategory.ENTERTAINMENT.type,
                 SourceType.ONLINE
             ),
             screenType = ScreenType.ONLINE_NEWS_SCREEN,
