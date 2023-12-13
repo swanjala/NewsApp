@@ -24,22 +24,26 @@ class NewsViewModel @Inject constructor(
         if (requestType.isEmpty()) {
             getAllNews()
         } else {
-            try {
-                val newsItems = dataRepository.getNewsByCategory(
-                    category = requestType
-                )
-                newsItems?.let {
-                    _newsUiState.value = NewsUiState(
-                        newsItems = it.articles,
-                        errorState = false
-                    )
-                }
-            } catch (error: Throwable) {
-                Log.getStackTraceString(error)
+            getCategories(requestType)
+        }
+    }
+
+    private suspend fun getCategories(requestType: String) {
+        try {
+            val newsItems = dataRepository.getNewsByCategory(
+                category = requestType
+            )
+            newsItems?.let {
                 _newsUiState.value = NewsUiState(
-                    errorState = true
+                    newsItems = it.articles,
+                    errorState = false
                 )
             }
+        } catch (error: Throwable) {
+            Log.getStackTraceString(error)
+            _newsUiState.value = NewsUiState(
+                errorState = true
+            )
         }
     }
 

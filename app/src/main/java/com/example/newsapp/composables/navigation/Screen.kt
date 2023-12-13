@@ -20,5 +20,4 @@ sealed class Screen(
         navigationAction = TopBarAction.Back,
         labelResourceId = R.string.top_bar_news_reader
     )
-
 }
