@@ -52,10 +52,12 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = composeView {
+        val navController = findNavController()
         SelectionScreenComposable(
             screenType = NEWS_HOME,
             viewModel = viewModel,
             handleArticleSelection = ::handleArticleSelection,
+            navigationController = navController,
             handleHomeSelection = ::handleHomeSectionOptions
         )
     }
