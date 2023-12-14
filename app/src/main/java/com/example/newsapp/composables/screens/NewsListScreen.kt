@@ -25,17 +25,16 @@ fun NewsListScreen(
     screen: Screen,
     viewModel: NewsViewModel,
     handleArticleSelected: (SourceType, Article) -> Unit,
-    onRetryClicked: suspend () -> Unit,
     onNavigationActionBarClicked: (TopBarAction) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
     with(uiState) {
-        if (uiState.errorState) {
+        if (errorState) {
             rememberCoroutineScope().apply {
                 ErrorStateComposable(onRetryClicked = {
                     launch {
-                        onRetryClicked.invoke()
+                        viewModel.getAllNews()
                     }
                 })
             }
