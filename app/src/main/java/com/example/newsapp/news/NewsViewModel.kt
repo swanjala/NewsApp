@@ -2,14 +2,12 @@ package com.example.newsapp.news
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.newsapp.composables.composableModels.NewsUiState
 import com.example.newsapp.data.datastore.DataRepository
 import com.example.newsapp.data.model.Article
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NewsViewModel @Inject constructor(
@@ -19,7 +17,7 @@ class NewsViewModel @Inject constructor(
     private var _newsUiState = MutableStateFlow(NewsUiState())
     val uiState: StateFlow<NewsUiState> = _newsUiState.asStateFlow()
 
-    fun getNewsByCategory(requestType: String) = viewModelScope.launch {
+    suspend fun getNewsByCategory(requestType: String) {
         if (requestType.isEmpty()) {
             getAllNews()
         } else {
@@ -64,7 +62,7 @@ class NewsViewModel @Inject constructor(
         }
     }
 
-    fun getSources() = viewModelScope.launch {
+    suspend fun getSources() {
         val dataSourceNewsValues = dataRepository.getNewsFromDataSource()
         dataSourceNewsValues?.let { data ->
             with(data) {
