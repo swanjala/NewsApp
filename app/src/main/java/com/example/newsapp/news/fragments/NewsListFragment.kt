@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -51,9 +50,6 @@ class NewsListFragment : Fragment() {
                         LOCAL_SOURCE -> {
                             getSavedArticles()
                         }
-                        else -> {
-                            //todo handle an else case here
-                        }
                     }
                 }
 
@@ -72,7 +68,6 @@ class NewsListFragment : Fragment() {
             viewModel = viewModel,
             handleArticleSelected = ::handleArticleSelection,
             onNavigationActionBarClicked = ::handleNavigationBarAction,
-            onRetryClicked = ::handleOnRetryClicked
         )
     }
 
@@ -87,15 +82,6 @@ class NewsListFragment : Fragment() {
             is TopBarAction.Back -> {
                 activity?.onBackPressed()
             }
-        }
-    }
-
-    private suspend fun handleOnRetryClicked() {
-        /*TODO
-        *  Add a retry mechanism for the online version of data passed
-        * */
-        lifecycleScope.run {
-            viewModel.getAllNews()
         }
     }
 }
