@@ -18,8 +18,8 @@ import com.example.newsapp.composables.screens.HomeScreenComposableDimens
 fun CountryButton(imageResource: Int) {
     Box(
         modifier = Modifier
-            .size(90.dp)
-            .clip(shape = RoundedCornerShape(HomeScreenComposableDimens.roundedCornerDimensions))
+            .size(70.dp)
+            .clip(shape = RoundedCornerShape(13.dp))
             .background(Color.Gray.copy(alpha = 0.2f)),
     ) {
         Image(
