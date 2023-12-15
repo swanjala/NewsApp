@@ -230,12 +230,14 @@ object HomeScreenComposableDimens {
 @Composable
 fun HomeCategoryCardPreview() {
     NewsAppTheme {
-        HomeCategoryCard(item = HomeButtonItem(
-            "The Autobots win the battle of Chicago!",
-            R.drawable.ic_online_news,
-            0,
-            newsSourceCategory = NewsCategory.ENTERTAINMENT.type,
-            SourceType.ONLINE
-        ), screenType = ScreenType.ONLINE_NEWS_SCREEN, handleHomeSelection = { _, _ -> })
+        HomeCategoryCard(
+            item = HomeButtonItem(
+                title = "The Autobots win the battle of Chicago!",
+                iconResource = R.drawable.ic_online_news,
+                destination = 0,
+                newsSourceCategory = NewsCategory.ENTERTAINMENT.type,
+                SourceType.ONLINE
+            ),
+            screenType = ScreenType.ONLINE_NEWS_SCREEN, handleHomeSelection = { _, _ -> })
     }
 }
