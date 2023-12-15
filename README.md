@@ -1,5 +1,5 @@
 # NewsApp
-A simple news application that consumes the newsapi.org API to get news data.
+A simple news application that consumes the newsapi.org API.
 
 #### Application setup.
 1. Register on [NewsAPI.org](https://newsapi.org/register) to get your API Key
