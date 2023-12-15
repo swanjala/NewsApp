@@ -36,6 +36,7 @@ import com.example.newsapp.R
 import com.example.newsapp.composables.components.ArticleCardDimens
 import com.example.newsapp.composables.components.CountryButton
 import com.example.newsapp.composables.components.ErrorStateComposable
+import com.example.newsapp.composables.components.InputCard
 import com.example.newsapp.composables.components.Title
 import com.example.newsapp.composables.components.TopCard
 import com.example.newsapp.composables.screens.HomeScreenComposableDimens.parentHorizontalPadding
@@ -62,13 +63,13 @@ fun SelectionScreenComposable(
     navigationController: NavController?,// Currently unused. To implement later.
     handleHomeSelection: (HomeButtonItem, ScreenType) -> Unit,
     handleArticleSelection: (SourceType, Article) -> Unit,
+    handleOnSearchClicked: (String) -> Unit,
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
 
     val buttonItems = HomeButtonResources.getButtonItems(
-        ScreenType.NEWS_CATEGORY,
-        LocalContext.current
+        ScreenType.NEWS_CATEGORY, LocalContext.current
     )
 
     val countryItems = HomeButtonResources.getCountryItems()
@@ -94,10 +95,14 @@ fun SelectionScreenComposable(
             ScreenType.NEWS_HOME -> {
                 Surface {
                     Column {
+                        Title(titleResource = R.string.home_label_explore)
+
+                        InputCard(onSearchClicked = handleOnSearchClicked)
+
                         Title(titleResource = R.string.home_label_categories)
+
                         LazyRow(
-                            modifier = Modifier
-                                .fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth()
                         ) {
                             item {
                                 Spacer(modifier = Modifier.width(10.dp))
@@ -115,7 +120,9 @@ fun SelectionScreenComposable(
                                 }
                             }
                         }
+
                         Title(titleResource = R.string.home_label_latest_news)
+
                         LazyRow(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -133,7 +140,9 @@ fun SelectionScreenComposable(
                                 }
                             }
                         }
+
                         Title(titleResource = R.string.home_label_sources_country)
+
                         LazyRow(
                             modifier = Modifier.fillMaxWidth()
                         ) {
@@ -190,10 +199,8 @@ fun HomeCategoryCard(
             .height(parentRowHeight)
             .width(100.dp)
             .clickable(
-                enabled = true,
-                onClick = onRowClicked
-            ),
-        verticalAlignment = Alignment.CenterVertically
+                enabled = true, onClick = onRowClicked
+            ), verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
@@ -225,14 +232,12 @@ fun HomeCategoryCardPreview() {
     NewsAppTheme {
         HomeCategoryCard(
             item = HomeButtonItem(
-                "The Autobots win the battle of Chicago!",
-                R.drawable.ic_online_news,
-                0,
+                title = "The Autobots win the battle of Chicago!",
+                iconResource = R.drawable.ic_online_news,
+                destination = 0,
                 newsSourceCategory = NewsCategory.ENTERTAINMENT.type,
                 SourceType.ONLINE
             ),
-            screenType = ScreenType.ONLINE_NEWS_SCREEN,
-            handleHomeSelection = { _, _ -> }
-        )
+            screenType = ScreenType.ONLINE_NEWS_SCREEN, handleHomeSelection = { _, _ -> })
     }
 }

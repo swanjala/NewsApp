@@ -56,7 +56,11 @@ fun TopCard(
                 .height(90.dp)
                 .align(Alignment.BottomCenter)
         ) {
-            Column(modifier = Modifier.padding(horizontal = 5.dp)) {
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 5.dp)
+                    .height(80.dp)
+            ) {
                 Text(
                     text = articleItem.title ?: "title",
                     fontWeight = FontWeight.Bold,

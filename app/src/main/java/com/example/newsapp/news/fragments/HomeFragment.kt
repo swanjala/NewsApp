@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -30,9 +31,10 @@ class HomeFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel:NewsViewModel by lazy {
+    private val viewModel: NewsViewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[NewsViewModel::class.java]
     }
+
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
@@ -58,14 +60,19 @@ class HomeFragment : Fragment() {
             viewModel = viewModel,
             handleArticleSelection = ::handleArticleSelection,
             navigationController = navController,
-            handleHomeSelection = ::handleHomeSectionOptions
+            handleHomeSelection = ::handleHomeSectionOptions,
+            handleOnSearchClicked = ::handleOnSearchClicked
         )
     }
 
+    private fun handleOnSearchClicked(searchText: String) {
+        Toast.makeText(context, searchText, Toast.LENGTH_LONG).show()
+    }
+
     private fun handleArticleSelection(screenType: SourceType, article: Article) {
-       // val navController = findNavController()
-       // val action = HomeFragmentDirections.nextAction(article, screenType)
-       // navController.navigate(action)
+        // val navController = findNavController()
+        // val action = HomeFragmentDirections.nextAction(article, screenType)
+        // navController.navigate(action)
     }
 
     private fun handleHomeSectionOptions(item: HomeButtonItem, screenType: ScreenType) =
@@ -84,16 +91,18 @@ class HomeFragment : Fragment() {
                                 )
                             }
                         }
+
                         LOCAL_SOURCE -> {
                             if (destination == R.id.news_fragment_destination) {
-                                    navigationController.navigate(
-                                        CategoriesFragmentDirections.nextAction(
-                                            "",
-                                            LOCAL_SOURCE
-                                        )
+                                navigationController.navigate(
+                                    CategoriesFragmentDirections.nextAction(
+                                        "",
+                                        LOCAL_SOURCE
                                     )
+                                )
                             }
                         }
+
                         else -> {
                             navigationController.navigate(destination)
                         }

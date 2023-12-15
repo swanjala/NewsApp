@@ -19,7 +19,9 @@
     <string name="home_label_latest_news">Latest News</string>
     <string name="home_label_sources_country">Country</string>
     <string name="home_label_discover">Discover</string>
+    <string name="home_label_explore">Explore</string>
     <string name="home_label_categories">Categories</string>
+    <string name="home_label_search_example">Ex. Blockchain</string>
     <string name="home_fragment">HomeFragment</string>
     <string name="navigation_back">Back</string>
     <string name="news_fragment">NewsFragment</string>
