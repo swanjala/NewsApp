@@ -7,7 +7,7 @@ import com.example.newsapp.composables.screens.screenmodels.ScreenType.NEWS_HOME
 import com.example.newsapp.data.model.Country
 import com.example.newsapp.data.model.NewsCategory
 
-object HomeButtonResource {
+object HomeButtonResources {
 
     fun getButtonItems(screenType: ScreenType, context: Context): List<HomeButtonItem> =
         with(context) {
@@ -98,7 +98,7 @@ object HomeButtonResource {
             }
         }
 
-    fun getCountryButtons() {
+    fun getCountryItems(): List<CountryButton> =
         listOf(
             CountryButton(
                 iconResource = R.drawable.flag_norway,
@@ -106,14 +106,24 @@ object HomeButtonResource {
                 countryCode = Country.NORWAY.countryCode
             ),
             CountryButton(
-                iconResource = R.drawable.flag_australia,
-                countryName = Country.AUSTRALIA.name,
-                countryCode = Country.AUSTRALIA.countryCode
+                iconResource = R.drawable.flag_usa,
+                countryName = Country.USA.name,
+                countryCode = Country.USA.countryCode
             ),
             CountryButton(
                 iconResource = R.drawable.flag_canada,
                 countryName = Country.CANADA.name,
                 countryCode = Country.CANADA.countryCode
+            ),
+            CountryButton(
+                iconResource = R.drawable.flag_uk,
+                countryName = Country.UK.name,
+                countryCode = Country.UK.countryCode
+            ),
+            CountryButton(
+                iconResource = R.drawable.flag_australia,
+                countryName = Country.AUSTRALIA.name,
+                countryCode = Country.AUSTRALIA.countryCode
             ),
             CountryButton(
                 iconResource = R.drawable.flag_france,
@@ -129,23 +139,6 @@ object HomeButtonResource {
                 iconResource = R.drawable.flag_sweden,
                 countryName = Country.SWEDEN.name,
                 countryCode = Country.SWEDEN.countryCode
-            ),
-            CountryButton(
-                iconResource = R.drawable.flag_uk,
-                countryName = Country.UK.name,
-                countryCode = Country.AUSTRALIA.countryCode
-            ),
-            CountryButton(
-                iconResource = R.drawable.flag_australia,
-                countryName = Country.AUSTRALIA.name,
-                countryCode = Country.AUSTRALIA.countryCode
-            ),
-            CountryButton(
-                iconResource = R.drawable.flag_australia,
-                countryName = Country.AUSTRALIA.name,
-                countryCode = Country.AUSTRALIA.countryCode
-            ),
+            )
         )
-
-    }
 }
