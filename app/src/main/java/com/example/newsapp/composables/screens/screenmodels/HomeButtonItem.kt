@@ -8,3 +8,9 @@ data class HomeButtonItem(
     val newsSourceCategory: String?,
     val sourceType: SourceType?
 )
+
+data class CountryButton(
+    val iconResource: Int,
+    val countryName: String,
+    val countryCode: String
+)
