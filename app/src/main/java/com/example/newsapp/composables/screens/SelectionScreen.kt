@@ -37,6 +37,7 @@ import com.example.newsapp.R
 import com.example.newsapp.composables.components.ArticleCard
 import com.example.newsapp.composables.components.ArticleCardDimens
 import com.example.newsapp.composables.components.ErrorStateComposable
+import com.example.newsapp.composables.components.Title
 import com.example.newsapp.composables.components.TopCard
 import com.example.newsapp.composables.screens.HomeScreenComposableDimens.parentHorizontalPadding
 import com.example.newsapp.composables.screens.HomeScreenComposableDimens.parentRowHeight
@@ -52,12 +53,13 @@ import com.example.newsapp.news.NewsViewModel
 import com.example.newsapp.ui.theme.NewsAppTheme
 import kotlinx.coroutines.launch
 
+const val INITIAL_BATCH = 30
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SelectionScreenComposable(
     screenType: ScreenType,
     viewModel: NewsViewModel,
-    navigationController: NavController?,
+    navigationController: NavController?,// Currently unused. To implement later.
     handleHomeSelection: (HomeButtonItem, ScreenType) -> Unit,
     handleArticleSelection: (SourceType, Article) -> Unit,
 ) {
@@ -90,12 +92,14 @@ fun SelectionScreenComposable(
             ScreenType.NEWS_HOME -> {
                 Surface {
                     Column {
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Title(titleResource = R.string.home_label_categories)
                         LazyRow(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 10.dp)
                         ) {
+                            item {
+                                Spacer(modifier = Modifier.width(10.dp))
+                            }
                             buttonItems.forEach { buttonItem ->
                                 item {
                                     HomeCategoryCard(
@@ -109,7 +113,7 @@ fun SelectionScreenComposable(
                                 }
                             }
                         }
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Title(titleResource = R.string.home_label_latest_news)
                         LazyRow(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -117,18 +121,21 @@ fun SelectionScreenComposable(
                             state = state,
                             flingBehavior = rememberSnapFlingBehavior(lazyListState = state)
                         ) {
-                            uiState.newsItems?.subList(0, 30)?.forEach { articleItem ->
+                            item {
+                                Spacer(modifier = Modifier.width(10.dp))
+                            }
+                            uiState.newsItems?.subList(0, INITIAL_BATCH)?.forEach { articleItem ->
                                 item {
                                     TopCard(articleItem = articleItem)
                                     Spacer(modifier = Modifier.width(5.dp))
                                 }
                             }
                         }
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Title(titleResource = R.string.home_label_sources)
                         LazyColumn(modifier = Modifier.fillMaxSize()) {
                             if (uiState.newsItems != null) {
                                 val itemsSize = uiState.newsItems?.size ?: 0
-                                val otherItems = uiState.newsItems?.subList(31, itemsSize)
+                                val otherItems = uiState.newsItems?.subList(INITIAL_BATCH + 1, itemsSize)
 
                                 item {
                                     otherItems?.forEach { articleItem ->
