@@ -110,6 +110,8 @@ fun ArticleCard(
 }
 
 object ArticleCardDimens {
+    val fontSizeXXLarge = 17.sp
+    val fontSizeXLarge = 15.sp
     val fontSizeLarge = 13.sp
     val fontSizeMedium = 10.sp
     val fontSizeSmall = 9.sp
