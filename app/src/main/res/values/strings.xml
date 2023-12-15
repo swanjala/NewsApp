@@ -17,7 +17,7 @@
     <string name="error_string">Unable displaying content from the internet</string>
     <string name="error_retry">Retry</string>
     <string name="home_label_latest_news">Latest News</string>
-    <string name="home_label_sources">Sources</string>
+    <string name="home_label_sources_country">Country</string>
     <string name="home_label_discover">Discover</string>
     <string name="home_label_categories">Categories</string>
     <string name="home_fragment">HomeFragment</string>
