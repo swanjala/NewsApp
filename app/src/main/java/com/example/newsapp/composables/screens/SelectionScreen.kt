@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,8 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.newsapp.R
-import com.example.newsapp.composables.components.ArticleCard
 import com.example.newsapp.composables.components.ArticleCardDimens
+import com.example.newsapp.composables.components.CountryButton
 import com.example.newsapp.composables.components.ErrorStateComposable
 import com.example.newsapp.composables.components.Title
 import com.example.newsapp.composables.components.TopCard
@@ -44,7 +43,7 @@ import com.example.newsapp.composables.screens.HomeScreenComposableDimens.parent
 import com.example.newsapp.composables.screens.HomeScreenComposableDimens.roundedCornerDimensions
 import com.example.newsapp.composables.screens.HomeScreenComposableDimens.sharedSpacerHeight
 import com.example.newsapp.composables.screens.screenmodels.HomeButtonItem
-import com.example.newsapp.composables.screens.screenmodels.HomeButtonResource
+import com.example.newsapp.composables.screens.screenmodels.HomeButtonResources
 import com.example.newsapp.composables.screens.screenmodels.ScreenType
 import com.example.newsapp.composables.screens.screenmodels.SourceType
 import com.example.newsapp.data.model.Article
@@ -54,6 +53,7 @@ import com.example.newsapp.ui.theme.NewsAppTheme
 import kotlinx.coroutines.launch
 
 const val INITIAL_BATCH = 30
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SelectionScreenComposable(
@@ -66,10 +66,12 @@ fun SelectionScreenComposable(
 
     val uiState by viewModel.uiState.collectAsState()
 
-    val buttonItems = HomeButtonResource.getButtonItems(
+    val buttonItems = HomeButtonResources.getButtonItems(
         ScreenType.NEWS_CATEGORY,
         LocalContext.current
     )
+
+    val countryItems = HomeButtonResources.getCountryItems()
 
     val state = rememberLazyListState()
 
@@ -131,20 +133,17 @@ fun SelectionScreenComposable(
                                 }
                             }
                         }
-                        Title(titleResource = R.string.home_label_sources)
-                        LazyColumn(modifier = Modifier.fillMaxSize()) {
-                            if (uiState.newsItems != null) {
-                                val itemsSize = uiState.newsItems?.size ?: 0
-                                val otherItems = uiState.newsItems?.subList(INITIAL_BATCH + 1, itemsSize)
-
+                        Title(titleResource = R.string.home_label_sources_country)
+                        LazyRow(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            item {
+                                Spacer(modifier = Modifier.width(10.dp))
+                            }
+                            countryItems.forEach { countryItem ->
                                 item {
-                                    otherItems?.forEach { articleItem ->
-                                        ArticleCard(
-                                            sourceType = SourceType.ONLINE,
-                                            article = articleItem,
-                                            handleArticleSelection = handleArticleSelection
-                                        )
-                                    }
+                                    CountryButton(imageResource = countryItem.iconResource)
+                                    Spacer(modifier = Modifier.width(10.dp))
                                 }
                             }
                         }
