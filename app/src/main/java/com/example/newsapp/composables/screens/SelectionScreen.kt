@@ -53,7 +53,7 @@ import com.example.newsapp.news.NewsViewModel
 import com.example.newsapp.ui.theme.NewsAppTheme
 import kotlinx.coroutines.launch
 
-const val INITIAL_BATCH = 30
+const val INITIAL_BATCH = 60
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
