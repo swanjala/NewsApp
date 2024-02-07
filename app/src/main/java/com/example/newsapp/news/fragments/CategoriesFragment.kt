@@ -34,6 +34,10 @@ class CategoriesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        onResumeByCategory()
+    }
+
+    private fun onResumeByCategory() {
         viewModel.run {
             viewModelScope.launch {
                 getNewsByCategory(NewsCategory.EVERYTHING.type)
